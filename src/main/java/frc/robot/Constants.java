@@ -14,12 +14,12 @@ package frc.robot;
  */
 public final class Constants {
   //Drivetrain Motors
-  public static final int leftDriveMotor1 = 1;
-  public static final int leftDriveMotor2 = 2;
-  public static final int leftDriveMotor3 = 3;
+  public static final int leftDriveMotor1 = 2;
+  public static final int leftDriveMotor2 = 3;
+  //public static final int leftDriveMotor3 = 3;
   public static final int rightDriveMotor1 = 4;
   public static final int rightDriveMotor2 = 5;
-  public static final int rightDriveMotor3 = 6;
+  //public static final int rightDriveMotor3 = 6;
   //Gyro
   public static final int pigeonIMU = 0;
   //Global Deadband and Motor Multiplier
