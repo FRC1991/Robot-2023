@@ -29,15 +29,15 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
  //Drivetrain Subsystem
-  public static final Drivetrain drivetrain = new Drivetrain();
+  public static final Drivetrain mDrivetrain = new Drivetrain();
  
 
 
   public RobotContainer() {
-    // Configure the trigger bindings
+  // Configure the trigger bindings
     configureBindings();
 //Drivetrain command
-    drivetrain.setDefaultCommand(new MaanitDrive());
+    mDrivetrain.setDefaultCommand(new MaanitDrive());
 
   }
 

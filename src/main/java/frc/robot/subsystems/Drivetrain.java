@@ -17,7 +17,7 @@ import frc.robot.Constants;
 //==============================ADD SHAFT ENCODING============================
 
 public class Drivetrain extends SubsystemBase {
-  
+//Motor declaration
   private static CANSparkMax leftDriveMotor1,
    leftDriveMotor2,  
    leftDriveMotor3,
@@ -27,20 +27,19 @@ public class Drivetrain extends SubsystemBase {
 
   MotorControllerGroup leftDriveMotors,
   rightDriveMotors;
-
-
+//Gyro and drive declaration 
   private final Pigeon2 pigeon; 
 
-    DifferentialDrive differentialDrive;
+  DifferentialDrive differentialDrive;
 
   /** Creates a new Drivetrain. */
   public Drivetrain() {
-
+//gyro config
     pigeon = new Pigeon2(Constants.pigeonIMU);
 
     pigeon.configMountPose(AxisDirection.NegativeY, AxisDirection.PositiveZ);
     pigeon.setYaw(0);
-
+//Motor and motor group setup 
     leftDriveMotor1 = new CANSparkMax(Constants.leftDriveMotor1, MotorType.kBrushless);
     leftDriveMotor2 = new CANSparkMax(Constants.leftDriveMotor2, MotorType.kBrushless);
     leftDriveMotor3 = new CANSparkMax(Constants.leftDriveMotor3, MotorType.kBrushless);
@@ -56,6 +55,7 @@ public class Drivetrain extends SubsystemBase {
     rightDriveMotors.setInverted(true);
 
   }
+
 //Yaw is abt +Z
   public double getYaw(){
     return pigeon.getYaw();
@@ -69,11 +69,15 @@ public class Drivetrain extends SubsystemBase {
     return pigeon.getRoll();
   }
 
-
+//Tankdrive 
   public void tankDrive(double leftSpeed, double rightSpeed){
     differentialDrive.tankDrive(leftSpeed, rightSpeed);
+  }
+//Arcadedrive
+  public void arcadeDrive(double speed, double rotation){
+    differentialDrive.tankDrive(speed, rotation);
 }
-
+//Encoders
   public double getLeftDrive1Pos(){
     return leftDriveMotor1.getEncoder().getPosition();
   }
@@ -107,7 +111,7 @@ public class Drivetrain extends SubsystemBase {
     rightDriveMotor2.getEncoder().setPosition(0);
     rightDriveMotor3.getEncoder().setPosition(0);
   }
-
+//Distance in ft 
   public double getDistanceFeet(){
     double avgDistanceInRotations = (leftDriveMotor1.getEncoder().getPosition() 
       + leftDriveMotor1.getEncoder().getPosition()
@@ -119,9 +123,9 @@ public class Drivetrain extends SubsystemBase {
       / 6.0;
 
     double avgDistanceInRotationsOfShaft = avgDistanceInRotations / 14.17;
-    return Math.PI * avgDistanceInRotationsOfShaft;
+    return Math.PI * avgDistanceInRotationsOfShaft; //6 in wheels, so circumfrence in ft is pi
   }
-
+//Motor getters
   public CANSparkMax getLeftDrive1(){
     return leftDriveMotor1;
   }
