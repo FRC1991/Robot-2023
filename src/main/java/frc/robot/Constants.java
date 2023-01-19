@@ -16,6 +16,7 @@ public final class Constants {
   //Drivetrain Motors
   public static final int leftDriveMotor1 = 2;
   public static final int leftDriveMotor2 = 3;
+<<<<<<< HEAD
   public static final int leftDriveMotor3 = 4;
   public static final int rightDriveMotor1 = 5;
   public static final int rightDriveMotor2 = 6;
@@ -27,6 +28,12 @@ public final class Constants {
   //Claw Motors
   public static final int clawTurretMotor = 10;
   public static final int clawMotor = 11;
+=======
+  //public static final int leftDriveMotor3 = 3;
+  public static final int rightDriveMotor1 = 4;
+  public static final int rightDriveMotor2 = 5;
+  //public static final int rightDriveMotor3 = 6;
+>>>>>>> d59e24f7848d098c3beb9baad7865d0c231f440a
   //Gyro
   public static final int pigeonIMU = 0;
   //Global Deadband and Motor Multiplier
