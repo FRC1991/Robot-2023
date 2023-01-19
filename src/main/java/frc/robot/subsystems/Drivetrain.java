@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-//==============================ADD SHAFT ENCODING============================
+//==============================ADD SHAFT ENCODING/REWORK NEW TRAIN============================
 
 public class Drivetrain extends SubsystemBase {
 //Motor declaration
