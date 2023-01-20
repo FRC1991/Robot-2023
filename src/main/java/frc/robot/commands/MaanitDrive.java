@@ -29,6 +29,7 @@ public class MaanitDrive extends CommandBase {
 
     RobotContainer.mDrivetrain.tankDrive(leftSpeed, rightSpeed);
 
+    System.out.println(RobotContainer.mDrivetrain.pigeon.getPitch());
 
   }
 

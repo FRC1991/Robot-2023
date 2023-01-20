@@ -6,7 +6,10 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.MaanitDrive;
+import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Turret;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -18,14 +21,17 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
+//==========================  SUBSYSTEMS +++++++++++++++++++++++
+  public static Drivetrain mDrivetrain = new Drivetrain();
+  public static Arm mArm = new Arm();
+  public static Claw mClaw = new Claw();
+  public static Turret mTurret = new Turret();
 
-  // Controllers
+//++++++++++++++++++++++++++Controllers=========================
   public final static CommandXboxController driverController = new CommandXboxController(OperatorConstants.DriverControllerPort);
-
+  public final static CommandXboxController auxController = new CommandXboxController(OperatorConstants.AuxControllerPort);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
  //Drivetrain Subsystem
-  public static final Drivetrain mDrivetrain = new Drivetrain();
  
 
 

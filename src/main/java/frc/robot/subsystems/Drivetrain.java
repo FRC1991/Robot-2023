@@ -28,7 +28,7 @@ public class Drivetrain extends SubsystemBase {
   MotorControllerGroup leftDriveMotors,
   rightDriveMotors;
 //Gyro and drive declaration 
-  private final Pigeon2 pigeon; 
+  public final Pigeon2 pigeon; 
 
   DifferentialDrive differentialDrive;
 
@@ -148,5 +148,5 @@ public class Drivetrain extends SubsystemBase {
 
   public CANSparkMax getRightDrive3(){
     return rightDriveMotor3;
-  }
+  } 
 }
