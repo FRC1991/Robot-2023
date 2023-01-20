@@ -10,6 +10,9 @@ import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Turret;
+import edu.wpi.first.networktables.GenericEntry;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -31,17 +34,29 @@ public class RobotContainer {
   public final static CommandXboxController driverController = new CommandXboxController(OperatorConstants.DriverControllerPort);
   public final static CommandXboxController auxController = new CommandXboxController(OperatorConstants.AuxControllerPort);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
- //Drivetrain Subsystem
- 
+ //=============================Commands +++++++++++++++++++++++++++++++++ 
+
+ //+++++++++++++++++++++++++++++++ Global Vars=================
+ //NetworkTableEntry gyroAngle;
+
 
 
   public RobotContainer() {
+    dashboardInit();
+   // NTListenerInit();
   // Configure the trigger bindings
     configureBindings();
-//Drivetrain command
     mDrivetrain.setDefaultCommand(new MaanitDrive());
-
   }
+
+
+  private void dashboardInit(){
+    Shuffleboard.getTab("Main")
+        .add("Gyro Angle", 0)
+        .withWidget(BuiltInWidgets.kGyro)
+        .getEntry();
+  }
+
 
   /**
    * Use this method to define your trigger->command mappings. Triggers can be created via the
