@@ -13,6 +13,7 @@ import frc.robot.subsystems.Turret;
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -51,10 +52,8 @@ public class RobotContainer {
 
 
   private void dashboardInit(){
-    Shuffleboard.getTab("Main")
-        .add("Gyro Angle", 0)
-        .withWidget(BuiltInWidgets.kGyro)
-        .getEntry();
+    SmartDashboard.putNumber("Gyro", mDrivetrain.pigeon.getPitch());
+    
   }
 
 
