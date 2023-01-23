@@ -6,10 +6,13 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.MaanitDrive;
+import frc.robot.commands.climbStation;
+import frc.robot.commands.turnBy;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Turret;
+import frc.robot.commands.climbStation;
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -34,9 +37,14 @@ public class RobotContainer {
 //++++++++++++++++++++++++++Controllers=========================
   public final static CommandXboxController driverController = new CommandXboxController(OperatorConstants.DriverControllerPort);
   public final static CommandXboxController auxController = new CommandXboxController(OperatorConstants.AuxControllerPort);
+
+  Trigger AuxAButton = auxController.a();
+
+
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
  //=============================Commands +++++++++++++++++++++++++++++++++ 
-
+ public static climbStation mClimbStation = new climbStation();
  //+++++++++++++++++++++++++++++++ Global Vars=================
  //NetworkTableEntry gyroAngle;
 
@@ -48,12 +56,13 @@ public class RobotContainer {
   // Configure the trigger bindings
     configureBindings();
     mDrivetrain.setDefaultCommand(new MaanitDrive());
+    AuxAButton.onTrue(mClimbStation);
+
   }
 
 
   private void dashboardInit(){
     SmartDashboard.putNumber("Gyro", mDrivetrain.pigeon.getPitch());
-    
   }
 
 

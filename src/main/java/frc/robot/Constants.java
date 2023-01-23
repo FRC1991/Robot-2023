@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj2.command.button.Trigger;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
@@ -43,6 +45,8 @@ public final class Constants {
     public static final int driveRightTrigger = 3;
     public static final int driveRightStickX = 4;
     public static final int driveRightStickY = 5;
+    //Aux controller Mapping 
+    public static final int AuxAButton = 6;
     
 
 
