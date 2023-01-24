@@ -34,17 +34,12 @@ public class RobotContainer {
   public static Claw mClaw = new Claw();
   public static Turret mTurret = new Turret();
 
-//++++++++++++++++++++++++++Controllers=========================
-  public final static CommandXboxController driverController = new CommandXboxController(OperatorConstants.DriverControllerPort);
-  public final static CommandXboxController auxController = new CommandXboxController(OperatorConstants.AuxControllerPort);
-
-  Trigger AuxAButton = auxController.a();
-
+//=============================Commands +++++++++++++++++++++++++++++++++ 
+public static climbStation mClimbStation = new climbStation();
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
- //=============================Commands +++++++++++++++++++++++++++++++++ 
- public static climbStation mClimbStation = new climbStation();
+ 
  //+++++++++++++++++++++++++++++++ Global Vars=================
  //NetworkTableEntry gyroAngle;
 
@@ -56,7 +51,6 @@ public class RobotContainer {
   // Configure the trigger bindings
     configureBindings();
     mDrivetrain.setDefaultCommand(new MaanitDrive());
-    AuxAButton.onTrue(mClimbStation);
 
   }
 
@@ -77,7 +71,8 @@ public class RobotContainer {
    */
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-  
+    ButtonBind.driveAButton.onTrue(mClimbStation);
+
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
   }

@@ -6,7 +6,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Robot;
+import frc.robot.ButtonBind;
 import frc.robot.RobotContainer;
 import frc.robot.Constants.OperatorConstants;
 
@@ -24,8 +24,8 @@ public class MaanitDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double leftSpeed = RobotContainer.driverController.getRawAxis(OperatorConstants.driveLeftStickY);
-    double rightSpeed = RobotContainer.driverController.getRawAxis(OperatorConstants.driveRightStickY);
+    double leftSpeed = ButtonBind.driverController.getLeftX();
+     double rightSpeed = ButtonBind.driverController.getRightY();
 
     RobotContainer.mDrivetrain.tankDrive(leftSpeed, rightSpeed);
 
