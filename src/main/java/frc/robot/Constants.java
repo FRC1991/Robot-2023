@@ -31,22 +31,6 @@ public final class Constants {
   public static final int pigeonIMU = 0;
   //Global Deadband and Motor Multiplier
   public static final double Deadband = 0.1;
-
-  public static class OperatorConstants {
-    //Controller Ports 
-    public static final int DriverControllerPort = 0;
-    public static final int AuxControllerPort = 1;
-    //Drive Controller Mapping
-    public static final int driveLeftStickX = 0;
-    public static final int driveLeftStickY = 1;
-    public static final int driveLeftTrigger = 2;
-    public static final int driveRightTrigger = 3;
-    public static final int driveRightStickX = 4;
-    public static final int driveRightStickY = 5;
-    //Aux controller Mapping 
-    public static final int AuxAButton = 6;
     
-
-
   }
-}
+

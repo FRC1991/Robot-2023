@@ -33,7 +33,7 @@ public class climbStation extends CommandBase {
   @Override
   public void initialize() {
     RobotContainer.mDrivetrain.tankDrive(0, 0);
-    pigeon.configMountPosePitch(0);
+    //pigeon.configMountPosePitch(0);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -41,6 +41,7 @@ public class climbStation extends CommandBase {
   public void execute() {
     RobotContainer.mDrivetrain.tankDrive(0.1, 0.1);
     
+    System.out.println(Math.round(pigeon.getPitch()));
     try {
       TimeUnit.SECONDS.sleep(waitFor);
     } catch (InterruptedException e) {

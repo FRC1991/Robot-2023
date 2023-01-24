@@ -4,7 +4,6 @@
 
 package frc.robot;
 
-import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.MaanitDrive;
 import frc.robot.commands.climbStation;
 import frc.robot.commands.turnBy;
@@ -35,7 +34,7 @@ public class RobotContainer {
   public static Turret mTurret = new Turret();
 
 //=============================Commands +++++++++++++++++++++++++++++++++ 
-public static climbStation mClimbStation = new climbStation();
+//public static climbStation mClimbStation = new climbStation();
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -71,7 +70,7 @@ public static climbStation mClimbStation = new climbStation();
    */
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    ButtonBind.driveAButton.onTrue(mClimbStation);
+    ButtonBind.driveAButton.onTrue(new climbStation());
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.

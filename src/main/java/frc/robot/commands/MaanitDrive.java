@@ -8,7 +8,6 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.ButtonBind;
 import frc.robot.RobotContainer;
-import frc.robot.Constants.OperatorConstants;
 
 public class MaanitDrive extends CommandBase {
   /** Creates a new MaanitDrive. */
@@ -24,7 +23,7 @@ public class MaanitDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double leftSpeed = ButtonBind.driverController.getLeftX();
+    double leftSpeed = ButtonBind.driverController.getLeftY();
      double rightSpeed = ButtonBind.driverController.getRightY();
 
     RobotContainer.mDrivetrain.tankDrive(leftSpeed, rightSpeed);
