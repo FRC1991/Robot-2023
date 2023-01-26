@@ -4,60 +4,63 @@
 
 package frc.robot.commands;
 
-import java.util.concurrent.TimeUnit;
 
 import com.ctre.phoenix.sensors.Pigeon2;
 import com.revrobotics.CANSparkMax.IdleMode;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
-import frc.robot.subsystems.Drivetrain;
 
 public class climbStation extends CommandBase {
   /** Creates a new climbStation. */
-  private Drivetrain drivetrain;
   private Pigeon2 pigeon;
   private boolean isPitchFlat;
-  private int topRange = 1;
-  private int bottomRange = -1;
-  private int waitFor = 1;
+  private boolean firstStep;
+  private boolean secondStep;
 
   public climbStation() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.mDrivetrain);
     pigeon = RobotContainer.mDrivetrain.pigeon;
-    //int isPitchFlat = NetworkTableEntry.getNumber(drivetrain.pigeon.getPitch());
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     RobotContainer.mDrivetrain.tankDrive(0, 0);
-    //pigeon.configMountPosePitch(0);
+    pigeon.configMountPosePitch(0);
+    isPitchFlat = false;
+    firstStep = false;
+    secondStep = false;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.mDrivetrain.tankDrive(0.1, 0.1);
-    
-    System.out.println(Math.round(pigeon.getPitch()));
-    try {
-      TimeUnit.SECONDS.sleep(waitFor);
-    } catch (InterruptedException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
+
+    RobotContainer.mDrivetrain.tankDrive(0.6, 0.6);
+
+    if(Math.round(pigeon.getPitch()) >= 16 || Math.round(pigeon.getPitch()) >= 15){
+        firstStep = true;
+    } 
+
+    if(firstStep == true){
+      RobotContainer.mDrivetrain.tankDrive(0.3, 0.3);
     }
 
-    if(pigeon.getPitch() >= topRange || pigeon.getPitch() <= bottomRange){
+    if(Math.round(pigeon.getPitch()) <= 9 || Math.round(pigeon.getPitch()) <= 8){
+    secondStep = true;
+    }
+
+    if(firstStep == true && secondStep == true){
       isPitchFlat = true;
     }
   }
 
+
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    drivetrain.tankDrive(0, 0);
     RobotContainer.mDrivetrain.getLeftDrive1().setIdleMode(IdleMode.kBrake);
     RobotContainer.mDrivetrain.getLeftDrive2().setIdleMode(IdleMode.kBrake);
     RobotContainer.mDrivetrain.getLeftDrive3().setIdleMode(IdleMode.kBrake);
