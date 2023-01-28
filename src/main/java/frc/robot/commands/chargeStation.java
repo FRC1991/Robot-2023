@@ -16,14 +16,14 @@ import frc.robot.RobotContainer;
 //+++++++++++++++++++++++++++++++++===========================================
 
 
-public class climbStation extends CommandBase {
+public class chargeStation extends CommandBase {
   /** Creates a new climbStation. */
   private Pigeon2 pigeon;
   private boolean isPitchFlat;
   private boolean firstStep;
   private boolean secondStep;
 
-  public climbStation() {
+  public chargeStation() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.mDrivetrain);
     pigeon = RobotContainer.mDrivetrain.pigeon;

@@ -6,7 +6,7 @@ package frc.robot;
 
 import frc.robot.commands.MaanitDrive;
 import frc.robot.commands.brakeMode;
-import frc.robot.commands.climbStation;
+import frc.robot.commands.chargeStation;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Drivetrain;
@@ -40,7 +40,7 @@ public static double maxSpeed;
 
 ButtonBind mButtonBind = new ButtonBind();
 brakeMode mBrakeMode = new brakeMode();
-climbStation mClimbStation = new climbStation();
+chargeStation mClimbStation = new chargeStation();
 
 MaanitDrive standardMaanitDriveCommand = new MaanitDrive(mButtonBind::getDriveRightTrigger, 
 mButtonBind::getDriveLeftTrigger,
@@ -49,6 +49,7 @@ mButtonBind::getDriveLeftTrigger,
    
 
   public RobotContainer() {
+    dashboardInit();
     configureBindings();
   }
 
