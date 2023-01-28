@@ -11,6 +11,11 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
+//++++++++===========++++++++=======+++++=====++++++++=======+++++=====+++==+=
+//+++++++++++++++++++++==============USE ENCODERS PLUS GYRO????+++++==========
+//+++++++++++++++++++++++++++++++++===========================================
+
+
 public class climbStation extends CommandBase {
   /** Creates a new climbStation. */
   private Pigeon2 pigeon;

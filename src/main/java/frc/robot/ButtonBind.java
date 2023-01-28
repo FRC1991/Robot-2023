@@ -13,48 +13,68 @@ public class ButtonBind {
     public final static CommandXboxController driverController = new CommandXboxController(0);
     public final static CommandXboxController auxController = new CommandXboxController(1);
 //Driver Binding
-    public final static Trigger driveAButton = driverController.a();
-    public final static Trigger driveBButton = driverController.b();
-    public final static Trigger driveXButton = driverController.x();
-    public final static Trigger driveYButton = driverController.y();
-    public final static Trigger driveLeftBumper = driverController.leftBumper();
-    public final static Trigger driveRightBumper = driverController.rightBumper();
-    public final static Trigger driveStartButton = driverController.start();
+    public final Trigger driveAButton = driverController.a();
+    public final Trigger driveBButton = driverController.b();
+    public final Trigger driveXButton = driverController.x();
+    public final Trigger driveYButton = driverController.y();
+    public final Trigger driveLeftBumper = driverController.leftBumper();
+    public final Trigger driveRightBumper = driverController.rightBumper();
+    public final Trigger driveStartButton = driverController.start();
 
     
-    public final static Trigger driveLeftStick = driverController.leftStick();
-    public final static Trigger driveRightStick = driverController.rightStick();
+    public final Trigger driveLeftStick = driverController.leftStick();
+    public final double driveLeftX = driverController.getLeftX();
+    public final Trigger driveRightStick = driverController.rightStick();
     
-    public final static Trigger driveLeftTrigger = driverController.leftTrigger();
-    public final static Trigger driveRightTrigger = driverController.rightTrigger();
+    public final double driveLeftTrigger = driverController.getLeftTriggerAxis();
+    public final double driveRightTrigger = driverController.getRightTriggerAxis();
 
-    public final static Trigger driveDPadDown = driverController.povDown();
-    public final static Trigger driveDPadUp = driverController.povUp();
-    public final static Trigger driveDPadLeft = driverController.povLeft();
-    public final static Trigger driveDPadRight = driverController.povRight();
+    public final Trigger driveDPadDown = driverController.povDown();
+    public final Trigger driveDPadUp = driverController.povUp();
+    public final Trigger driveDPadLeft = driverController.povLeft();
+    public final Trigger driveDPadRight = driverController.povRight();
 
 //Aux Binding
-    public final static Trigger auxAButton = auxController.a();
-    public final static Trigger auxBButton = auxController.b();
-    public final static Trigger auxXButton = auxController.x();
-    public final static Trigger auxYButton = auxController.y();
-    public final static Trigger auxLeftBumper = auxController.leftBumper();
-    public final static Trigger auxRightBumper = auxController.rightBumper();
-    public final static Trigger auxStartButton = auxController.start();
+    public final Trigger auxAButton = auxController.a();
+    public final Trigger auxBButton = auxController.b();
+    public final Trigger auxXButton = auxController.x();
+    public final Trigger auxYButton = auxController.y();
+    public final Trigger auxLeftBumper = auxController.leftBumper();
+    public final Trigger auxRightBumper = auxController.rightBumper();
+    public final Trigger auxStartButton = auxController.start();
 
     
-    public final static Trigger auxLeftStick = auxController.leftStick();
-    public final static Trigger auxRightStick = auxController.rightStick();
+    public final Trigger auxLeftStick = auxController.leftStick();
+    public final Trigger auxRightStick = auxController.rightStick();
     
-    public final static Trigger auxLeftTrigger = auxController.leftTrigger();
-    public final static Trigger auxRightTrigger = auxController.rightTrigger();
+    public final Trigger auxLeftTrigger = auxController.leftTrigger();
+    public final Trigger auxRightTrigger = auxController.rightTrigger();
 
-    public final static Trigger auxDPadDown = auxController.povDown();
-    public final static Trigger auxDPadUp = auxController.povUp();
-    public final static Trigger auxDPadLeft = auxController.povLeft();
-    public final static Trigger auxDPadRight = auxController.povRight();
+    public final Trigger auxDPadDown = auxController.povDown();
+    public final Trigger auxDPadUp = auxController.povUp();
+    public final Trigger auxDPadLeft = auxController.povLeft();
+    public final Trigger auxDPadRight = auxController.povRight();
 
 
+    public double getDriveRightTrigger(){
+        return driveRightTrigger;
+    }
+
+    public double getDriveLeftTrigger(){
+        return driveLeftTrigger;
+    }
+
+    public double getDriveLeftX(){
+        return driveLeftX;
+    }
+
+    public boolean getDriveX(){
+        return driveXButton.getAsBoolean();
+    }
+
+    public boolean getDriveRightBumper(){
+        return driveRightBumper.getAsBoolean();
+    }
 
 
 

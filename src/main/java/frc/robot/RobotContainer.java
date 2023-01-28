@@ -5,6 +5,7 @@
 package frc.robot;
 
 import frc.robot.commands.MaanitDrive;
+import frc.robot.commands.brakeMode;
 import frc.robot.commands.climbStation;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Claw;
@@ -28,8 +29,12 @@ public class RobotContainer {
   public static Turret mTurret = new Turret();
 
 //=============================Commands +++++++++++++++++++++++++++++++++ 
-//public static climbStation mClimbStation = new climbStation();
+ButtonBind mButtonBind = new ButtonBind();
 
+//MaanitDrive maanitDrive = new MaanitDrive(mButtonBind::getDriveRightTrigger,
+ //mButtonBind::getDriveLeftTrigger, 
+ //mButtonBind::getDriveLeftX,
+//mButtonBind::getDriveRightBumper, ()->(1.0));
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
  
@@ -64,7 +69,8 @@ public class RobotContainer {
    */
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    ButtonBind.driveAButton.onTrue(new climbStation());
+    mButtonBind.driveAButton.onTrue(new climbStation());
+    mButtonBind.driveBButton.whileTrue(new brakeMode());
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
@@ -78,5 +84,5 @@ public class RobotContainer {
   //public Command getAutonomousCommand() {
     // An example command will be run in autonomous
     //return Autos.exampleAuto(m_exampleSubsystem);
-  //}
+ // }
 }
