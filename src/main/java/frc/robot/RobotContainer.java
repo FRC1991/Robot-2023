@@ -5,19 +5,14 @@
 package frc.robot;
 
 import frc.robot.commands.MaanitDrive;
+import frc.robot.commands.brakeMode;
+import frc.robot.commands.climbStation;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Turret;
 
-import javax.swing.plaf.basic.BasicBorders.ButtonBorder;
-
-import edu.wpi.first.networktables.GenericEntry;
-import edu.wpi.first.wpilibj.PS4Controller.Button;
-import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -35,7 +30,7 @@ public class RobotContainer {
 //+++++++++++++++++++++++++++++++ Global Vars=================
 public static double maxSpeed;
 
-//==========================  SUBSYSTEMS +++++++++++++++++++++++
+//==========================  Subsystems +++++++++++++++++++++++
   public static Drivetrain mDrivetrain = new Drivetrain();
   public static Arm mArm = new Arm();
   public static Claw mClaw = new Claw();
@@ -44,8 +39,10 @@ public static double maxSpeed;
 //=============================Commands +++++++++++++++++++++++++++++++++ 
 
 ButtonBind mButtonBind = new ButtonBind();
+brakeMode mBrakeMode = new brakeMode();
+climbStation mClimbStation = new climbStation();
 
-MaanitDrive maanitDrive = new MaanitDrive(mButtonBind::getDriveRightTrigger, 
+MaanitDrive standardMaanitDriveCommand = new MaanitDrive(mButtonBind::getDriveRightTrigger, 
 mButtonBind::getDriveLeftTrigger,
  mButtonBind::getDriveLeftX,
   mButtonBind::getDriveRightBumper, ()->(1.0));
@@ -72,8 +69,11 @@ mButtonBind::getDriveLeftTrigger,
    */
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    //mDrivetrain.setDefaultCommand(standardMaanitDriveCommand);
+    mDrivetrain.setDefaultCommand(standardMaanitDriveCommand);
 
+    mButtonBind.driveAButton.whileTrue(mBrakeMode);
+    mButtonBind.driveYButton.toggleOnTrue(mClimbStation);
+    
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
   }

@@ -64,7 +64,8 @@ private double deadband = Constants.globalDeadband;
     rightDriveMotors.setInverted(rightDriveInverted);
 
   }
-
+  
+//Drivetrain setup
   public  void setDrivetrain(double leftSpeed, double rightSpeed){
   leftDriveMotors.set(leftSpeed);
   rightDriveMotors.set(rightSpeed);
