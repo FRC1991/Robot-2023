@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+
 import com.ctre.phoenix.sensors.Pigeon2;
 import com.ctre.phoenix.sensors.Pigeon2.AxisDirection;
 import com.revrobotics.CANSparkMax;
@@ -14,9 +15,15 @@ import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-//==============================ADD SHAFT ENCODING/REWORK NEW TRAIN============================
+//==============================ADD SHAFT ENCODING============================
 
 public class Drivetrain extends SubsystemBase {
+
+//Drivetrain Variable
+private boolean leftDriveInverted = false;
+private boolean rightDriveInverted = true;
+private double deadband = Constants.globalDeadband;
+
 //Motor declaration
   private static CANSparkMax leftDriveMotor1,
    leftDriveMotor2,  
@@ -39,6 +46,7 @@ public class Drivetrain extends SubsystemBase {
 
     pigeon.configMountPose(AxisDirection.NegativeY, AxisDirection.PositiveZ);
     pigeon.setYaw(0);
+
 //Motor and motor group setup 
     leftDriveMotor1 = new CANSparkMax(Constants.leftDriveMotor1, MotorType.kBrushless);
     leftDriveMotor2 = new CANSparkMax(Constants.leftDriveMotor2, MotorType.kBrushless);
@@ -52,22 +60,31 @@ public class Drivetrain extends SubsystemBase {
     
     differentialDrive = new DifferentialDrive(leftDriveMotors, rightDriveMotors);
 
-    rightDriveMotors.setInverted(true);
+    leftDriveMotors.setInverted(leftDriveInverted);
+    rightDriveMotors.setInverted(rightDriveInverted);
 
   }
 
-//Yaw is abt +Z
-  public double getYaw(){
-    return pigeon.getYaw();
+  public  void setDrivetrain(double leftSpeed, double rightSpeed){
+  leftDriveMotors.set(leftSpeed);
+  rightDriveMotors.set(rightSpeed);
   }
-//Pitch is abt +Y
-  public double getPitch(){
-    return pigeon.getPitch();
+
+  public void setDrivetrain(double leftSpeed, double rightSpeed, double multiplier){
+    setDrivetrain(leftSpeed * multiplier, rightSpeed * multiplier);
   }
-//Roll is abt +X
-  public double getRoll(){
-    return pigeon.getRoll();
+
+  public void setDrivetrain(double leftSpeed, double rightSpeed, double multiplier, boolean isDeadbandActive){
+    if(isDeadbandActive){
+      if(Math.abs(leftSpeed) > deadband) leftDriveMotors.set(leftSpeed);
+      else leftDriveMotors.set(0);
+      if(Math.abs(rightSpeed) > deadband) rightDriveMotors.set(rightSpeed);
+      else rightDriveMotors.set(0);
+    }else{
+      setDrivetrain(leftSpeed, rightSpeed, multiplier);
+    }
   }
+
 
 //Tankdrive 
   public void tankDrive(double leftSpeed, double rightSpeed){
@@ -77,6 +94,29 @@ public class Drivetrain extends SubsystemBase {
   public void arcadeDrive(double speed, double rotation){
     differentialDrive.tankDrive(speed, rotation);
 }
+//MaanitDrive
+  public void setMaanitDrive( double forwardSpeed, double backwardSpeed, double rotation, boolean isFastTurn, double multiplier){
+
+    forwardSpeed = multiplier * forwardSpeed;
+    backwardSpeed = -1 * backwardSpeed * multiplier;
+    double totalSpeed = forwardSpeed + backwardSpeed;
+
+    if(Math.abs(totalSpeed) > deadband * multiplier){
+      differentialDrive.curvatureDrive(totalSpeed, multiplier * -rotation, isFastTurn);
+    }else if(Math.abs(totalSpeed) > 0.01 * multiplier){
+      setDrivetrain(rotation, rotation, multiplier);
+    }else if(isFastTurn){
+      differentialDrive.curvatureDrive(0, -rotation * multiplier, true);
+    } else {
+      differentialDrive.curvatureDrive(0, -rotation * multiplier, true);
+    }
+  }
+
+//StopDrivetrain  
+  public void stopDrivetrain(){
+    setDrivetrain(0, 0);
+  }
+
 //Encoders
   public double getLeftDrive1Pos(){
     return leftDriveMotor1.getEncoder().getPosition();
@@ -149,4 +189,18 @@ public class Drivetrain extends SubsystemBase {
   public CANSparkMax getRightDrive3(){
     return rightDriveMotor3;
   } 
+
+//Yaw is abt +Z
+public double getYaw(){
+  return pigeon.getYaw();
+}
+//Pitch is abt +Y
+public double getPitch(){
+  return pigeon.getPitch();
+}
+//Roll is abt +X
+public double getRoll(){
+  return pigeon.getRoll();
+}
+
 }

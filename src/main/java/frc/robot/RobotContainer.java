@@ -5,13 +5,19 @@
 package frc.robot;
 
 import frc.robot.commands.MaanitDrive;
-import frc.robot.commands.brakeMode;
-import frc.robot.commands.climbStation;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Turret;
+
+import javax.swing.plaf.basic.BasicBorders.ButtonBorder;
+
+import edu.wpi.first.networktables.GenericEntry;
+import edu.wpi.first.wpilibj.PS4Controller.Button;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -22,6 +28,13 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
+
+//The robot's subsystems, commands, and global varibales are all here
+
+
+//+++++++++++++++++++++++++++++++ Global Vars=================
+public static double maxSpeed;
+
 //==========================  SUBSYSTEMS +++++++++++++++++++++++
   public static Drivetrain mDrivetrain = new Drivetrain();
   public static Arm mArm = new Arm();
@@ -29,27 +42,17 @@ public class RobotContainer {
   public static Turret mTurret = new Turret();
 
 //=============================Commands +++++++++++++++++++++++++++++++++ 
+
 ButtonBind mButtonBind = new ButtonBind();
 
-//MaanitDrive maanitDrive = new MaanitDrive(mButtonBind::getDriveRightTrigger,
- //mButtonBind::getDriveLeftTrigger, 
- //mButtonBind::getDriveLeftX,
-//mButtonBind::getDriveRightBumper, ()->(1.0));
-
-  /** The container for the robot. Contains subsystems, OI devices, and commands. */
- 
- //+++++++++++++++++++++++++++++++ Global Vars=================
- //NetworkTableEntry gyroAngle;
-
-
+MaanitDrive maanitDrive = new MaanitDrive(mButtonBind::getDriveRightTrigger, 
+mButtonBind::getDriveLeftTrigger,
+ mButtonBind::getDriveLeftX,
+  mButtonBind::getDriveRightBumper, ()->(1.0));
+   
 
   public RobotContainer() {
-    dashboardInit();
-   // NTListenerInit();
-  // Configure the trigger bindings
     configureBindings();
-    mDrivetrain.setDefaultCommand(new MaanitDrive());
-
   }
 
 
@@ -69,8 +72,7 @@ ButtonBind mButtonBind = new ButtonBind();
    */
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    mButtonBind.driveAButton.onTrue(new climbStation());
-    mButtonBind.driveBButton.whileTrue(new brakeMode());
+    //mDrivetrain.setDefaultCommand(standardMaanitDriveCommand);
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
@@ -84,5 +86,5 @@ ButtonBind mButtonBind = new ButtonBind();
   //public Command getAutonomousCommand() {
     // An example command will be run in autonomous
     //return Autos.exampleAuto(m_exampleSubsystem);
- // }
+  //}
 }

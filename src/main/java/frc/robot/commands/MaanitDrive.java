@@ -5,16 +5,33 @@
 
 package frc.robot.commands;
 
+import java.util.function.Supplier;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.ButtonBind;
 import frc.robot.RobotContainer;
+import frc.robot.subsystems.Drivetrain;
 
 public class MaanitDrive extends CommandBase {
-  /** Creates a new MaanitDrive. */
-  public MaanitDrive() {
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.mDrivetrain);
+
+  private final Drivetrain drivetrain;
+  private final Supplier<Double> forwardSpeed, backwardSpeed, rotation, multiplier;
+  private final Supplier<Boolean> isFastTurn;
+
+  public MaanitDrive( Supplier<Double> forwardSpeedSupplier,
+  Supplier<Double> backwardSpeedSupplier,
+  Supplier<Double> rotationSupplier,
+  Supplier<Boolean> isFastTurnSupplier,
+  Supplier<Double> multiplierSupplier)  {
+  drivetrain = RobotContainer.mDrivetrain;
+  forwardSpeed = forwardSpeedSupplier;
+  backwardSpeed = backwardSpeedSupplier;
+  rotation = rotationSupplier;
+  multiplier = multiplierSupplier;
+  isFastTurn = isFastTurnSupplier;
+  addRequirements(drivetrain);
   }
+
 
   // Called when the command is initially scheduled.
   @Override
@@ -23,20 +40,18 @@ public class MaanitDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double leftSpeed = ButtonBind.driverController.getLeftY();
-     double rightSpeed = ButtonBind.driverController.getRightY();
-
-    RobotContainer.mDrivetrain.tankDrive(leftSpeed, rightSpeed);
-
-    System.out.println(RobotContainer.mDrivetrain.pigeon.getPitch());
+    drivetrain.setMaanitDrive(
+      forwardSpeed.get(),
+      backwardSpeed.get(),
+      rotation.get(),
+      isFastTurn.get(),
+      multiplier.get());
 
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    RobotContainer.mDrivetrain.tankDrive(0, 0);
-
   }
 
   // Returns true when the command should end.
