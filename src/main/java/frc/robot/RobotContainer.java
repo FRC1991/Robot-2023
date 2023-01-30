@@ -35,17 +35,17 @@ public static double maxSpeed;
   public static Arm mArm = new Arm();
   public static Claw mClaw = new Claw();
   public static Turret mTurret = new Turret();
+  public static ButtonBind mButtonBind = new ButtonBind();
 
 //=============================Commands +++++++++++++++++++++++++++++++++ 
 
-ButtonBind mButtonBind = new ButtonBind();
 brakeMode mBrakeMode = new brakeMode();
 chargeStation mClimbStation = new chargeStation();
-
-MaanitDrive standardMaanitDriveCommand = new MaanitDrive(mButtonBind::getDriveRightTrigger, 
-mButtonBind::getDriveLeftTrigger,
- mButtonBind::getDriveLeftX,
-  mButtonBind::getDriveRightBumper, ()->(1.0));
+MaanitDrive standardMaanitDriveCommand = new MaanitDrive();
+//MaanitDrive standardMaanitDriveCommand = new MaanitDrive(mButtonBind::getDriveRightTrigger, 
+//mButtonBind::getDriveLeftTrigger,
+ //mButtonBind::getDriveLeftX,
+ // mButtonBind::getDriveRightBumper, ()->(1.0));
    
 
   public RobotContainer() {
