@@ -203,7 +203,7 @@ private double deadband = Constants.globalDeadband;
 
 //Yaw is abt +Z
 public double getYaw(){
-  return pigeon.getYaw();
+  return pigeon.getYaw() % 360;
 }
 //Pitch is abt +Y
 public double getPitch(){

@@ -4,73 +4,45 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.wpilibj2.command.ProfiledPIDCommand;
+import frc.robot.Constants;
+import frc.robot.subsystems.Drivetrain;
 
-import com.ctre.phoenix.sensors.Pigeon2;
-import com.revrobotics.CANSparkMax.IdleMode;
-
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotContainer;
-
-
-
-
-public class chargeStation extends CommandBase {
-  /** Creates a new climbStation. */
-  private Pigeon2 pigeon;
-  private boolean isPitchFlat;
-  private boolean firstStep;
-  private boolean secondStep;
-  private PIDController pidClimb;
-
-  public chargeStation() {
+// NOTE:  Consider using this command inline, rather than writing a subclass.  For more
+// information, see:
+// https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
+public class chargeStation extends ProfiledPIDCommand {
+  /** Creates a new chargeStation. */
+  public chargeStation(double targetAngle, Drivetrain drivetrain) {
+    super(
+        // The ProfiledPIDController used by the command
+        new ProfiledPIDController(
+            // The PID gains
+            Constants.kTurnP,
+            Constants.kTurnI,
+            Constants.kTurnD,
+            // The motion profile constraints
+            new TrapezoidProfile.Constraints(Constants.kMaxTurnRateDegPerS, Constants.kMaxTurnAccelerationDegPerSSquared)),
+        // This should return the measurement
+        drivetrain::getYaw,
+        // This should return the goal (can also be a constant)
+        targetAngle,
+        // This uses the output
+        (output, setpoint) -> drivetrain.arcadeDrive(0, output),
+          // Use the output (and setpoint, if desired) here
+         drivetrain);
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.mDrivetrain);
-    pigeon = RobotContainer.mDrivetrain.pigeon;
-  }
+    // Configure additional PID options by calling `getController` here.
+    getController().enableContinuousInput(-180, 180);
 
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {
-    RobotContainer.mDrivetrain.tankDrive(0, 0);
-    pigeon.configMountPosePitch(0);
-    isPitchFlat = false;
-    firstStep = false;
-    secondStep = false;
-  }
-
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-
-    RobotContainer.mDrivetrain.tankDrive(0.6, 0.6);
-
-    if(Math.round(pigeon.getPitch()) >= 16 || Math.round(pigeon.getPitch()) >= 15){
-        firstStep = true;
-    } 
-
-    if(firstStep == true){
-      RobotContainer.mDrivetrain.tankDrive(0.3, 0.3);
-    }
-
-    if(Math.round(pigeon.getPitch()) <= 9 || Math.round(pigeon.getPitch()) <= 8){
-    secondStep = true;
-    }
-
-    if(firstStep == true && secondStep == true){
-      isPitchFlat = true;
-    }
-  }
-
-
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {
+    getController().setTolerance(Constants.kTurnToleranceDeg, Constants.kTurnRateToleranceDegPerS);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return isPitchFlat;
+    return getController().atGoal();
   }
 }
