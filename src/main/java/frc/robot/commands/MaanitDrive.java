@@ -14,20 +14,20 @@ import frc.robot.subsystems.Drivetrain;
 public class MaanitDrive extends CommandBase {
 
   private final Drivetrain drivetrain;
-  //private final Supplier<Double> forwardSpeed, backwardSpeed, rotation, multiplier;
-  //private final Supplier<Boolean> isFastTurn;
+  private final Supplier<Double> forwardSpeed, backwardSpeed, rotation, multiplier;
+  private final Supplier<Boolean> isFastTurn;
 
-  public MaanitDrive(){// Supplier<Double> forwardSpeedSupplier,
-  //Supplier<Double> backwardSpeedSupplier,
-  //Supplier<Double> rotationSupplier,
-  //Supplier<Boolean> isFastTurnSupplier,
-  //Supplier<Double> multiplierSupplier)  {
+  public MaanitDrive(Supplier<Double> forwardSpeedSupplier,
+  Supplier<Double> backwardSpeedSupplier,
+  Supplier<Double> rotationSupplier,
+  Supplier<Boolean> isFastTurnSupplier,
+  Supplier<Double> multiplierSupplier){  
   drivetrain = RobotContainer.mDrivetrain;
-  //forwardSpeed = forwardSpeedSupplier;
-  //backwardSpeed = backwardSpeedSupplier;
-  //rotation = rotationSupplier;
-  //multiplier = multiplierSupplier;
-  //isFastTurn = isFastTurnSupplier;
+  forwardSpeed = forwardSpeedSupplier;
+  backwardSpeed = backwardSpeedSupplier;
+  rotation = rotationSupplier;
+  multiplier = multiplierSupplier;
+  isFastTurn = isFastTurnSupplier;
   addRequirements(drivetrain);
   }
 
@@ -39,12 +39,12 @@ public class MaanitDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-   // drivetrain.setMaanitDrive(
-   //   forwardSpeed.get(),
-   //   backwardSpeed.get(),
-    //  rotation.get(),
-    //  isFastTurn.get(),
-    //  multiplier.get());
+   drivetrain.setMaanitDrive(
+      forwardSpeed.get(),
+     backwardSpeed.get(),
+      rotation.get(),
+      isFastTurn.get(),
+    multiplier.get());
 
       double leftSpeed = RobotContainer.mButtonBind.getDriveLeftY();
       double rightSpeed = RobotContainer.mButtonBind.getDriveRightY();

@@ -12,6 +12,14 @@ import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Turret;
 
+import java.util.Map;
+
+import edu.wpi.first.networktables.GenericEntry;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.SimpleWidget;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -28,7 +36,7 @@ public class RobotContainer {
 
 
 //+++++++++++++++++++++++++++++++ Global Vars=================
-public static double maxSpeed;
+public static SimpleWidget GyroYaw;
 
 //==========================  Subsystems +++++++++++++++++++++++
   public static Drivetrain mDrivetrain = new Drivetrain();
@@ -41,22 +49,33 @@ public static double maxSpeed;
 
 brakeMode mBrakeMode = new brakeMode();
 chargeStation mClimbStation = new chargeStation();
-MaanitDrive standardMaanitDriveCommand = new MaanitDrive();
-//MaanitDrive standardMaanitDriveCommand = new MaanitDrive(mButtonBind::getDriveRightTrigger, 
-//mButtonBind::getDriveLeftTrigger,
- //mButtonBind::getDriveLeftX,
- // mButtonBind::getDriveRightBumper, ()->(1.0));
+//MaanitDrive standardMaanitDriveCommand = new MaanitDrive();
+MaanitDrive standardMaanitDriveCommand = new MaanitDrive(mButtonBind::getDriveRightTrigger, 
+mButtonBind::getDriveLeftTrigger,
+mButtonBind::getDriveLeftX,
+mButtonBind::getDriveRightBumper, ()->(1.0));
    
 
   public RobotContainer() {
     dashboardInit();
+    NTListenerInit();
     configureBindings();
   }
 
-
+  
   private void dashboardInit(){
-    SmartDashboard.putNumber("Gyro", mDrivetrain.pigeon.getPitch());
+    GyroYaw =
+        Shuffleboard.getTab("Main")
+            .add("Gyro Yaw", mDrivetrain.pigeon.getYaw())
+            .withWidget(BuiltInWidgets.kGyro);
+     }
+
+
+  private void NTListenerInit(){
+    NetworkTableInstance ntInstance = NetworkTableInstance.getDefault();
+      
   }
+
 
 
   /**

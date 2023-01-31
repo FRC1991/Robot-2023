@@ -8,12 +8,11 @@ package frc.robot.commands;
 import com.ctre.phoenix.sensors.Pigeon2;
 import com.revrobotics.CANSparkMax.IdleMode;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
-//++++++++===========++++++++=======+++++=====++++++++=======+++++=====+++==+=
-//+++++++++++++++++++++==============USE ENCODERS PLUS GYRO????+++++==========
-//+++++++++++++++++++++++++++++++++===========================================
+
 
 
 public class chargeStation extends CommandBase {
@@ -22,6 +21,7 @@ public class chargeStation extends CommandBase {
   private boolean isPitchFlat;
   private boolean firstStep;
   private boolean secondStep;
+  private PIDController pidClimb;
 
   public chargeStation() {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -66,13 +66,6 @@ public class chargeStation extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    RobotContainer.mDrivetrain.getLeftDrive1().setIdleMode(IdleMode.kBrake);
-    RobotContainer.mDrivetrain.getLeftDrive2().setIdleMode(IdleMode.kBrake);
-    RobotContainer.mDrivetrain.getLeftDrive3().setIdleMode(IdleMode.kBrake);
-    RobotContainer.mDrivetrain.getRightDrive1().setIdleMode(IdleMode.kBrake);
-    RobotContainer.mDrivetrain.getRightDrive2().setIdleMode(IdleMode.kBrake);
-    RobotContainer.mDrivetrain.getRightDrive3().setIdleMode(IdleMode.kBrake);
-
   }
 
   // Returns true when the command should end.

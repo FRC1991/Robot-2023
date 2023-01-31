@@ -10,8 +10,10 @@ import com.ctre.phoenix.sensors.Pigeon2.AxisDirection;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -62,6 +64,9 @@ private double deadband = Constants.globalDeadband;
 
     leftDriveMotors.setInverted(leftDriveInverted);
     rightDriveMotors.setInverted(rightDriveInverted);
+
+  //PID Setup
+  //pidControllerLeftDrive = leftDriveMotor1.getPIDController();
 
   }
   
@@ -166,6 +171,11 @@ private double deadband = Constants.globalDeadband;
     double avgDistanceInRotationsOfShaft = avgDistanceInRotations / 14.17;
     return Math.PI * avgDistanceInRotationsOfShaft; //6 in wheels, so circumfrence in ft is pi
   }
+
+//PID setup 
+
+//public void setGyroPID()
+
 //Motor getters
   public CANSparkMax getLeftDrive1(){
     return leftDriveMotor1;

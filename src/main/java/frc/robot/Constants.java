@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
@@ -16,8 +17,8 @@ public final class Constants {
   //Drivetrain Motors
   public static final int leftDriveMotor1 = 2;
   public static final int leftDriveMotor2 = 3;
-  public static final int leftDriveMotor3 = 4;
-  public static final int rightDriveMotor1 = 5;
+  public static final int leftDriveMotor3 = 40;
+  public static final int rightDriveMotor1 = 4;
   public static final int rightDriveMotor2 = 6;
   public static final int rightDriveMotor3 = 7;
   //Turret Motors
@@ -31,6 +32,8 @@ public final class Constants {
   public static final int pigeonIMU = 0;
   //Global Deadband and Motor Multiplier
   public static final double globalDeadband = 0.1;
+  public static final double GTADriveMultiplier = 1;
+
     
   }
 
