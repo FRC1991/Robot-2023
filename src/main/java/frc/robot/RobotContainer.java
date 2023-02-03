@@ -12,15 +12,10 @@ import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Turret;
 
-import java.util.Map;
-
-import edu.wpi.first.networktables.GenericEntry;
-import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.SimpleWidget;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -48,12 +43,9 @@ public static SimpleWidget GyroYaw;
 //=============================Commands +++++++++++++++++++++++++++++++++ 
 
 brakeMode mBrakeMode = new brakeMode();
-chargeStation mClimbStation = new chargeStation(-90, mDrivetrain);
+chargeStation mClimbStation = new chargeStation(0, mDrivetrain);
 MaanitDrive standardMaanitDriveCommand = new MaanitDrive();
-//MaanitDrive standardMaanitDriveCommand = new MaanitDrive(mButtonBind::getDriveRightTrigger, 
-//mButtonBind::getDriveLeftTrigger,
-//mButtonBind::getDriveLeftX,
-//mButtonBind::getDriveRightBumper, ()->(1.0));
+
    
 
   public RobotContainer() {

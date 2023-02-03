@@ -30,12 +30,12 @@ public class chargeStation extends ProfiledPIDCommand {
         // This should return the goal (can also be a constant)
         targetAngle,
         // This uses the output
-        (output, setpoint) -> drivetrain.arcadeDrive(0, output),
+        (output, setpoint) -> drivetrain.arcadeDrive(output, 0),
           // Use the output (and setpoint, if desired) here
          drivetrain);
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.
-    getController().enableContinuousInput(-180, 180);
+    getController().enableContinuousInput(2, 2);
 
     getController().setTolerance(Constants.kTurnToleranceDeg, Constants.kTurnRateToleranceDegPerS);
   }

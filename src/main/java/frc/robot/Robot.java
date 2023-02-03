@@ -58,6 +58,17 @@ public class Robot extends TimedRobot {
     RobotContainer.mDrivetrain.getRightDrive2().setIdleMode(IdleMode.kCoast);
     RobotContainer.mDrivetrain.getRightDrive3().setIdleMode(IdleMode.kCoast);
 
+    System.out.println("||||||             ||||||");
+    System.out.println("||| |||           ||| |||");
+    System.out.println("|||  |||         |||  |||");
+    System.out.println("|||   |||       |||   |||");
+    System.out.println("|||    |||     |||    |||");
+    System.out.println("|||     |||   |||     |||");
+    System.out.println("|||      ||| |||      |||");
+    System.out.println("|||       |||||       |||");
+    System.out.println("|||                   |||");
+    System.out.println("|||                   |||");
+    
   }
 
   @Override

@@ -10,10 +10,8 @@ import com.ctre.phoenix.sensors.Pigeon2.AxisDirection;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
-import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -65,32 +63,34 @@ private double deadband = Constants.globalDeadband;
     leftDriveMotors.setInverted(leftDriveInverted);
     rightDriveMotors.setInverted(rightDriveInverted);
 
-  //PID Setup
-  //pidControllerLeftDrive = leftDriveMotor1.getPIDController();
 
   }
   
 //Drivetrain setup
-  public  void setDrivetrain(double leftSpeed, double rightSpeed){
-  leftDriveMotors.set(leftSpeed);
-  rightDriveMotors.set(rightSpeed);
-  }
+// public  void setDrivetrain(double leftSpeed, double rightSpeed){
+//  leftDriveMotors.set(leftSpeed);
+//  rightDriveMotors.set(rightSpeed);
+ // }
 
-  public void setDrivetrain(double leftSpeed, double rightSpeed, double multiplier){
-    setDrivetrain(leftSpeed * multiplier, rightSpeed * multiplier);
-  }
+ // public void setDrivetrain(double leftSpeed, double rightSpeed, double multiplier){
+  //  setDrivetrain(leftSpeed * multiplier, rightSpeed * multiplier);
+ // }
 
-  public void setDrivetrain(double leftSpeed, double rightSpeed, double multiplier, boolean isDeadbandActive){
-    if(isDeadbandActive){
-      if(Math.abs(leftSpeed) > deadband) leftDriveMotors.set(leftSpeed);
-      else leftDriveMotors.set(0);
-      if(Math.abs(rightSpeed) > deadband) rightDriveMotors.set(rightSpeed);
-      else rightDriveMotors.set(0);
-    }else{
-      setDrivetrain(leftSpeed, rightSpeed, multiplier);
-    }
-  }
+ // public void setDrivetrain(double leftSpeed, double rightSpeed, double multiplier, boolean isDeadbandActive){
+  //  if(isDeadbandActive){
+   //   if(Math.abs(leftSpeed) > deadband) leftDriveMotors.set(leftSpeed);
+    //  else leftDriveMotors.set(0);
+     // if(Math.abs(rightSpeed) > deadband) rightDriveMotors.set(rightSpeed);
+     // else rightDriveMotors.set(0);
+    //}else{
+     // setDrivetrain(leftSpeed, rightSpeed, multiplier);
+   // }
+ // }
 
+public void MaanitDrive(double forward, double backward, double curve, boolean fastTurn){
+  double netspeed = forward - backward;
+  differentialDrive.curvatureDrive(netspeed, curve, fastTurn);
+}
 
 //Tankdrive 
   public void tankDrive(double leftSpeed, double rightSpeed){
@@ -98,30 +98,30 @@ private double deadband = Constants.globalDeadband;
   }
 //Arcadedrive
   public void arcadeDrive(double speed, double rotation){
-    differentialDrive.tankDrive(speed, rotation);
+    differentialDrive.arcadeDrive(speed, rotation);
 }
 //MaanitDrive
-  public void setMaanitDrive( double forwardSpeed, double backwardSpeed, double rotation, boolean isFastTurn, double multiplier){
+ // public void setMaanitDrive( double forwardSpeed, double backwardSpeed, double rotation, boolean isFastTurn, double multiplier){
 
-    forwardSpeed = multiplier * forwardSpeed;
-    backwardSpeed = -1 * backwardSpeed * multiplier;
-    double totalSpeed = forwardSpeed + backwardSpeed;
+//    forwardSpeed = multiplier * forwardSpeed;
+  //  backwardSpeed = -1 * backwardSpeed * multiplier;
+   // double totalSpeed = forwardSpeed + backwardSpeed;
 
-    if(Math.abs(totalSpeed) > deadband * multiplier){
-      differentialDrive.curvatureDrive(totalSpeed, multiplier * -rotation, isFastTurn);
-    }else if(Math.abs(totalSpeed) > 0.01 * multiplier){
-      setDrivetrain(rotation, rotation, multiplier);
-    }else if(isFastTurn){
-      differentialDrive.curvatureDrive(0, -rotation * multiplier, true);
-    } else {
-      differentialDrive.curvatureDrive(0, -rotation * multiplier, true);
-    }
-  }
+  //  if(Math.abs(totalSpeed) > deadband * multiplier){
+ //     differentialDrive.curvatureDrive(totalSpeed, multiplier * -rotation, isFastTurn);
+  //  }else if(Math.abs(totalSpeed) > 0.01 * multiplier){
+  //    setDrivetrain(rotation, rotation, multiplier);
+  //  }else if(isFastTurn){
+   //   differentialDrive.curvatureDrive(0, -rotation * multiplier, true);
+   // } else {
+    //  differentialDrive.curvatureDrive(0, -rotation * multiplier, true);
+   // }
+ // }
 
 //StopDrivetrain  
-  public void stopDrivetrain(){
-    setDrivetrain(0, 0);
-  }
+ // public void stopDrivetrain(){
+  //  setDrivetrain(0, 0);
+ // }
 
 //Encoders
   public double getLeftDrive1Pos(){
@@ -157,7 +157,7 @@ private double deadband = Constants.globalDeadband;
     rightDriveMotor2.getEncoder().setPosition(0);
     rightDriveMotor3.getEncoder().setPosition(0);
   }
-//Distance in ft 
+//Distance in ft ADJUST FOR WHEELS
   public double getDistanceFeet(){
     double avgDistanceInRotations = (leftDriveMotor1.getEncoder().getPosition() 
       + leftDriveMotor1.getEncoder().getPosition()
@@ -172,9 +172,6 @@ private double deadband = Constants.globalDeadband;
     return Math.PI * avgDistanceInRotationsOfShaft; //6 in wheels, so circumfrence in ft is pi
   }
 
-//PID setup 
-
-//public void setGyroPID()
 
 //Motor getters
   public CANSparkMax getLeftDrive1(){
