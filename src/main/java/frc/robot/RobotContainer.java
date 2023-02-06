@@ -70,7 +70,7 @@ GameDrive standardGameDriveCommand = new GameDrive();
       .withProperties(Map.of("Min", 0, "Max", 1))
       .getEntry();
 
-
+    
 
 
      }
@@ -89,7 +89,7 @@ GameDrive standardGameDriveCommand = new GameDrive();
 
 
       
-     double[] aprilTagNum = aprilTagNT.getSubTable("limelight-aprilTags").getEntry("tid").getDoubleArray(new double[6]);
+     double aprilTagNum = aprilTagNT.getSubTable("limelight-aprilTags").getEntry("tid").getDouble(0);
      System.out.println("Number: " + aprilTagNum);
 
      }
