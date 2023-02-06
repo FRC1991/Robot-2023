@@ -4,26 +4,20 @@
 
 package frc.robot;
 
-import frc.robot.commands.MaanitDrive;
-import frc.robot.commands.brakeMode;
-import frc.robot.commands.chargeStation;
+import frc.robot.commands.DrivetrainCommands.MaanitDrive;
 import frc.robot.commands.MiscCommands.BrakeMode;
 import frc.robot.commands.DrivetrainCommands.ChargeStationClimb;
-import frc.robot.commands.DrivetrainCommands.MaanitDrive;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Turret;
 
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.SimpleWidget;
 import java.util.Map;
 
 import edu.wpi.first.networktables.GenericEntry;
-import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -51,8 +45,6 @@ public static GenericEntry maxSpeedEntry;
 
 //=============================Commands +++++++++++++++++++++++++++++++++ 
 
-brakeMode mBrakeMode = new brakeMode();
-chargeStation mClimbStation = new chargeStation(0, mDrivetrain);
 BrakeMode brakeMode = new BrakeMode();
 ChargeStationClimb chargeStation = new ChargeStationClimb(); 
 MaanitDrive standardMaanitDriveCommand = new MaanitDrive();
@@ -61,25 +53,11 @@ MaanitDrive standardMaanitDriveCommand = new MaanitDrive();
 
   public RobotContainer() {
     dashboardInit();
-    NTListenerInit();
     configureBindings();
   }
 
   
-  private void dashboardInit(){
-    GyroYaw =
-        Shuffleboard.getTab("Main")
-            .add("Gyro Yaw", mDrivetrain.pigeon.getYaw())
-            .withWidget(BuiltInWidgets.kGyro);
-     }
 
-
-  private void NTListenerInit(){
-    NetworkTableInstance ntInstance = NetworkTableInstance.getDefault();
-      
-  }
-    configureBindings();
-  }
 
  //===============================Dashboard setup+++++++++++++++++++++++ 
   private void dashboardInit(){
@@ -116,8 +94,6 @@ public static double maxSpeed = maxSpeedEntry.getDouble(1.0);
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     mDrivetrain.setDefaultCommand(standardMaanitDriveCommand);
 
-    mButtonBind.driveAButton.whileTrue(mBrakeMode);
-    mButtonBind.driveYButton.toggleOnTrue(mClimbStation);
     mButtonBind.driveAButton.whileTrue(brakeMode);
     mButtonBind.driveBButton.toggleOnTrue(chargeStation);
     
