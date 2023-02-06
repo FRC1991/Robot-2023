@@ -33,7 +33,7 @@ public final class Constants {
   //Global Deadband and Motor Multiplier
   public static final double globalDeadband = 0.1;
   public static final double GTADriveMultiplier = 1;
-  //PID Constants
+  //PID turn Constants
 public static final double kTurnP = 0.6;
 public static final double kTurnI = 4;
 public static final double kTurnD = 0.0225;
@@ -43,5 +43,17 @@ public static final  double kMaxTurnAccelerationDegPerSSquared = 300;
 
 public static final double kTurnToleranceDeg = 5;
 public static final double kTurnRateToleranceDegPerS = 10; 
+
+  //PID ChargeStation Constants
     
+  public static final double kChargeP = 1;
+  public static final double kChargeI = 0;
+  public static final double kChargeD = 0;
+  
+  public static final double kMaxChargeRateDegPerS = 100;
+  public static final  double kMaxChargeAccelerationDegPerSSquared = 300;
+  
+  public static final double kChargeToleranceDeg = 5;
+  public static final double kChargeRateToleranceDegPerS = 10; 
+
   }

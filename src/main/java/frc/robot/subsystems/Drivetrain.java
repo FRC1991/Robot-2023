@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
 
 //==============================ADD SHAFT ENCODING============================
 
@@ -89,6 +90,10 @@ private double deadband = Constants.globalDeadband;
 
 public void MaanitDrive(double forward, double backward, double curve, boolean fastTurn){
   double netspeed = forward - backward;
+
+//Drivetrain setup
+public void MaanitDrive(double forward, double backward, double curve, boolean fastTurn){
+  double netspeed = (forward - backward) * RobotContainer.maxSpeed;
   differentialDrive.curvatureDrive(netspeed, curve, fastTurn);
 }
 
@@ -122,6 +127,8 @@ public void MaanitDrive(double forward, double backward, double curve, boolean f
  // public void stopDrivetrain(){
   //  setDrivetrain(0, 0);
  // }
+
+
 
 //Encoders
   public double getLeftDrive1Pos(){
@@ -170,6 +177,15 @@ public void MaanitDrive(double forward, double backward, double curve, boolean f
 
     double avgDistanceInRotationsOfShaft = avgDistanceInRotations / 14.17;
     return Math.PI * avgDistanceInRotationsOfShaft; //6 in wheels, so circumfrence in ft is pi
+      + leftDriveMotor3.getEncoder().getPosition()
+      + rightDriveMotor1.getEncoder().getPosition()
+      + rightDriveMotor3.getEncoder().getPosition())
+
+      / 4.0;
+
+    double avgDistanceInRotationsOfShaft = avgDistanceInRotations / 14.17; //replace with new gear ratio
+    return Math.PI
+     * avgDistanceInRotationsOfShaft; //6 in wheels, so circumfrence in ft is pi
   }
 
 

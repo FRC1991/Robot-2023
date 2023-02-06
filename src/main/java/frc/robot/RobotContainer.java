@@ -7,6 +7,9 @@ package frc.robot;
 import frc.robot.commands.MaanitDrive;
 import frc.robot.commands.brakeMode;
 import frc.robot.commands.chargeStation;
+import frc.robot.commands.MiscCommands.BrakeMode;
+import frc.robot.commands.DrivetrainCommands.ChargeStationClimb;
+import frc.robot.commands.DrivetrainCommands.MaanitDrive;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Drivetrain;
@@ -16,6 +19,11 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.SimpleWidget;
+import java.util.Map;
+
+import edu.wpi.first.networktables.GenericEntry;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -32,6 +40,7 @@ public class RobotContainer {
 
 //+++++++++++++++++++++++++++++++ Global Vars=================
 public static SimpleWidget GyroYaw;
+public static GenericEntry maxSpeedEntry;
 
 //==========================  Subsystems +++++++++++++++++++++++
   public static Drivetrain mDrivetrain = new Drivetrain();
@@ -44,6 +53,8 @@ public static SimpleWidget GyroYaw;
 
 brakeMode mBrakeMode = new brakeMode();
 chargeStation mClimbStation = new chargeStation(0, mDrivetrain);
+BrakeMode brakeMode = new BrakeMode();
+ChargeStationClimb chargeStation = new ChargeStationClimb(); 
 MaanitDrive standardMaanitDriveCommand = new MaanitDrive();
 
    
@@ -67,6 +78,28 @@ MaanitDrive standardMaanitDriveCommand = new MaanitDrive();
     NetworkTableInstance ntInstance = NetworkTableInstance.getDefault();
       
   }
+    configureBindings();
+  }
+
+ //===============================Dashboard setup+++++++++++++++++++++++ 
+  private void dashboardInit(){
+
+    maxSpeedEntry = 
+      Shuffleboard.getTab("Main")
+      .add("Max Speed", Constants.GTADriveMultiplier)
+      .withWidget(BuiltInWidgets.kNumberSlider)
+      .withProperties(Map.of("Min", 0, "Max", 1))
+      .getEntry();
+
+
+
+
+     }
+
+//++++++++++++++++++++++++++++++Networktable listener+++++++++++++++++++++
+
+public static double maxSpeed = maxSpeedEntry.getDouble(1.0);
+
 
 
 
@@ -85,6 +118,8 @@ MaanitDrive standardMaanitDriveCommand = new MaanitDrive();
 
     mButtonBind.driveAButton.whileTrue(mBrakeMode);
     mButtonBind.driveYButton.toggleOnTrue(mClimbStation);
+    mButtonBind.driveAButton.whileTrue(brakeMode);
+    mButtonBind.driveBButton.toggleOnTrue(chargeStation);
     
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
