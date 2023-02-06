@@ -68,7 +68,7 @@ private boolean rightDriveInverted = true;
   
 
 //Drivetrain setup
-public void MaanitDrive(double forward, double backward, double curve, boolean fastTurn){
+public void GameDrive(double forward, double backward, double curve, boolean fastTurn){
   double netspeed = (forward - backward) * RobotContainer.maxSpeed;
   differentialDrive.curvatureDrive(netspeed, curve, fastTurn);
 }

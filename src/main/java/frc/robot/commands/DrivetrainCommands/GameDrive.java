@@ -8,12 +8,12 @@ package frc.robot.commands.DrivetrainCommands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
-public class MaanitDrive extends CommandBase {
+public class GameDrive extends CommandBase {
 
  // private final Supplier<Double> forwardSpeed, backwardSpeed, rotation, multiplier;
  // private final Supplier<Boolean> isFastTurn;
 
-  public MaanitDrive(){  
+  public GameDrive(){  
   addRequirements(RobotContainer.mDrivetrain);
 }
 
@@ -32,7 +32,7 @@ public class MaanitDrive extends CommandBase {
     double curve = RobotContainer.mButtonBind.getDriveLeftX();
     boolean fastTurn = RobotContainer.mButtonBind.getDriveRightBumper();
 
-    RobotContainer.mDrivetrain.MaanitDrive(forward, backward, curve, fastTurn);
+    RobotContainer.mDrivetrain.GameDrive(forward, backward, curve, fastTurn);
 
   }
 

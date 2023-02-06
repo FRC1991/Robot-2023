@@ -4,7 +4,7 @@
 
 package frc.robot;
 
-import frc.robot.commands.DrivetrainCommands.MaanitDrive;
+import frc.robot.commands.DrivetrainCommands.GameDrive;
 import frc.robot.commands.MiscCommands.BrakeMode;
 import frc.robot.commands.DrivetrainCommands.ChargeStationClimb;
 import frc.robot.subsystems.Arm;
@@ -18,6 +18,8 @@ import edu.wpi.first.wpilibj.shuffleboard.SimpleWidget;
 import java.util.Map;
 
 import edu.wpi.first.networktables.GenericEntry;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -47,18 +49,17 @@ public static GenericEntry maxSpeedEntry;
 
 BrakeMode brakeMode = new BrakeMode();
 ChargeStationClimb chargeStation = new ChargeStationClimb(); 
-MaanitDrive standardMaanitDriveCommand = new MaanitDrive();
+GameDrive standardGameDriveCommand = new GameDrive();
 
    
 
   public RobotContainer() {
     dashboardInit();
+    NTListenInit();
     configureBindings();
   }
 
   
-
-
  //===============================Dashboard setup+++++++++++++++++++++++ 
   private void dashboardInit(){
 
@@ -75,6 +76,24 @@ MaanitDrive standardMaanitDriveCommand = new MaanitDrive();
      }
 
 //++++++++++++++++++++++++++++++Networktable listener+++++++++++++++++++++
+     private void NTListenInit(){
+
+//Network tables setup
+      NetworkTableInstance ntInst = NetworkTableInstance.getDefault();
+      NetworkTable aprilTagNT = ntInst.getTable("limelight-aprilTags");
+      NetworkTable polesNT = ntInst.getTable("limelight-poles");
+      NetworkTable cubesNT = ntInst.getTable("limelight-cubes");
+      NetworkTable conesNT = ntInst.getTable("limelight-cones");
+
+
+
+
+      
+     double[] aprilTagNum = aprilTagNT.getSubTable("limelight-aprilTags").getEntry("tid").getDoubleArray(new double[6]);
+     System.out.println("Number: " + aprilTagNum);
+
+     }
+
 
 public static double maxSpeed = maxSpeedEntry.getDouble(1.0);
 
@@ -92,7 +111,7 @@ public static double maxSpeed = maxSpeedEntry.getDouble(1.0);
    */
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    mDrivetrain.setDefaultCommand(standardMaanitDriveCommand);
+    mDrivetrain.setDefaultCommand(standardGameDriveCommand);
 
     mButtonBind.driveAButton.whileTrue(brakeMode);
     mButtonBind.driveBButton.toggleOnTrue(chargeStation);
