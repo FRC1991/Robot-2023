@@ -23,7 +23,6 @@ public class Drivetrain extends SubsystemBase {
 //Drivetrain Variable
 private boolean leftDriveInverted = false;
 private boolean rightDriveInverted = true;
-private double deadband = Constants.globalDeadband;
 
 //Motor declaration
   private static CANSparkMax leftDriveMotor1,
