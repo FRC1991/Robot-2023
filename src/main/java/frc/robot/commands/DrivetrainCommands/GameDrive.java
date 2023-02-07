@@ -27,10 +27,10 @@ public class GameDrive extends CommandBase {
   public void execute() {
   
 
-    double forward = RobotContainer.mButtonBind.getDriveRightTrigger();
-    double backward = RobotContainer.mButtonBind.getDriveLeftTrigger();
-    double curve = RobotContainer.mButtonBind.getDriveLeftX();
-    boolean fastTurn = RobotContainer.mButtonBind.getDriveRightBumper();
+    double forward = ButtonBind.driverController.getRightTrigger();
+    double backward = RobotContainer.mButtonBind.geteLeftTrigger();
+    double curve = RobotContainer.mButtonBind.getLeftX();
+    boolean fastTurn = RobotContainer.mButtonBind.getRightBumper().getAsBoolean();
 
     RobotContainer.mDrivetrain.GameDrive(forward, backward, curve, fastTurn);
 
