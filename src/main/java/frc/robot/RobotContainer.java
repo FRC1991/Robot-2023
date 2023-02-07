@@ -62,16 +62,7 @@ GameDrive standardGameDriveCommand = new GameDrive();
   
  //===============================Dashboard setup+++++++++++++++++++++++ 
   private void dashboardInit(){
-
-    maxSpeedEntry = 
-      Shuffleboard.getTab("Main")
-      .add("Max Speed", Constants.GTADriveMultiplier)
-      .withWidget(BuiltInWidgets.kNumberSlider)
-      .withProperties(Map.of("Min", 0, "Max", 1))
-      .getEntry();
-
     
-
 
      }
 
@@ -90,12 +81,8 @@ GameDrive standardGameDriveCommand = new GameDrive();
 
       
      double aprilTagNum = aprilTagNT.getSubTable("limelight-aprilTags").getEntry("tid").getDouble(0);
-     System.out.println("Number: " + aprilTagNum);
 
      }
-
-
-public static double maxSpeed = maxSpeedEntry.getDouble(1.0);
 
 
 

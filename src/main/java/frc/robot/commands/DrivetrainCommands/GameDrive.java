@@ -6,12 +6,11 @@
 package frc.robot.commands.DrivetrainCommands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.ButtonBind;
 import frc.robot.RobotContainer;
 
 public class GameDrive extends CommandBase {
 
- // private final Supplier<Double> forwardSpeed, backwardSpeed, rotation, multiplier;
- // private final Supplier<Boolean> isFastTurn;
 
   public GameDrive(){  
   addRequirements(RobotContainer.mDrivetrain);
@@ -27,10 +26,10 @@ public class GameDrive extends CommandBase {
   public void execute() {
   
 
-    double forward = ButtonBind.driverController.getRightTrigger();
-    double backward = RobotContainer.mButtonBind.geteLeftTrigger();
-    double curve = RobotContainer.mButtonBind.getLeftX();
-    boolean fastTurn = RobotContainer.mButtonBind.getRightBumper().getAsBoolean();
+    double forward = ButtonBind.driverController.getRightTriggerAxis();
+    double backward = ButtonBind.driverController.getLeftTriggerAxis();
+    double curve = ButtonBind.driverController.getLeftX();
+    boolean fastTurn = ButtonBind.driverController.rightBumper().getAsBoolean();
 
     RobotContainer.mDrivetrain.GameDrive(forward, backward, curve, fastTurn);
 

@@ -4,8 +4,6 @@
 
 package frc.robot.commands.MiscCommands;
 
-import java.sql.Time;
-
 import com.revrobotics.CANSparkMax.IdleMode;
 
 import edu.wpi.first.wpilibj.Timer;
@@ -32,7 +30,7 @@ public class BrakeMode extends CommandBase {
     RobotContainer.mDrivetrain.getRightDrive1().setIdleMode(IdleMode.kBrake);
     RobotContainer.mDrivetrain.getRightDrive2().setIdleMode(IdleMode.kBrake);
     RobotContainer.mDrivetrain.getRightDrive3().setIdleMode(IdleMode.kBrake);
-    Timer.delay(0.2);
+    Timer.delay(0.3);
   }
 
   // Called once the command ends or is interrupted.

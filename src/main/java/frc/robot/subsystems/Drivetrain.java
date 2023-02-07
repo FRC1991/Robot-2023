@@ -14,7 +14,6 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.RobotContainer;
 
 //==============================ADD SHAFT ENCODING============================
 
@@ -69,7 +68,7 @@ private boolean rightDriveInverted = true;
 
 //Drivetrain setup
 public void GameDrive(double forward, double backward, double curve, boolean fastTurn){
-  double netspeed = (forward - backward) * RobotContainer.maxSpeed;
+  double netspeed = forward - backward;
   differentialDrive.curvatureDrive(netspeed, curve, fastTurn);
 }
 
@@ -119,11 +118,13 @@ public void GameDrive(double forward, double backward, double curve, boolean fas
 //Distance in ft ADJUST FOR WHEELS
   public double getDistanceFeet(){ 
     double avgDistanceInRotations = (leftDriveMotor1.getEncoder().getPosition()
+      + leftDriveMotor2.getEncoder().getPosition()
       + leftDriveMotor3.getEncoder().getPosition()
       + rightDriveMotor1.getEncoder().getPosition()
+      + rightDriveMotor2.getEncoder().getPosition()
       + rightDriveMotor3.getEncoder().getPosition())
 
-      / 4.0;
+      / 6.0;
 
     double avgDistanceInRotationsOfShaft = avgDistanceInRotations / 14.17; //replace with new gear ratio
     return Math.PI

@@ -34,9 +34,9 @@ public final class Constants {
   public static final double globalDeadband = 0.1;
   public static final double GTADriveMultiplier = 1;
   //PID turn Constants
-public static final double kTurnP = 0.6;
-public static final double kTurnI = 4;
-public static final double kTurnD = 0.0225;
+public static final double kTurnP = 1;
+public static final double kTurnI = 0;
+public static final double kTurnD = 0;
 
 public static final double kMaxTurnRateDegPerS = 100;
 public static final  double kMaxTurnAccelerationDegPerSSquared = 300;
@@ -53,7 +53,7 @@ public static final double kTurnRateToleranceDegPerS = 10;
   public static final double kMaxChargeRateDegPerS = 100;
   public static final  double kMaxChargeAccelerationDegPerSSquared = 300;
   
-  public static final double kChargeToleranceDeg = 5;
-  public static final double kChargeRateToleranceDegPerS = 10; 
+  public static final double kChargeToleranceDeg = 2;
+  public static final double kChargeRateToleranceDegPerS = 4; 
 
   }

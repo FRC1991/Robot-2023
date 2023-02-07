@@ -13,9 +13,9 @@ import frc.robot.subsystems.Drivetrain;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class chargeStation extends ProfiledPIDCommand {
+public class YawClimb extends ProfiledPIDCommand {
   /** Creates a new chargeStation. */
-  public chargeStation(double targetAngle, Drivetrain drivetrain) {
+  public YawClimb(double targetAngle, Drivetrain drivetrain) {
     super(
         // The ProfiledPIDController used by the command
         new ProfiledPIDController(

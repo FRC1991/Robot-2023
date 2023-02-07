@@ -15,7 +15,7 @@ public class ChargeStationClimb extends SequentialCommandGroup {
   public ChargeStationClimb() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new chargeStation(15, RobotContainer.mDrivetrain),
+    addCommands(new YawClimb(15, RobotContainer.mDrivetrain),
      new DriveDistance(0.5, 0.3),
      new TurnDegrees(90,RobotContainer.mDrivetrain));
   }
