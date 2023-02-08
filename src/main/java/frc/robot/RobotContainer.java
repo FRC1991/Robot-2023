@@ -19,6 +19,7 @@ import java.util.Map;
 
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -35,8 +36,8 @@ public class RobotContainer {
 
 
 //+++++++++++++++++++++++++++++++ Global Vars=================
-public static SimpleWidget GyroYaw;
-public static GenericEntry maxSpeedEntry;
+public static GenericEntry aprilNumEntry;
+public static boolean aprilNum = false;
 
 //==========================  Subsystems +++++++++++++++++++++++
   public static Drivetrain mDrivetrain = new Drivetrain();
@@ -63,6 +64,16 @@ GameDrive standardGameDriveCommand = new GameDrive();
  //===============================Dashboard setup+++++++++++++++++++++++ 
   private void dashboardInit(){
     
+    aprilNumEntry =
+        Shuffleboard.getTab("Main").add("Shot Target Found", aprilNum).getEntry();
+
+    GenericEntry driveEntry = Shuffleboard.getTab("Main")
+        .add("Values", 0)
+        .withWidget(BuiltInWidgets.kDifferentialDrive)
+        .withProperties(Map.of("min", 0, "max", 1))
+        .getEntry();
+     
+
 
      }
 
@@ -71,16 +82,16 @@ GameDrive standardGameDriveCommand = new GameDrive();
 
 //Network tables setup
       NetworkTableInstance ntInst = NetworkTableInstance.getDefault();
-      NetworkTable aprilTagNT = ntInst.getTable("limelight-aprilTags");
-      NetworkTable polesNT = ntInst.getTable("limelight-poles");
-      NetworkTable cubesNT = ntInst.getTable("limelight-cubes");
-      NetworkTable conesNT = ntInst.getTable("limelight-cones");
+      NetworkTable aimmingNT = ntInst.getTable("limelight-aimming");
+      NetworkTable gamePieceNT = ntInst.getTable("limelight-gamePiece");
 
 
 
 
       
-     double aprilTagNum = aprilTagNT.getSubTable("limelight-aprilTags").getEntry("tid").getDouble(0);
+     double aprilNumEntry = aimmingNT.getSubTable("limelight-aimming").getEntry("tid").getDouble(0);
+     double gamePiece = gamePieceNT.getSubTable("limelight-gamePiece").getEntry("tv").getDouble(0);
+  
 
      }
 
