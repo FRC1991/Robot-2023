@@ -14,12 +14,10 @@ import frc.robot.subsystems.Turret;
 
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.SimpleWidget;
 import java.util.Map;
 
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -37,7 +35,7 @@ public class RobotContainer {
 
 //+++++++++++++++++++++++++++++++ Global Vars=================
 public static GenericEntry aprilNumEntry;
-public static boolean aprilNum = false;
+public static double aprilNum;
 
 //==========================  Subsystems +++++++++++++++++++++++
   public static Drivetrain mDrivetrain = new Drivetrain();
@@ -64,13 +62,12 @@ GameDrive standardGameDriveCommand = new GameDrive();
  //===============================Dashboard setup+++++++++++++++++++++++ 
   private void dashboardInit(){
     
-    aprilNumEntry =
-        Shuffleboard.getTab("Main").add("Shot Target Found", aprilNum).getEntry();
-
+    
+  
     GenericEntry driveEntry = Shuffleboard.getTab("Main")
         .add("Values", 0)
         .withWidget(BuiltInWidgets.kDifferentialDrive)
-        .withProperties(Map.of("min", 0, "max", 1))
+        .withProperties(Map.of("min", -1, "max", 1))
         .getEntry();
      
 
@@ -82,16 +79,19 @@ GameDrive standardGameDriveCommand = new GameDrive();
 
 //Network tables setup
       NetworkTableInstance ntInst = NetworkTableInstance.getDefault();
-      NetworkTable aimmingNT = ntInst.getTable("limelight-aimming");
+      NetworkTable aimmingNT = ntInst.getTable("limelight");
       NetworkTable gamePieceNT = ntInst.getTable("limelight-gamePiece");
 
 
 
 
       
-     double aprilNumEntry = aimmingNT.getSubTable("limelight-aimming").getEntry("tid").getDouble(0);
+     double aprilNum = aimmingNT.getEntry("tid").getDouble(0);
      double gamePiece = gamePieceNT.getSubTable("limelight-gamePiece").getEntry("tv").getDouble(0);
-  
+
+     aprilNumEntry =
+     Shuffleboard.getTab("Main").add("Shot Target Found", aprilNum).getEntry();
+   
 
      }
 
