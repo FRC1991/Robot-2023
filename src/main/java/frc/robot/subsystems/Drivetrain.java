@@ -179,15 +179,15 @@ public double getRoll(){
 @Override
   public void periodic() {
 
-    boolean range;
 
     if(getPitch() > 2 || getPitch() < -2){
-      range = false;
+      boolean range = false;
+      SmartDashboard.putBoolean("Charge Station In Range?", range);
     }else{
-      range = true;
+      boolean range = true;
+      SmartDashboard.putBoolean("Charge Station Range", range);
     }
     // This method will be called once per scheduler run
-    SmartDashboard.putBoolean("Charge Station Range", range);
   }
 
 }
