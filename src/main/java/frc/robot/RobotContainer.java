@@ -90,7 +90,7 @@ GameDrive standardGameDriveCommand = new GameDrive();
      double gamePiece = gamePieceNT.getSubTable("limelight-gamePiece").getEntry("tv").getDouble(0);
 
      aprilNumEntry =
-     Shuffleboard.getTab("Main").add("Shot Target Found", aprilNum).getEntry();
+     Shuffleboard.getTab("Main").add("Shot Target Found", aprilNum).getEntry("tid");
    
 
      }
@@ -113,6 +113,8 @@ GameDrive standardGameDriveCommand = new GameDrive();
 
     mButtonBind.driveAButton.whileTrue(brakeMode);
     mButtonBind.driveBButton.toggleOnTrue(chargeStation);
+
+   // mButtonBind.clawLimit.toggleOnTrue(mClaw::resetClawEncoder);
     
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.

@@ -5,6 +5,8 @@
 package frc.robot.subsystems;
 
 
+import java.util.Map;
+
 import com.ctre.phoenix.sensors.Pigeon2;
 import com.ctre.phoenix.sensors.Pigeon2.AxisDirection;
 import com.revrobotics.CANSparkMax;
@@ -12,6 +14,8 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -169,5 +173,13 @@ public double getPitch(){
 public double getRoll(){
   return pigeon.getRoll();
 }
+
+@Override
+  public void periodic() {
+    // This method will be called once per scheduler run
+
+  Shuffleboard.getTab("Main").add("Gyro Angle", getYaw()).withWidget(BuiltInWidgets.kGyro).withProperties(Map.of("min", 0, "max", 360))
+  .getEntry();
+  }
 
 }
