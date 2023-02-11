@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 
 import java.util.Map;
+import java.util.function.BiPredicate;
 
 import com.ctre.phoenix.sensors.Pigeon2;
 import com.ctre.phoenix.sensors.Pigeon2.AxisDirection;
@@ -16,6 +17,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -176,10 +178,16 @@ public double getRoll(){
 
 @Override
   public void periodic() {
-    // This method will be called once per scheduler run
 
-  Shuffleboard.getTab("Main").add("Gyro Angle", getYaw()).withWidget(BuiltInWidgets.kGyro).withProperties(Map.of("min", 0, "max", 360))
-  .getEntry();
+    boolean range;
+
+    if(getPitch() > 2 || getPitch() < -2){
+      range = false;
+    }else{
+      range = true;
+    }
+    // This method will be called once per scheduler run
+    SmartDashboard.putBoolean("Charge Station Range", range);
   }
 
 }
