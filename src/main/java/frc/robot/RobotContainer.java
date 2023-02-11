@@ -83,9 +83,9 @@ GameDrive standardGameDriveCommand = new GameDrive();
       NetworkTable gamePieceNT = ntInst.getTable("limelight-gamePiece");
 
 
+int i = 0;
 
-
-      
+while(i == 1){
      double aprilNum = aimmingNT.getEntry("tid").getDouble(0);
      double gamePiece = gamePieceNT.getSubTable("limelight-gamePiece").getEntry("tv").getDouble(0);
      
@@ -104,7 +104,7 @@ GameDrive standardGameDriveCommand = new GameDrive();
       Shuffleboard.getTab("Main").add("Shot Target Found", isTag).getEntry();
 
     }
-   
+  }
 
      }
 

@@ -5,9 +5,7 @@
 package frc.robot.subsystems;
 
 
-import java.util.Map;
-import java.util.function.BiPredicate;
-
+import com.ctre.phoenix.ErrorCode;
 import com.ctre.phoenix.sensors.Pigeon2;
 import com.ctre.phoenix.sensors.Pigeon2.AxisDirection;
 import com.revrobotics.CANSparkMax;
@@ -15,8 +13,6 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
-import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -175,6 +171,11 @@ public double getPitch(){
 public double getRoll(){
   return pigeon.getRoll();
 }
+//Reset Gyro 
+public ErrorCode resetGyro(){
+  return pigeon.zeroGyroBiasNow();
+}
+
 
 @Override
   public void periodic() {
@@ -185,7 +186,7 @@ public double getRoll(){
       SmartDashboard.putBoolean("Charge Station In Range?", range);
     }else{
       boolean range = true;
-      SmartDashboard.putBoolean("Charge Station Range", range);
+      SmartDashboard.putBoolean("Charge Station In Range?", range);
     }
     // This method will be called once per scheduler run
   }
