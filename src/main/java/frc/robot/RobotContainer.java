@@ -12,14 +12,9 @@ import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Turret;
 
-import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import java.util.Map;
-
-import edu.wpi.first.networktables.DoubleSubscriber;
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -36,9 +31,8 @@ public class RobotContainer {
 
 
 //+++++++++++++++++++++++++++++++ Global Vars=================
-public NetworkTableEntry aprilNumEntry;
-public double aprilNum;
-public double prev;
+public static GenericEntry aprilNumEntry;
+public static double aprilNum;
 //==========================  Subsystems +++++++++++++++++++++++
   public static Drivetrain mDrivetrain = new Drivetrain();
   public static Arm mArm = new Arm();
@@ -68,22 +62,21 @@ GameDrive standardGameDriveCommand = new GameDrive();
      }
 
 //++++++++++++++++++++++++++++++Networktable listener+++++++++++++++++++++
-     private void NTListenInit(){
+     public void NTListenInit(){
 
 //Network tables setup
       NetworkTableInstance ntInst = NetworkTableInstance.getDefault();
       NetworkTable aimmingNT = ntInst.getTable("limelight");
       NetworkTable gamePieceNT = ntInst.getTable("limelight-gamePiece");
 
-      aprilNumEntry = aimmingNT.getEntry("tid");
 
-      aprilNum = aprilNumEntry.getDouble(0);
+
+
       
-      
-      if (aprilNum != prev) {
-        prev = aprilNum;  // save previous value
-        System.out.println("X changed value: " + aprilNum);
-      }
+     double aprilNum = aimmingNT.getEntry("tid").getDouble(0);
+
+     aprilNumEntry = Shuffleboard.getTab("Main").add("Shot Target Found", aprilNum).getEntry();
+   
   }
 
 
