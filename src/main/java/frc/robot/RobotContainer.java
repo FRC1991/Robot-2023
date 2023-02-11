@@ -16,8 +16,10 @@ import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import java.util.Map;
 
+import edu.wpi.first.networktables.DoubleSubscriber;
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -34,8 +36,9 @@ public class RobotContainer {
 
 
 //+++++++++++++++++++++++++++++++ Global Vars=================
-public static GenericEntry aprilNumEntry;
-public GenericEntry aprilNum;
+public NetworkTableEntry aprilNumEntry;
+public double aprilNum;
+public double prev;
 //==========================  Subsystems +++++++++++++++++++++++
   public static Drivetrain mDrivetrain = new Drivetrain();
   public static Arm mArm = new Arm();
@@ -61,15 +64,6 @@ GameDrive standardGameDriveCommand = new GameDrive();
  //===============================Dashboard setup+++++++++++++++++++++++ 
   private void dashboardInit(){
     
-    
-  
-    GenericEntry driveEntry = Shuffleboard.getTab("Main")
-        .add("Values", 0)
-        .withWidget(BuiltInWidgets.kDifferentialDrive)
-        .withProperties(Map.of("min", -1, "max", 1))
-        .getEntry();
-     
-
 
      }
 
@@ -81,18 +75,15 @@ GameDrive standardGameDriveCommand = new GameDrive();
       NetworkTable aimmingNT = ntInst.getTable("limelight");
       NetworkTable gamePieceNT = ntInst.getTable("limelight-gamePiece");
 
+      aprilNumEntry = aimmingNT.getEntry("tid");
 
-
-     double aprilNumEntry = aimmingNT.getEntry("tid").getDouble(0);
-     double gamePiece = gamePieceNT.getSubTable("limelight-gamePiece").getEntry("tv").getDouble(0);
-     
-
-
-    
-     aprilNum =
-     Shuffleboard.getTab("Main").add("Shot Target Found", aprilNumEntry).getEntry();
+      aprilNum = aprilNumEntry.getDouble(0);
       
-     
+      
+      if (aprilNum != prev) {
+        prev = aprilNum;  // save previous value
+        System.out.println("X changed value: " + aprilNum);
+      }
   }
 
 
