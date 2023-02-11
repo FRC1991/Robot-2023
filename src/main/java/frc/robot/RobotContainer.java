@@ -35,8 +35,7 @@ public class RobotContainer {
 
 //+++++++++++++++++++++++++++++++ Global Vars=================
 public static GenericEntry aprilNumEntry;
-public double aprilNum;
-public boolean isTag;
+public GenericEntry aprilNum;
 //==========================  Subsystems +++++++++++++++++++++++
   public static Drivetrain mDrivetrain = new Drivetrain();
   public static Arm mArm = new Arm();
@@ -83,30 +82,20 @@ GameDrive standardGameDriveCommand = new GameDrive();
       NetworkTable gamePieceNT = ntInst.getTable("limelight-gamePiece");
 
 
-int i = 0;
 
-while(i == 1){
-     double aprilNum = aimmingNT.getEntry("tid").getDouble(0);
+     double aprilNumEntry = aimmingNT.getEntry("tid").getDouble(0);
      double gamePiece = gamePieceNT.getSubTable("limelight-gamePiece").getEntry("tv").getDouble(0);
      
 
 
-    if(aprilNum > 0){
     
-     isTag = true;
-     aprilNumEntry =
-     Shuffleboard.getTab("Main").add("Shot Target Found", isTag).getEntry();
-    }else{
+     aprilNum =
+     Shuffleboard.getTab("Main").add("Shot Target Found", aprilNumEntry).getEntry();
       
-     isTag = false;
-
-      aprilNumEntry =
-      Shuffleboard.getTab("Main").add("Shot Target Found", isTag).getEntry();
-
-    }
+     
   }
 
-     }
+
 
 
 
