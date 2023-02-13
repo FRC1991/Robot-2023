@@ -13,9 +13,12 @@ import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Turret;
 
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.networktables.DoubleSubscriber;
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.NetworkTableListener;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -31,8 +34,7 @@ public class RobotContainer {
 
 
 //+++++++++++++++++++++++++++++++ Global Vars=================
-public static GenericEntry aprilNumEntry;
-public static double aprilNum;
+
 //==========================  Subsystems +++++++++++++++++++++++
   public static Drivetrain mDrivetrain = new Drivetrain();
   public static Arm mArm = new Arm();
@@ -62,21 +64,23 @@ GameDrive standardGameDriveCommand = new GameDrive();
      }
 
 //++++++++++++++++++++++++++++++Networktable listener+++++++++++++++++++++
-     public void NTListenInit(){
+  private void NTListenInit(){
 
 //Network tables setup
-      NetworkTableInstance ntInst = NetworkTableInstance.getDefault();
-      NetworkTable aimmingNT = ntInst.getTable("limelight");
-      NetworkTable gamePieceNT = ntInst.getTable("limelight-gamePiece");
+    NetworkTableInstance ntInst = NetworkTableInstance.getDefault();
+    NetworkTable aimmingNT = ntInst.getTable("limelight");
+    //NetworkTable gamePieceNT = ntInst.getTable("limelight-gamePiece");
 
 
 
+    DoubleSubscriber aprilNum = aimmingNT.getDoubleTopic("tid").subscribe(0);
 
-      
-     double aprilNum = aimmingNT.getEntry("tid").getDouble(0);
+    double april = aprilNum.get();
 
-     aprilNumEntry = Shuffleboard.getTab("Main").add("Shot Target Found", aprilNum).getEntry();
-   
+    GenericEntry aprilNumEntry = Shuffleboard.getTab("Main").add("Shot Target Found", april).getEntry();
+
+
+    
   }
 
 
