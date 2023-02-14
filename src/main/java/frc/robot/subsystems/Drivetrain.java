@@ -188,7 +188,10 @@ public ErrorCode resetGyro(){
       boolean range = true;
       SmartDashboard.putBoolean("Charge Station In Range?", range);
     }
-    // This method will be called once per scheduler run
+
+
+
+
   }
 
 }

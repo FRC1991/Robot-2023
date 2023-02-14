@@ -54,6 +54,6 @@ public static final double kTurnRateToleranceDegPerS = 10;
   public static final  double kMaxChargeAccelerationDegPerSSquared = 300;
   
   public static final double kChargeToleranceDeg = 2;
-  public static final double kChargeRateToleranceDegPerS = 4; 
+  public static final double kChargeRateToleranceDegPerS = 4;
 
   }

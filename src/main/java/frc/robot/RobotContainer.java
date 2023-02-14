@@ -7,18 +7,24 @@ package frc.robot;
 import frc.robot.commands.DrivetrainCommands.GameDrive;
 import frc.robot.commands.MiscCommands.BrakeMode;
 import frc.robot.commands.DrivetrainCommands.ChargeStationClimb;
-import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.ArmExtension;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Turret;
 
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+
+import java.util.EnumSet;
+import java.util.concurrent.atomic.AtomicReference;
+
 import edu.wpi.first.networktables.DoubleSubscriber;
+import edu.wpi.first.networktables.DoubleTopic;
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableEvent;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.networktables.NetworkTableListener;
+import edu.wpi.first.networktables.PubSubOption;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -34,10 +40,12 @@ public class RobotContainer {
 
 
 //+++++++++++++++++++++++++++++++ Global Vars=================
+  public static double ballXError;
+  final AtomicReference<Double> tidValue = new AtomicReference<Double>();
 
 //==========================  Subsystems +++++++++++++++++++++++
   public static Drivetrain mDrivetrain = new Drivetrain();
-  public static Arm mArm = new Arm();
+  public static ArmExtension mArm = new ArmExtension();
   public static Claw mClaw = new Claw();
   public static Turret mTurret = new Turret();
   public static ButtonBind mButtonBind = new ButtonBind();
@@ -59,30 +67,35 @@ GameDrive standardGameDriveCommand = new GameDrive();
   
  //===============================Dashboard setup+++++++++++++++++++++++ 
   private void dashboardInit(){
-    
+
 
      }
 
 //++++++++++++++++++++++++++++++Networktable listener+++++++++++++++++++++
   private void NTListenInit(){
-
 //Network tables setup
-    NetworkTableInstance ntInst = NetworkTableInstance.getDefault();
-    NetworkTable aimmingNT = ntInst.getTable("limelight");
-    //NetworkTable gamePieceNT = ntInst.getTable("limelight-gamePiece");
+NetworkTableInstance ntInst = NetworkTableInstance.getDefault();
+NetworkTable aimmingNT = ntInst.getTable("limelight");
+DoubleTopic tidTopic = aimmingNT.getDoubleTopic("tid");
+
+int listenerHandle = ntInst.addListener(
+  tidTopic,
+  EnumSet.of(NetworkTableEvent.Kind.kValueAll),
+  event -> {
+      tidValue.set(event.valueData.value.getDouble());
+  });
+//NetworkTable gamePieceNT = ntInst.getTable("limelight-gamePiece");
 
 
 
-    DoubleSubscriber aprilNum = aimmingNT.getDoubleTopic("tid").subscribe(0);
+DoubleSubscriber aprilNum = aimmingNT.getDoubleTopic("tid").subscribe(0, PubSubOption.keepDuplicates(true), PubSubOption.pollStorage(10));
 
-    double april = aprilNum.get();
+double april = aprilNum.get();
 
-    GenericEntry aprilNumEntry = Shuffleboard.getTab("Main").add("Shot Target Found", april).getEntry();
+GenericEntry aprilNumEntry = Shuffleboard.getTab("Main").add("Shot Target Found", april).getEntry();
 
-
-    
-  }
-
+  
+}
 
 
 
@@ -103,6 +116,10 @@ GameDrive standardGameDriveCommand = new GameDrive();
 
     mButtonBind.driveAButton.whileTrue(brakeMode);
     mButtonBind.driveBButton.toggleOnTrue(chargeStation);
+    mButtonBind.driveXButton.onTrue(new InstantCommand(
+      ()->{
+        System.out.println(tidValue.get());
+      }));
 
    // mButtonBind.clawLimit.toggleOnTrue(mClaw::resetClawEncoder);
     
