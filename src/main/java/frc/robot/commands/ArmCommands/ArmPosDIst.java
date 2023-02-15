@@ -7,17 +7,16 @@ package frc.robot.commands.ArmCommands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
+public class ArmPosDIst extends CommandBase {
+  /** Creates a new ArmPosStages. */
+private double extendDistance, extendSpeed = 0;
 
-public class ArmExtend extends CommandBase {
-  /** Creates a new ArmExtend. */
-
-  private double armExtensionSpeed;
-
-
-  public ArmExtend(double armExt) {
+  public ArmPosDIst(double distance, double speed) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.mArmExtension);
-     armExtensionSpeed = armExt;
+
+    extendDistance = distance;
+    extendSpeed = speed;
   }
 
   // Called when the command is initially scheduled.
@@ -29,20 +28,18 @@ public class ArmExtend extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
-    RobotContainer.mArmExtension.setArmExtend(armExtensionSpeed * 0.5);
-
+    RobotContainer.mArmExtension.setArmExtend(extendDistance * extendSpeed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    RobotContainer.mArmExtension.stopArmExtension();
+      RobotContainer.mArmExtension.stopArmExtension();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return (Math.abs(RobotContainer.mArmExtension.getArmExtendDist()) >= extendDistance);
   }
 }
