@@ -11,13 +11,11 @@ import frc.robot.RobotContainer;
 public class ArmExtend extends CommandBase {
   /** Creates a new ArmExtend. */
 
-  private double armExtensionSpeed;
 
 
-  public ArmExtend(double armExt) {
+  public ArmExtend() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.mArmExtension);
-     armExtensionSpeed = armExt;
   }
 
   // Called when the command is initially scheduled.
@@ -29,6 +27,7 @@ public class ArmExtend extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    double armExtensionSpeed = RobotContainer.mButtonBind.driveLeftX;
 
     RobotContainer.mArmExtension.setArmExtend(armExtensionSpeed * 0.5);
 

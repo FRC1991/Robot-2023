@@ -6,6 +6,7 @@ package frc.robot;
 
 import frc.robot.commands.DrivetrainCommands.GameDrive;
 import frc.robot.commands.MiscCommands.BrakeMode;
+import frc.robot.commands.ArmCommands.ArmExtend;
 import frc.robot.commands.DrivetrainCommands.ChargeStationClimb;
 import frc.robot.subsystems.ArmExtension;
 import frc.robot.subsystems.Claw;
@@ -41,6 +42,7 @@ public class RobotContainer {
   //final AtomicReference<Boolean> isTagVisible = new AtomicReference<Boolean>(false);
   GenericEntry isTagVisible;
   DoubleTopic tagIDTopic;
+  int aprilTagIDListenerHandle;
 //==========================  Subsystems +++++++++++++++++++++++
   public static Drivetrain mDrivetrain = new Drivetrain();
   public static ArmExtension mArmExtension = new ArmExtension();
@@ -53,7 +55,7 @@ public class RobotContainer {
 BrakeMode brakeMode = new BrakeMode();
 ChargeStationClimb chargeStation = new ChargeStationClimb(); 
 GameDrive standardGameDriveCommand = new GameDrive();
-
+ArmExtend armExtend = new ArmExtend();
    
 
   public RobotContainer() {
@@ -63,12 +65,7 @@ GameDrive standardGameDriveCommand = new GameDrive();
   }
 
   
- //===============================Dashboard setup+++++++++++++++++++++++ 
-  private void dashboardInit(){
-
-    isTagVisible = Shuffleboard.getTab("Main").add("Is tag in view", aprilTagID).getEntry();
-
-     }
+ 
 
 //++++++++++++++++++++++++++++++Networktable listener+++++++++++++++++++++
   private void NTListenInit(){
@@ -79,7 +76,7 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-gamePiece");
 
  tagIDTopic = aimmingNT.getDoubleTopic("tid");
 
-int aprilTagIDListenerHandle = ntInst.addListener(
+ aprilTagIDListenerHandle = ntInst.addListener(
   tagIDTopic,
   EnumSet.of(NetworkTableEvent.Kind.kValueAll),
   event -> {
@@ -90,7 +87,12 @@ int aprilTagIDListenerHandle = ntInst.addListener(
   
 }
 
+//===============================Dashboard setup+++++++++++++++++++++++ 
+private void dashboardInit(){
 
+  //isTagVisible = Shuffleboard.getTab("Main").add("Is tag in view", aprilTagIDListenerHandle).getEntry();
+
+   }
 
 
 
@@ -105,10 +107,11 @@ int aprilTagIDListenerHandle = ntInst.addListener(
    */
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    mDrivetrain.setDefaultCommand(standardGameDriveCommand);
+    mDrivetrain.setDefaultCommand(armExtend);
 
     mButtonBind.driveAButton.whileTrue(brakeMode);
     mButtonBind.driveBButton.toggleOnTrue(chargeStation);
+
    
     mButtonBind.driveXButton.onTrue(new InstantCommand(
       ()->{

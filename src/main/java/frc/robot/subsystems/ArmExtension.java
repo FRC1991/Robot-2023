@@ -19,7 +19,7 @@ public class ArmExtension extends SubsystemBase {
 
   public ArmExtension() {
 
-    armExtendMotor = new CANSparkMax(Constants.armMotor , MotorType.kBrushless);
+    armExtendMotor = new CANSparkMax(Constants.armMotorExtend , MotorType.kBrushless);
     //Reset encoders before match
     resetArmEncoder();
     //Limiters

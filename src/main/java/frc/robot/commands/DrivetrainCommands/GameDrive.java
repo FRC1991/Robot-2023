@@ -11,7 +11,7 @@ import frc.robot.RobotContainer;
 
 public class GameDrive extends CommandBase {
 
-
+  
   public GameDrive(){  
   addRequirements(RobotContainer.mDrivetrain);
 }
@@ -20,17 +20,18 @@ public class GameDrive extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize(){
+    
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
   
-
     double forward = ButtonBind.driverController.getRightTriggerAxis();
     double backward = ButtonBind.driverController.getLeftTriggerAxis();
     double curve = ButtonBind.driverController.getLeftX();
     boolean fastTurn = ButtonBind.driverController.rightBumper().getAsBoolean();
+    
 
     RobotContainer.mDrivetrain.GameDrive(forward, backward, curve, fastTurn);
 

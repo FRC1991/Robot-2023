@@ -24,7 +24,7 @@ public final class Constants {
   //Turret Motors
   public static final int turretMotor = 8;
   //Arm Motor
-  public static final int armMotor = 9;
+  public static final int armMotorExtend = 9;
   //Claw Motors
   public static final int clawTurretMotor = 10;
   public static final int clawMotor = 11;
