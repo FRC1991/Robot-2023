@@ -40,8 +40,7 @@ public class RobotContainer {
 
 
 //+++++++++++++++++++++++++++++++ Global Vars=================
-  public static double ballXError;
-  final AtomicReference<Double> tidValue = new AtomicReference<Double>();
+  final AtomicReference<Double> aprilTagID = new AtomicReference<Double>();
 
 //==========================  Subsystems +++++++++++++++++++++++
   public static Drivetrain mDrivetrain = new Drivetrain();
@@ -76,23 +75,17 @@ GameDrive standardGameDriveCommand = new GameDrive();
 //Network tables setup
 NetworkTableInstance ntInst = NetworkTableInstance.getDefault();
 NetworkTable aimmingNT = ntInst.getTable("limelight");
-DoubleTopic tidTopic = aimmingNT.getDoubleTopic("tid");
+NetworkTable gamePieceNT = ntInst.getTable("limelight-gamePiece");
 
-int listenerHandle = ntInst.addListener(
-  tidTopic,
+DoubleTopic tagIDTopic = aimmingNT.getDoubleTopic("tid");
+
+int aprilTagIDListenerHandle = ntInst.addListener(
+  tagIDTopic,
   EnumSet.of(NetworkTableEvent.Kind.kValueAll),
   event -> {
-      tidValue.set(event.valueData.value.getDouble());
+      aprilTagID.set(event.valueData.value.getDouble());
   });
-//NetworkTable gamePieceNT = ntInst.getTable("limelight-gamePiece");
 
-
-
-DoubleSubscriber aprilNum = aimmingNT.getDoubleTopic("tid").subscribe(0, PubSubOption.keepDuplicates(true), PubSubOption.pollStorage(10));
-
-double april = aprilNum.get();
-
-GenericEntry aprilNumEntry = Shuffleboard.getTab("Main").add("Shot Target Found", april).getEntry();
 
   
 }
@@ -116,11 +109,11 @@ GenericEntry aprilNumEntry = Shuffleboard.getTab("Main").add("Shot Target Found"
 
     mButtonBind.driveAButton.whileTrue(brakeMode);
     mButtonBind.driveBButton.toggleOnTrue(chargeStation);
+   
     mButtonBind.driveXButton.onTrue(new InstantCommand(
       ()->{
-        System.out.println(tidValue.get());
+        System.out.println(aprilTagID.get());
       }));
-
    // mButtonBind.clawLimit.toggleOnTrue(mClaw::resetClawEncoder);
     
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,

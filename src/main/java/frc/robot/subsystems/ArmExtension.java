@@ -23,7 +23,10 @@ public class ArmExtension extends SubsystemBase {
     resetArmEncoder();
     //Limiters
     armExtendMotor.setSoftLimit(SoftLimitDirection.kForward, 35);//check how many rotations
-    armExtendMotor.enableSoftLimit(SoftLimitDirection.kForward, true);//check if needed with limelight
+    armExtendMotor.enableSoftLimit(SoftLimitDirection.kForward, true);
+
+    armExtendMotor.setSoftLimit(SoftLimitDirection.kReverse, 35);
+    armExtendMotor.enableSoftLimit(SoftLimitDirection.kReverse, true);
 
   }
 

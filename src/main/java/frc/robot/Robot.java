@@ -31,7 +31,6 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
-    Shuffleboard.getTab("Main").add("Shot Target Found", 0).getEntry();
   }
 
   /**
@@ -80,6 +79,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     //m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    RobotContainer.mDrivetrain.resetGyro();
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
@@ -106,6 +106,8 @@ public class Robot extends TimedRobot {
     RobotContainer.mDrivetrain.getRightDrive1().setIdleMode(IdleMode.kCoast);
     RobotContainer.mDrivetrain.getRightDrive2().setIdleMode(IdleMode.kCoast);
     RobotContainer.mDrivetrain.getRightDrive3().setIdleMode(IdleMode.kCoast);
+    RobotContainer.mDrivetrain.resetGyro();
+
   }
 
   /** This function is called periodically during operator control. */
