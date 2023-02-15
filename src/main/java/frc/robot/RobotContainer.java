@@ -16,9 +16,11 @@ import java.util.EnumSet;
 import java.util.concurrent.atomic.AtomicReference;
 
 import edu.wpi.first.networktables.DoubleTopic;
+import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEvent;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -36,7 +38,9 @@ public class RobotContainer {
 
 //+++++++++++++++++++++++++++++++ Global Vars=================
   final AtomicReference<Double> aprilTagID = new AtomicReference<Double>();
-
+  //final AtomicReference<Boolean> isTagVisible = new AtomicReference<Boolean>(false);
+  GenericEntry isTagVisible;
+  DoubleTopic tagIDTopic;
 //==========================  Subsystems +++++++++++++++++++++++
   public static Drivetrain mDrivetrain = new Drivetrain();
   public static ArmExtension mArmExtension = new ArmExtension();
@@ -62,6 +66,7 @@ GameDrive standardGameDriveCommand = new GameDrive();
  //===============================Dashboard setup+++++++++++++++++++++++ 
   private void dashboardInit(){
 
+    isTagVisible = Shuffleboard.getTab("Main").add("Is tag in view", aprilTagID).getEntry();
 
      }
 
@@ -72,7 +77,7 @@ NetworkTableInstance ntInst = NetworkTableInstance.getDefault();
 NetworkTable aimmingNT = ntInst.getTable("limelight");
 NetworkTable gamePieceNT = ntInst.getTable("limelight-gamePiece");
 
-DoubleTopic tagIDTopic = aimmingNT.getDoubleTopic("tid");
+ tagIDTopic = aimmingNT.getDoubleTopic("tid");
 
 int aprilTagIDListenerHandle = ntInst.addListener(
   tagIDTopic,
