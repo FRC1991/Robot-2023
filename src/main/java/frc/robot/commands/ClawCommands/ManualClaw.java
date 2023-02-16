@@ -5,24 +5,27 @@
 package frc.robot.commands.ClawCommands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.ButtonBind;
 import frc.robot.RobotContainer;
 
-public class ClawCone extends CommandBase {
-  /** Creates a new ClawCone. */
-  public ClawCone() {
-    // Use addRequirements() here to declare subsystem dependencies.
+public class ManualClaw extends CommandBase {
+  /** Creates a new ManualClaw. */
+  public ManualClaw() {
     addRequirements(RobotContainer.mClaw);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+
+   double speed = ButtonBind.auxController.getRightTriggerAxis();;
+   RobotContainer.mClaw.setClaw(speed);
+
+  }
 
   // Called once the command ends or is interrupted.
   @Override

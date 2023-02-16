@@ -8,7 +8,6 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -99,14 +98,6 @@ public class Arm extends SubsystemBase {
     double distForLift = getArmLiftPos() / 60; //replace with new gear ratio
 
     return Math.PI * distForLift;
-  }
-
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Arm Extension Motors Active?", Math.round(armExtendMotor.get()));
-    SmartDashboard.putNumber("Are Lift Motors Work?", Math.round(armLiftMotor.get()));
-
   }
 
   

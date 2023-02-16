@@ -6,6 +6,7 @@ package frc.robot;
 
 import frc.robot.commands.DrivetrainCommands.GameDrive;
 import frc.robot.commands.MiscCommands.BrakeMode;
+import frc.robot.commands.ClawCommands.ResetClaw;
 import frc.robot.commands.DrivetrainCommands.ChargeStationClimb;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Claw;
@@ -16,11 +17,9 @@ import java.util.EnumSet;
 import java.util.concurrent.atomic.AtomicReference;
 
 import edu.wpi.first.networktables.DoubleTopic;
-import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEvent;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -38,7 +37,6 @@ public class RobotContainer {
 
 //+++++++++++++++++++++++++++++++ Global Vars=================
   final AtomicReference<Double> aprilTagID = new AtomicReference<Double>();
-  boolean isTagVisible;
   DoubleTopic tagIDTopic;
   int aprilTagIDListenerHandle;
 //==========================  Subsystems +++++++++++++++++++++++
@@ -53,10 +51,10 @@ public class RobotContainer {
 BrakeMode brakeMode = new BrakeMode();
 ChargeStationClimb chargeStation = new ChargeStationClimb(); 
 GameDrive standardGameDriveCommand = new GameDrive();
+ResetClaw resetClaw = new ResetClaw();
    
 
   public RobotContainer() {
-    dashboardInit();
     NTListenInit();
     configureBindings();
   }
@@ -71,8 +69,11 @@ NetworkTableInstance ntInst = NetworkTableInstance.getDefault();
 NetworkTable aimmingNT = ntInst.getTable("limelight");
 NetworkTable gamePieceNT = ntInst.getTable("limelight-gamePiece");
 
+//Topics
  tagIDTopic = aimmingNT.getDoubleTopic("tid");
 
+
+ //Listeners
  aprilTagIDListenerHandle = ntInst.addListener(
   tagIDTopic,
   EnumSet.of(NetworkTableEvent.Kind.kValueAll),
@@ -84,17 +85,6 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-gamePiece");
   
 }
 
-//===============================Dashboard setup+++++++++++++++++++++++ 
-private void dashboardInit(){
-
-  if( aprilTagID.get() > 0){
-    isTagVisible = true;
-  }
-
-
-   Shuffleboard.getTab("Main").add("Is tag in view", isTagVisible).getEntry();
-
-   }
 
 
 
@@ -119,10 +109,8 @@ private void dashboardInit(){
       ()->{
         System.out.println(aprilTagID.get());
       }));
-    //mButtonBind.clawLimit.toggleOnTrue();
     
-    // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
-    // cancelling on release.
+    
   }
 
   /**
