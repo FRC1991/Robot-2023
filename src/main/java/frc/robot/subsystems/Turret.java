@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -23,27 +24,31 @@ public class Turret extends SubsystemBase {
     turretMotor.setSoftLimit(SoftLimitDirection.kForward, 35);//check how many rotations
     turretMotor.enableSoftLimit(SoftLimitDirection.kForward, true);//check if needed with limelight
   }
-  
+//Turret speed set
   public void setTurret(double speed){
     turretMotor.set(speed);
   } 
 
+//Get turret pos
   public double getTurretPos(){
     return turretMotor.getEncoder().getPosition();
   }
 
+//Reset turret encoders
   public void resetTurretEncoder(){
     turretMotor.getEncoder().setPosition(0);
   }
 
+//Stop turret  
   public void stopTurret() {
     turretMotor.set(0);
+    turretMotor.setIdleMode(IdleMode.kBrake);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Turret Motors Active?", turretMotor.get());
+    SmartDashboard.putNumber("Turret Motors Active?", Math.round(turretMotor.get()));
 
   }
 

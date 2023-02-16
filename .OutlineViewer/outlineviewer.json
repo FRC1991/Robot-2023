@@ -1,8 +1,23 @@
 {
+  "Clients": {
+    "open": true
+  },
   "Connections": {
     "open": true
   },
-  "Persistent Values": {
-    "open": false
-  }
+  "NetworkTables Settings": {
+    "mode": "Client (NT4)",
+    "serverTeam": "1991"
+  },
+  "Server": {
+    "Publishers": {
+      "open": true
+    },
+    "Subscribers": {
+      "open": true
+    },
+    "open": true
+  },
+  "properties": true,
+  "tree": false
 }

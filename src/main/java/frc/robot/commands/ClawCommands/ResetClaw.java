@@ -2,44 +2,39 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.ArmCommands;
+package frc.robot.commands.ClawCommands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
-public class ArmPosDIst extends CommandBase {
-  /** Creates a new ArmPosStages. */
-private double extendDistance, extendSpeed = 0;
-
-  public ArmPosDIst(double distance, double speed) {
+public class ResetClaw extends CommandBase {
+  /** Creates a new ResetCone. */
+  public ResetClaw() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.mArmExtension);
-
-    extendDistance = distance;
-    extendSpeed = speed;
+    addRequirements(RobotContainer.mClaw);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    RobotContainer.mArmExtension.resetArmEncoder();
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.mArmExtension.setArmExtend(extendDistance * extendSpeed);
+    RobotContainer.mClaw.setClaw(-1);
+    //center turrnt code
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-      RobotContainer.mArmExtension.stopArmExtension();
+    RobotContainer.mClaw.resetClawEncoder();
+    RobotContainer.mClaw.resetClawTurretEncoder();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (Math.abs(RobotContainer.mArmExtension.getArmExtendDist()) >= extendDistance);
+    return RobotContainer.mButtonBind.clawLimit.getAsBoolean() == true;
   }
 }

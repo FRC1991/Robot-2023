@@ -17,17 +17,18 @@ public final class Constants {
   //Drivetrain Motors
   public static final int leftDriveMotor1 = 2;
   public static final int leftDriveMotor2 = 3;
-  public static final int leftDriveMotor3 = 40;
-  public static final int rightDriveMotor1 = 4;
+  public static final int leftDriveMotor3 = 4;
+  public static final int rightDriveMotor1 = 5;
   public static final int rightDriveMotor2 = 6;
   public static final int rightDriveMotor3 = 7;
   //Turret Motors
   public static final int turretMotor = 8;
   //Arm Motor
   public static final int armMotorExtend = 9;
+  public static final int armLiftMotor = 10;
   //Claw Motors
-  public static final int clawTurretMotor = 10;
-  public static final int clawMotor = 11;
+  public static final int clawTurretMotor = 11;
+  public static final int clawMotor = 12;
   //Gyro
   public static final int pigeonIMU = 0;
   //Global Deadband and Motor Multiplier

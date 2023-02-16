@@ -18,16 +18,27 @@ public class Claw extends SubsystemBase {
   public final  CANSparkMax clawMotor, clawTurretMotor;
 
   public Claw() {
-    clawMotor = new CANSparkMax(Constants.clawMotor , MotorType.kBrushless);
+    clawMotor = new CANSparkMax(Constants.clawMotor , MotorType.kBrushed);
     clawTurretMotor = new CANSparkMax(Constants.clawTurretMotor , MotorType.kBrushless);
-    //Reset Encoders before match
+
+//Reset Encoders before match
     resetClawEncoder();
     resetClawTurretEncoder();
-    //Limiters
+
+//Limiter for claw
     clawMotor.setSoftLimit(SoftLimitDirection.kForward, 35);//check how many rotations
-    clawMotor.enableSoftLimit(SoftLimitDirection.kForward, true);//check if needed with limelight
+    clawMotor.enableSoftLimit(SoftLimitDirection.kForward, true);
+
+    clawMotor.setSoftLimit(SoftLimitDirection.kReverse, 35);//check how many rotations
+    clawMotor.enableSoftLimit(SoftLimitDirection.kReverse, true);
+
+//Limiter for claw turret   
     clawTurretMotor.setSoftLimit(SoftLimitDirection.kForward, 35);//check how many rotations
-    clawTurretMotor.enableSoftLimit(SoftLimitDirection.kForward, true);//check if needed with limelight
+    clawTurretMotor.enableSoftLimit(SoftLimitDirection.kForward, true);
+
+    clawTurretMotor.setSoftLimit(SoftLimitDirection.kReverse, 35);//check how many rotations
+    clawTurretMotor.enableSoftLimit(SoftLimitDirection.kReverse, true);
+
 
   }
   
@@ -36,31 +47,37 @@ public class Claw extends SubsystemBase {
     clawMotor.set(speed);
   }
 
+//Claw turret Motor values
+public void setClawTurret(double speed){
+  clawTurretMotor.set(speed);
+}
+
+//Get claw Pos
   public double getClawPos(){
     return clawMotor.getEncoder().getPosition();
   }
 
+//get claw turret pos
+  public double getClawTurretPos(){
+    return clawTurretMotor.getEncoder().getPosition();
+  }  
+
+ //Reset claw encoder  
   public void resetClawEncoder(){
     clawMotor.getEncoder().setPosition(0);
   }
 
-  public void stopClaw(){
-    clawMotor.set(0);
-  }
-
-//Claw turret Motor values
-  public void setClawTurret(double speed){
-    clawTurretMotor.set(speed);
-  }
-
-  public double getClawTurretPos(){
-    return clawTurretMotor.getEncoder().getPosition();
-  }
-
+ //Reset claw turret encoder 
   public void resetClawTurretEncoder(){
     clawTurretMotor.getEncoder().setPosition(0);
   }
 
+//Stop claw   
+  public void stopClaw(){
+    clawMotor.set(0);
+  }
+
+//Stop claw turret 
   public void stopClawTurret(){
     clawTurretMotor.set(0);
   }
@@ -68,8 +85,8 @@ public class Claw extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Claw Motors Active?", clawMotor.get());
-    SmartDashboard.putNumber("Claw Turret Motors Active?", clawTurretMotor.get());
+    SmartDashboard.putNumber("Claw Motors Active?", Math.abs(clawMotor.get()));
+    SmartDashboard.putNumber("Claw Turret Motors Active?", Math.abs(clawTurretMotor.get()));
 
   }
 

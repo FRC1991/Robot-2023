@@ -189,8 +189,8 @@ public ErrorCode resetGyro(){
       SmartDashboard.putBoolean("Charge Station In Range?", range);
     }
 
-    SmartDashboard.putNumber("Left Motors Active?", leftDriveMotors.get());
-    SmartDashboard.putNumber("Right Motors Active?", rightDriveMotors.get());
+    SmartDashboard.putNumber("Left Motors Active?", Math.round(leftDriveMotors.get()));
+    SmartDashboard.putNumber("Right Motors Active?", Math.round(rightDriveMotors.get()));
 
   }
 

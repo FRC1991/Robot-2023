@@ -206,9 +206,9 @@ public class ButtonBind {
 
 
 //Limit switches
-       DigitalInput clawLimitSwitch = new DigitalInput(0);
+    public DigitalInput clawLimitSwitch = new DigitalInput(0);
 
-       Trigger clawLimit = new Trigger(clawLimitSwitch::get);
+    public Trigger clawLimit = new Trigger(clawLimitSwitch::get);
     
 
 }
