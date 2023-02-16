@@ -14,7 +14,7 @@ import frc.robot.Constants;
 public class Claw extends SubsystemBase {
 //Motor declaration 
 
-  public final  CANSparkMax clawMotor, clawTurretMotor;
+  private final  CANSparkMax clawMotor, clawTurretMotor;
 
   public Claw() {
     clawMotor = new CANSparkMax(Constants.clawMotor , MotorType.kBrushed);

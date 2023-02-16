@@ -14,7 +14,8 @@ import frc.robot.Constants;
 
 public class Turret extends SubsystemBase {
 //Motor declaration 
-  public final CANSparkMax turretMotor;
+  private final CANSparkMax turretMotor;
+  
   public Turret() {
     turretMotor = new CANSparkMax(Constants.turretMotor, MotorType.kBrushless); 
     //reset before match starts

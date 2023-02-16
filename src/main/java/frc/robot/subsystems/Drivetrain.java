@@ -36,7 +36,7 @@ private boolean rightDriveInverted = true;
   MotorControllerGroup leftDriveMotors,
   rightDriveMotors;
 //Gyro and drive declaration 
-  public final Pigeon2 pigeon; 
+  private final Pigeon2 pigeon; 
 
   DifferentialDrive differentialDrive;
 

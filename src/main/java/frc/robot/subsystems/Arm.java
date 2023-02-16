@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -14,15 +15,15 @@ import frc.robot.Constants;
 public class Arm extends SubsystemBase {
 //Motor declaration 
 
-  public final CANSparkMax armExtendMotor;
-  public final CANSparkMax armLiftMotor;
+  private final CANSparkMax armExtendMotor, armLiftMotor;
+
+  private SparkMaxPIDController armExtendPID, armLiftMotorPID;
 
   public Arm() {
 
 //Arm Motors setup
     armExtendMotor = new CANSparkMax(Constants.armMotorExtend , MotorType.kBrushless);
     armLiftMotor = new CANSparkMax(Constants.armLiftMotor, MotorType.kBrushless);
-
     
 //Reset encoders before match
     resetArmExtensionEncoder();
@@ -42,6 +43,32 @@ public class Arm extends SubsystemBase {
     armLiftMotor.setSoftLimit(SoftLimitDirection.kReverse, 35);
     armLiftMotor.enableSoftLimit(SoftLimitDirection.kReverse, true);
 
+  
+//Arm PID Motor setup
+    armExtendPID = armExtendMotor.getPIDController();
+    armLiftMotorPID = armLiftMotor.getPIDController();
+
+//PID Values for extender
+    armExtendPID.setP(Constants.kArmExtendP);
+    armExtendPID.setI(Constants.kArmExtendI);
+    armExtendPID.setD(Constants.kArmExtendD);
+    armExtendPID.setOutputRange(Constants.kArmExtendMinOut, Constants.kArmExtendMaxOut);
+
+//PID values for Lifter
+    armLiftMotorPID.setP(Constants.kArmLiftP);
+    armLiftMotorPID.setI(Constants.kArmLiftI);
+    armLiftMotorPID.setD(Constants.kArmLiftD);
+    armLiftMotorPID.setOutputRange(Constants.kArmLiftMinOut, Constants.kArmLiftMaxOut);
+  
+  }
+
+//PID Setup
+  public void setArmExtendPID(double armExtenderPos){
+    armExtendPID.setReference(armExtenderPos, CANSparkMax.ControlType.kPosition);
+  }
+
+  public void setArmLiftPID(double armLiftPos){
+    armLiftMotorPID.setReference(armLiftPos, CANSparkMax.ControlType.kPosition);
   }
 
 //Extender Speed Set

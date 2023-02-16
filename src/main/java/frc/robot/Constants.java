@@ -34,6 +34,8 @@ public final class Constants {
   //Global Deadband and Motor Multiplier
   public static final double globalDeadband = 0.1;
   public static final double GTADriveMultiplier = 1;
+
+
   //PID turn Constants
 public static final double kTurnP = 1;
 public static final double kTurnI = 0;
@@ -56,5 +58,24 @@ public static final double kTurnRateToleranceDegPerS = 10;
   
   public static final double kChargeToleranceDeg = 2;
   public static final double kChargeRateToleranceDegPerS = 4;
+
+  //PID For Arm Extension
+
+  public static final double kArmExtendP = 1;
+  public static final double kArmExtendI = 0;
+  public static final double kArmExtendD = 0;
+
+  public static final double kArmExtendMaxOut = 1;
+  public static final double kArmExtendMinOut = -1;
+
+
+  //PID for arm Lifter
+
+  public static final double kArmLiftP = 1;
+  public static final double kArmLiftI = 0;
+  public static final double kArmLiftD = 0;
+
+  public static final double kArmLiftMaxOut = 1;
+  public static final double kArmLiftMinOut = -1;
 
   }
