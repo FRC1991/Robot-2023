@@ -105,6 +105,7 @@ public class Arm extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Arm Extension Motors Active?", Math.round(armExtendMotor.get()));
+    SmartDashboard.putNumber("Are Lift Motors Work?", Math.round(armLiftMotor.get()));
 
   }
 
