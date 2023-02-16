@@ -63,8 +63,6 @@ public class TurnTillTag extends CommandBase {
   @Override
   public void execute() {
     RobotContainer.mDrivetrain.arcadeDrive(0, turnSpeed);
-    System.out.print("tagfound");
-
   }
 
   // Called once the command ends or is interrupted.

@@ -20,6 +20,7 @@ import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEvent;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -37,8 +38,7 @@ public class RobotContainer {
 
 //+++++++++++++++++++++++++++++++ Global Vars=================
   final AtomicReference<Double> aprilTagID = new AtomicReference<Double>();
-  //final AtomicReference<Boolean> isTagVisible = new AtomicReference<Boolean>(false);
-  GenericEntry isTagVisible;
+  boolean isTagVisible;
   DoubleTopic tagIDTopic;
   int aprilTagIDListenerHandle;
 //==========================  Subsystems +++++++++++++++++++++++
@@ -87,7 +87,12 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-gamePiece");
 //===============================Dashboard setup+++++++++++++++++++++++ 
 private void dashboardInit(){
 
-  //isTagVisible = Shuffleboard.getTab("Main").add("Is tag in view", aprilTagIDListenerHandle).getEntry();
+  if( aprilTagID.get() > 0){
+    isTagVisible = true;
+  }
+
+
+   Shuffleboard.getTab("Main").add("Is tag in view", isTagVisible).getEntry();
 
    }
 
