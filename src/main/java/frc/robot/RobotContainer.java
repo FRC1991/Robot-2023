@@ -19,10 +19,8 @@ import java.util.concurrent.atomic.AtomicReference;
 import edu.wpi.first.networktables.DoubleTopic;
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableEvent;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -40,14 +38,16 @@ public class RobotContainer {
 
 
 //+++++++++++++++++++++++++++++++ Global Vars=================
-  final AtomicReference<Double> aprilTagID = new AtomicReference<Double>();
-  final AtomicReference<Double> yDistance = new AtomicReference<Double>();
+  public final AtomicReference<Double> aprilTagID = new AtomicReference<Double>();
+  final AtomicReference<Double> yDistanceAim = new AtomicReference<Double>();
+  final AtomicReference <Double> xDistanceAim = new AtomicReference<Double>();
   
-  DoubleTopic tagIDTopic, yDistanceTopic;
+  DoubleTopic tagIDTopic, yDistanceAimTopic, xDistanceAimTopic;
   
-  double aprilTagIDListenerHandle, yDistanceListenerHandle;
+  double aprilTagIDListenerHandle, yDistanceAimListenerHandle, xDistanceAimListenerHandle;
+  boolean isTagVisible;
 
-  public static GenericEntry measuredArmHeight;
+  public static GenericEntry isTagVisibleEntry;
 //==========================  Subsystems +++++++++++++++++++++++
   public static Drivetrain mDrivetrain = new Drivetrain();
   public static Arm mArm = new Arm();
@@ -71,11 +71,8 @@ ResetClaw resetClaw = new ResetClaw();
 
   private void dashboardInit(){
 
-    measuredArmHeight = Shuffleboard.getTab("Main")
-      .add("Arm Height", 0)
-      .withWidget(BuiltInWidgets.kNumberSlider)
-      .getEntry();
-
+    isTagVisibleEntry = 
+      Shuffleboard.getTab("Main").add("Is tag visible", isTagVisible).getEntry();
 
 
   }
@@ -91,7 +88,8 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-gamePiece");
 
 //Topics
  tagIDTopic = aimmingNT.getDoubleTopic("tid");
- yDistanceTopic = aimmingNT.getDoubleTopic("ty");
+ yDistanceAimTopic = aimmingNT.getDoubleTopic("ty");
+ xDistanceAimTopic = aimmingNT.getDoubleTopic("tx");
 
  //Listeners
  aprilTagIDListenerHandle = ntInst.addListener(
@@ -101,11 +99,18 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-gamePiece");
       aprilTagID.set(event.valueData.value.getDouble());
   });
 
-  yDistanceListenerHandle = ntInst.addListener(
-    yDistanceTopic, 
+  yDistanceAimListenerHandle = ntInst.addListener(
+    yDistanceAimTopic, 
     EnumSet.of(NetworkTableEvent.Kind.kValueAll),
     event -> {
-      yDistance.set(event.valueData.value.getDouble());
+      yDistanceAim.set(event.valueData.value.getDouble());
+    });
+
+  xDistanceAimListenerHandle = ntInst.addListener(
+    xDistanceAimTopic, 
+    EnumSet.of(NetworkTableEvent.Kind.kValueAll),
+    event -> {
+      xDistanceAim.set(event.valueData.value.getDouble());
     });
 
   
@@ -133,7 +138,7 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-gamePiece");
    
     mButtonBind.driveXButton.onTrue(new InstantCommand(
       ()->{
-        System.out.println(yDistance.get());
+        System.out.println(yDistanceAim.get());
       }));
 
     
