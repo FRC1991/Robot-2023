@@ -22,7 +22,7 @@ public class ManualClaw extends CommandBase {
   @Override
   public void execute() {
 
-   double speed = ButtonBind.auxController.getRightTriggerAxis();;
+   double speed = ButtonBind.auxController.getRightTriggerAxis();
    RobotContainer.mClaw.setClaw(speed);
 
   }

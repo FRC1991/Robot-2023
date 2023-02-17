@@ -17,9 +17,13 @@ import java.util.EnumSet;
 import java.util.concurrent.atomic.AtomicReference;
 
 import edu.wpi.first.networktables.DoubleTopic;
+import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableEvent;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -37,8 +41,13 @@ public class RobotContainer {
 
 //+++++++++++++++++++++++++++++++ Global Vars=================
   final AtomicReference<Double> aprilTagID = new AtomicReference<Double>();
-  DoubleTopic tagIDTopic;
-  int aprilTagIDListenerHandle;
+  final AtomicReference<Double> yDistance = new AtomicReference<Double>();
+  
+  DoubleTopic tagIDTopic, yDistanceTopic;
+  
+  double aprilTagIDListenerHandle, yDistanceListenerHandle;
+
+  public static GenericEntry measuredArmHeight;
 //==========================  Subsystems +++++++++++++++++++++++
   public static Drivetrain mDrivetrain = new Drivetrain();
   public static Arm mArm = new Arm();
@@ -57,10 +66,21 @@ ResetClaw resetClaw = new ResetClaw();
   public RobotContainer() {
     NTListenInit();
     configureBindings();
+    dashboardInit();
   }
 
-  
+  private void dashboardInit(){
+
+    measuredArmHeight = Shuffleboard.getTab("Main")
+      .add("Arm Height", 0)
+      .withWidget(BuiltInWidgets.kNumberSlider)
+      .getEntry();
+
+
+
+  }
  
+
 
 //++++++++++++++++++++++++++++++Networktable listener+++++++++++++++++++++
   private void NTListenInit(){
@@ -71,7 +91,7 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-gamePiece");
 
 //Topics
  tagIDTopic = aimmingNT.getDoubleTopic("tid");
-
+ yDistanceTopic = aimmingNT.getDoubleTopic("ty");
 
  //Listeners
  aprilTagIDListenerHandle = ntInst.addListener(
@@ -81,6 +101,12 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-gamePiece");
       aprilTagID.set(event.valueData.value.getDouble());
   });
 
+  yDistanceListenerHandle = ntInst.addListener(
+    yDistanceTopic, 
+    EnumSet.of(NetworkTableEvent.Kind.kValueAll),
+    event -> {
+      yDistance.set(event.valueData.value.getDouble());
+    });
 
   
 }
@@ -107,8 +133,9 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-gamePiece");
    
     mButtonBind.driveXButton.onTrue(new InstantCommand(
       ()->{
-        System.out.println(aprilTagID.get());
+        System.out.println(yDistance.get());
       }));
+
     
     
   }
