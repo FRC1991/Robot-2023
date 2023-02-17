@@ -78,4 +78,8 @@ public static final double kTurnRateToleranceDegPerS = 10;
   public static final double kArmLiftMaxOut = 1;
   public static final double kArmLiftMinOut = -1;
 
+  //Vision constant
+
+    public static final double visionConstant = 0.0015;
+
   }

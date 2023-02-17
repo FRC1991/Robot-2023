@@ -19,7 +19,7 @@ public class TurnTillTag extends CommandBase {
 
     addRequirements(RobotContainer.mDrivetrain);
     turnSpeed = speed;
-    isTagVisibleEntry = RobotContainer.isTagVisibleEntry.getDouble(0);
+    isTagVisibleEntry = RobotContainer.aprilTagID.get();
 
   }
 

@@ -14,6 +14,7 @@ import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Turret;
 
 import java.util.EnumSet;
+import java.util.concurrent.atomic.AtomicMarkableReference;
 import java.util.concurrent.atomic.AtomicReference;
 
 import edu.wpi.first.networktables.DoubleTopic;
@@ -21,6 +22,7 @@ import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEvent;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.util.concurrent.Event;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -38,14 +40,18 @@ public class RobotContainer {
 
 
 //+++++++++++++++++++++++++++++++ Global Vars=================
-  public final AtomicReference<Double> aprilTagID = new AtomicReference<Double>();
-  final AtomicReference<Double> yDistanceAim = new AtomicReference<Double>();
-  final AtomicReference <Double> xDistanceAim = new AtomicReference<Double>();
+  public final static AtomicReference<Double> aprilTagID = new AtomicReference<Double>();
+  public final static AtomicReference<Double> yDistanceAim = new AtomicReference<Double>();
+  public final static AtomicReference <Double> xDistanceAim = new AtomicReference<Double>();
+  public final static AtomicReference<Double> retroTape = new AtomicReference<Double>();
+  public final static AtomicReference<Double> gamePieceSeen = new AtomicReference<Double>();
+  public final static AtomicReference<Double> yDistanceGamePiece = new AtomicReference<Double>();
+  public final static AtomicReference<Double> xDistanceGamePiece = new AtomicReference<Double>();
+
+
+  DoubleTopic tagIDTopic, yDistanceAimTopic, xDistanceAimTopic, retroTapeTopic, gamePieceSeenTopic, yDistanceGamePieceTopic, xDistanceGamePieceTopic;
   
-  DoubleTopic tagIDTopic, yDistanceAimTopic, xDistanceAimTopic;
-  
-  double aprilTagIDListenerHandle, yDistanceAimListenerHandle, xDistanceAimListenerHandle;
-  boolean isTagVisible;
+  double aprilTagIDListenerHandle, yDistanceAimListenerHandle, xDistanceAimListenerHandle, retroTapeListenerHandle, gamePieceSeenListenerHandle, yDistanceGamePieceListenerHandle, xDistanceGamePieceListenerHandle;
 
   public static GenericEntry isTagVisibleEntry;
 //==========================  Subsystems +++++++++++++++++++++++
@@ -72,7 +78,7 @@ ResetClaw resetClaw = new ResetClaw();
   private void dashboardInit(){
 
     isTagVisibleEntry = 
-      Shuffleboard.getTab("Main").add("Is tag visible", isTagVisible).getEntry();
+      Shuffleboard.getTab("Main").add("Is tag visible", aprilTagID.get()).getEntry();
 
 
   }
@@ -86,12 +92,19 @@ NetworkTableInstance ntInst = NetworkTableInstance.getDefault();
 NetworkTable aimmingNT = ntInst.getTable("limelight");
 NetworkTable gamePieceNT = ntInst.getTable("limelight-gamePiece");
 
-//Topics
+//Topics From Aimming NT
  tagIDTopic = aimmingNT.getDoubleTopic("tid");
  yDistanceAimTopic = aimmingNT.getDoubleTopic("ty");
  xDistanceAimTopic = aimmingNT.getDoubleTopic("tx");
+ retroTapeTopic = aimmingNT.getDoubleTopic("tv");
 
- //Listeners
+//Topics from Game piece NT
+  gamePieceSeenTopic = gamePieceNT.getDoubleTopic("tv");
+  yDistanceGamePieceTopic = gamePieceNT.getDoubleTopic("ty");
+  xDistanceGamePieceTopic = gamePieceNT.getDoubleTopic("tx");
+
+
+ //Listeners for Aimming NT
  aprilTagIDListenerHandle = ntInst.addListener(
   tagIDTopic,
   EnumSet.of(NetworkTableEvent.Kind.kValueAll),
@@ -113,7 +126,34 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-gamePiece");
       xDistanceAim.set(event.valueData.value.getDouble());
     });
 
+  retroTapeListenerHandle = ntInst.addListener(
+    retroTapeTopic,
+    EnumSet.of(NetworkTableEvent.Kind.kValueAll),
+    event -> {
+      retroTape.set(event.valueData.value.getDouble());
+    });
+
+//Listener from Game Piece NT
+  gamePieceSeenListenerHandle = ntInst.addListener(
+    gamePieceSeenTopic,
+    EnumSet.of(NetworkTableEvent.Kind.kValueAll), 
+    event -> {
+      gamePieceSeen.set(event.valueData.value.getDouble());
+    });
+
+  yDistanceGamePieceListenerHandle = ntInst.addListener(
+    yDistanceGamePieceTopic,
+    EnumSet.of(NetworkTableEvent.Kind.kValueAll), 
+    event -> {
+      yDistanceGamePiece.set(event.valueData.value.getDouble());
+    });
   
+  xDistanceGamePieceListenerHandle = ntInst.addListener(
+    xDistanceGamePieceTopic,
+    EnumSet.of(NetworkTableEvent.Kind.kValueAll), 
+    event -> {
+      xDistanceGamePiece.set(event.valueData.value.getDouble());
+    });
 }
 
 
