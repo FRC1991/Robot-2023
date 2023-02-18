@@ -13,20 +13,23 @@ public class RunForTag extends CommandBase {
 
   private final double steerScale = Constants.visionConstant;
   private double adjustSteer = 0;
-  private double speed, xSteer;
+  private double speeder, xSteer;
 
   
-  public RunForTag() {
+  public RunForTag(double speed) {
 
     addRequirements(RobotContainer.mDrivetrain);
-
-    
+    speeder = speed;
+    speed = 0.90;
 
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+
+
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override

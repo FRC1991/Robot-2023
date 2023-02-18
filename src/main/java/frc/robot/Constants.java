@@ -82,4 +82,16 @@ public static final double kTurnRateToleranceDegPerS = 10;
 
     public static final double visionConstant = 0.0015;
 
+//Drive Distance PID Constants
+
+    public static final double kDriveP = 1;
+    public static final double kDriveI = 0;
+    public static final double kDriveD = 0;
+
+    public static final double kMaxDistPerS = 100;
+    public static final double kMaxAccelerationPerS = 300;
+
+    public static final double kDistTolerance = 5;
+    public static final double kDistRateTolerancePerS = 10; 
+
   }
