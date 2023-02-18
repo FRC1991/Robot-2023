@@ -206,9 +206,11 @@ public class ButtonBind {
 
 
 //Limit switches
-    public DigitalInput clawLimitSwitch = new DigitalInput(0);
+    public final DigitalInput clawLimitSwitch = new DigitalInput(0);
+    public final DigitalInput turretBeamBreak = new DigitalInput(1);
 
-    public Trigger clawLimit = new Trigger(clawLimitSwitch::get);
+    public final Trigger clawLimit = new Trigger(clawLimitSwitch::get);
+    public final Trigger turretBeam = new Trigger(turretBeamBreak::get);
     
 
 }
