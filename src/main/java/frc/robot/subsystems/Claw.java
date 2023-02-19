@@ -21,8 +21,8 @@ public class Claw extends SubsystemBase {
     clawTurretMotor = new CANSparkMax(Constants.clawTurretMotor , MotorType.kBrushless);
 
 //Reset Encoders before match
-    resetClawEncoder();
-    resetClawTurretEncoder();
+   resetClawEncoder();
+   resetClawTurretEncoder();
 
 //Limiter for claw
     clawMotor.setSoftLimit(SoftLimitDirection.kForward, 35);//check how many rotations

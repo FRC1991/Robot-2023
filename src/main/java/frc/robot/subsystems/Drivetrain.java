@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
 
 //==============================ADD SHAFT ENCODING============================
 
@@ -132,6 +133,23 @@ public void GameDrive(double forward, double backward, double curve, boolean fas
     return Math.PI
      * avgDistanceInRotationsOfShaft; //6 in wheels, so circumfrence in ft is pi
   }
+//Distance from tag
+  public double distanceFromTargetInFeet(){
+
+    double tagY = RobotContainer.yDistanceAim.get();
+    double limelightAngleDeg = 10.0;
+    double limelightHeightInch = 20.0;
+    double tagHeightInch = 10.0;
+
+    double angleToTagDeg = limelightAngleDeg + tagY;
+    double angleToTagRad = angleToTagDeg * (3.14159 / 180.0);
+
+    double distanceToTargetInches = (tagHeightInch - limelightHeightInch) / Math.tan(angleToTagRad);
+    double distanceToTargetFeet = distanceToTargetInches / 12;
+
+    return distanceToTargetFeet;
+  }
+
 
 
 //Motor getters

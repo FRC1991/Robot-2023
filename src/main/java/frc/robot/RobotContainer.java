@@ -6,6 +6,7 @@ package frc.robot;
 
 import frc.robot.commands.DrivetrainCommands.GameDrive;
 import frc.robot.commands.MiscCommands.BrakeMode;
+import frc.robot.commands.ArmCommands.CenterArm;
 import frc.robot.commands.ClawCommands.ResetClaw;
 import frc.robot.commands.DrivetrainCommands.ChargeStationClimb;
 import frc.robot.subsystems.Arm;
@@ -65,6 +66,7 @@ BrakeMode brakeMode = new BrakeMode();
 ChargeStationClimb chargeStation = new ChargeStationClimb(); 
 GameDrive standardGameDriveCommand = new GameDrive();
 ResetClaw resetClaw = new ResetClaw();
+CenterArm centerArm = new CenterArm();
    
 
   public RobotContainer() {
@@ -176,7 +178,7 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-gamePiece");
    
     mButtonBind.driveXButton.onTrue(new InstantCommand(
       ()->{
-        System.out.println(yDistanceAim.get());
+        System.out.println(RobotContainer.mDrivetrain.distanceFromTargetInFeet());
       }));
 
     
