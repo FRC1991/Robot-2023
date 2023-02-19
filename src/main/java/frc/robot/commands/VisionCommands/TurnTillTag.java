@@ -4,6 +4,8 @@
 
 package frc.robot.commands.VisionCommands;
 
+import java.util.concurrent.atomic.AtomicReference;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 import frc.robot.RobotContainer;
@@ -14,12 +16,14 @@ public class TurnTillTag extends CommandBase {
   private double isTagVisibleEntry;
   private double turnSpeed;
   private boolean tagFound = false;
+  private AtomicReference<Double> tagVis;
 
   public TurnTillTag(double speed) {
 
     addRequirements(RobotContainer.mDrivetrain);
     turnSpeed = speed;
-    isTagVisibleEntry = RobotContainer.aprilTagID.get();
+    tagVis = RobotContainer.aprilTagID;
+    isTagVisibleEntry = tagVis.get();
 
   }
 

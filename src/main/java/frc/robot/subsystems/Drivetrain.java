@@ -14,11 +14,12 @@ import com.ctre.phoenix.sensors.Pigeon2.AxisDirection;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
 
 //==============================ADD SHAFT ENCODING============================
 
@@ -136,9 +137,9 @@ public void GameDrive(double forward, double backward, double curve, boolean fas
      * avgDistanceInRotationsOfShaft; //6 in wheels, so circumfrence in ft is pi
   }
 //Distance from tag
-  public double distanceFromTargetInFeet(AtomicReference<Double> ydistanceaim){
-
-    double tagY = ydistanceaim.get();
+  public double distanceFromTargetInFeet(){
+    AtomicReference <Double> targetY = RobotContainer.yDistanceAim;  
+    double tagY = targetY.get();
     double limelightAngleDeg = 10.0;
     double limelightHeightInch = 20.0;
     double tagHeightInch = 10.0;
@@ -202,12 +203,24 @@ public ErrorCode resetGyro(){
 
 
     if(getPitch() > 2 || getPitch() < -2){
+      
       boolean range = false;
-      SmartDashboard.putBoolean("Charge Station In Range?", range);
+
+      NetworkTableInstance.getDefault()
+      .getTable("Shuffleboard")
+      .getSubTable("Main")
+      .getEntry("Is charging station in range?")
+      .setBoolean(range);    
+      
     }else{
+    
       boolean range = true;
-      SmartDashboard.putBoolean("Charge Station In Range?", range);
-    }
+    
+      NetworkTableInstance.getDefault()
+      .getTable("Shuffleboard")
+      .getSubTable("Main")
+      .getEntry("Is charging station in range?")
+      .setBoolean(range);        }
   }
 
 

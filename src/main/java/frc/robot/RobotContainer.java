@@ -6,7 +6,7 @@ package frc.robot;
 
 import frc.robot.commands.DrivetrainCommands.GameDrive;
 import frc.robot.commands.MiscCommands.BrakeMode;
-import frc.robot.commands.VisionCommands.DistFromTarget;
+import frc.robot.commands.VisionCommands.RunForTag;
 import frc.robot.commands.ArmCommands.CenterArm;
 import frc.robot.commands.ClawCommands.ResetClaw;
 import frc.robot.commands.DrivetrainCommands.ChargeStationClimb;
@@ -67,6 +67,8 @@ ChargeStationClimb chargeStation = new ChargeStationClimb();
 GameDrive standardGameDriveCommand = new GameDrive();
 ResetClaw resetClaw = new ResetClaw();
 CenterArm centerArm = new CenterArm();
+RunForTag runForTagDriverSpeed = new RunForTag(ButtonBind.driverController.getRightTriggerAxis());
+RunForTag runForTagAuto = new RunForTag();
    
 
   public RobotContainer() {
@@ -77,8 +79,7 @@ CenterArm centerArm = new CenterArm();
 
   private void dashboardInit(){
 
-    isTagVisibleEntry = 
-      Shuffleboard.getTab("Main").add("Is tag visible", aprilTagID.get()).getEntry();
+    
 
 
   }
@@ -172,7 +173,6 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-gamePiece");
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     mDrivetrain.setDefaultCommand(standardGameDriveCommand);
 
-    mButtonBind.driveAButton.whileTrue(new DistFromTarget());
     mButtonBind.driveBButton.toggleOnTrue(chargeStation);
 
    
