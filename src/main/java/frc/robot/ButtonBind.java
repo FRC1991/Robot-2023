@@ -4,7 +4,12 @@
 
 package frc.robot;
 
+import java.sql.Time;
+
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -13,6 +18,9 @@ public class ButtonBind {
 //Controllers
     public final static CommandXboxController driverController = new CommandXboxController(0);
     public final static CommandXboxController auxController = new CommandXboxController(1);
+//Controllers just for rumble
+    private final static XboxController driveRumble = new XboxController(0);
+    private final static XboxController auxRumble = new XboxController(1);
 //DRIVER BINDINGS
 //Driver Binding For Buttons
     public final Trigger driveAButton = driverController.a();
@@ -213,6 +221,48 @@ public class ButtonBind {
     public final Trigger clawLimit = new Trigger(clawLimitSwitch::get);
     public final Trigger turretBeam = new Trigger(turretBeamBreak::get);
     public final Trigger clawTurret = new Trigger(clawTurretBeam::get);
+
+//Rumble Controllers
+
+       public void doubleDriveVibrate(){
+        for(int i = 0; i < 2; i++){
+            driveRumble.setRumble(RumbleType.kBothRumble, 1);
+            Timer.delay(0.2);
+            driveRumble.setRumble(RumbleType.kBothRumble, 0);
+            Timer.delay(0.2);
+        }
+       }
+       public void singleDriveVibrate(){
+            driveRumble.setRumble(RumbleType.kBothRumble, 1);
+            Timer.delay(0.25);
+            driveRumble.setRumble(RumbleType.kBothRumble, 0);
+       }
+       public void alternatingDriveVibrate(){
+            driveRumble.setRumble(RumbleType.kLeftRumble, 1);
+            Timer.delay(0.25);
+            driveRumble.setRumble(RumbleType.kRightRumble, 1);
+       }
+
+       public void doubleAuxVibrate(){
+        for(int i = 0; i < 2; i++){
+            auxRumble.setRumble(RumbleType.kBothRumble, 1);
+            Timer.delay(0.2);
+            auxRumble.setRumble(RumbleType.kBothRumble, 0);
+            Timer.delay(0.2);
+        }
+       }
+       public void singleAuxVibrate(){
+        auxRumble.setRumble(RumbleType.kBothRumble, 1);
+            Timer.delay(0.25);
+        auxRumble.setRumble(RumbleType.kBothRumble, 0);
+       }
+       public void alternatingAuxVibrate(){
+        auxRumble.setRumble(RumbleType.kLeftRumble, 1);
+        Timer.delay(0.25);
+        auxRumble.setRumble(RumbleType.kRightRumble, 1);
+       }
+        
+
     
 
 }
