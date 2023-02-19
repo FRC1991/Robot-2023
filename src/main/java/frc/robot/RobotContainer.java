@@ -6,6 +6,7 @@ package frc.robot;
 
 import frc.robot.commands.DrivetrainCommands.GameDrive;
 import frc.robot.commands.MiscCommands.BrakeMode;
+import frc.robot.commands.VisionCommands.DistFromTarget;
 import frc.robot.commands.ArmCommands.CenterArm;
 import frc.robot.commands.ClawCommands.ResetClaw;
 import frc.robot.commands.DrivetrainCommands.ChargeStationClimb;
@@ -23,7 +24,6 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEvent;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -172,14 +172,10 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-gamePiece");
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     mDrivetrain.setDefaultCommand(standardGameDriveCommand);
 
-    mButtonBind.driveAButton.whileTrue(brakeMode);
+    mButtonBind.driveAButton.whileTrue(new DistFromTarget());
     mButtonBind.driveBButton.toggleOnTrue(chargeStation);
 
    
-    mButtonBind.driveXButton.onTrue(new InstantCommand(
-      ()->{
-        System.out.println(RobotContainer.mDrivetrain.distanceFromTargetInFeet());
-      }));
 
     
     

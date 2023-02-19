@@ -5,6 +5,9 @@
 package frc.robot.subsystems;
 
 
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Supplier;
+
 import com.ctre.phoenix.ErrorCode;
 import com.ctre.phoenix.sensors.Pigeon2;
 import com.ctre.phoenix.sensors.Pigeon2.AxisDirection;
@@ -16,7 +19,6 @@ import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.RobotContainer;
 
 //==============================ADD SHAFT ENCODING============================
 
@@ -134,9 +136,9 @@ public void GameDrive(double forward, double backward, double curve, boolean fas
      * avgDistanceInRotationsOfShaft; //6 in wheels, so circumfrence in ft is pi
   }
 //Distance from tag
-  public double distanceFromTargetInFeet(){
+  public double distanceFromTargetInFeet(AtomicReference<Double> ydistanceaim){
 
-    double tagY = RobotContainer.yDistanceAim.get();
+    double tagY = ydistanceaim.get();
     double limelightAngleDeg = 10.0;
     double limelightHeightInch = 20.0;
     double tagHeightInch = 10.0;
@@ -207,5 +209,10 @@ public ErrorCode resetGyro(){
       SmartDashboard.putBoolean("Charge Station In Range?", range);
     }
   }
+
+
+public char[] distanceFromTargetInFeet(Supplier<Double> tagYSupplier) {
+  return null;
+}
 
 }
