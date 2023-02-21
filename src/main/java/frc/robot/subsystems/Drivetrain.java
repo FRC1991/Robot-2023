@@ -6,7 +6,6 @@ package frc.robot.subsystems;
 
 
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.function.Supplier;
 
 import com.ctre.phoenix.ErrorCode;
 import com.ctre.phoenix.sensors.Pigeon2;
@@ -50,8 +49,7 @@ private boolean rightDriveInverted = true;
     pigeon = new Pigeon2(Constants.pigeonIMU);
 
     pigeon.configMountPose(AxisDirection.NegativeY, AxisDirection.PositiveZ);
-    pigeon.setYaw(0);
-
+    resetGyro();
 //Motor and motor group setup 
     leftDriveMotor1 = new CANSparkMax(Constants.leftDriveMotor1, MotorType.kBrushless);
     leftDriveMotor2 = new CANSparkMax(Constants.leftDriveMotor2, MotorType.kBrushless);
@@ -194,6 +192,7 @@ public double getRoll(){
 }
 //Reset Gyro 
 public ErrorCode resetGyro(){
+  //return pigeon.setYaw(0);
   return pigeon.zeroGyroBiasNow();
 }
 
@@ -201,6 +200,18 @@ public ErrorCode resetGyro(){
 @Override
   public void periodic() {
 
+
+    NetworkTableInstance.getDefault()
+    .getTable("Shuffleboard")
+    .getSubTable("Main")
+    .getEntry("Gyro Yaw")
+    .setNumber(getYaw());   
+
+    NetworkTableInstance.getDefault()
+    .getTable("Shuffleboard")
+    .getSubTable("Main")
+    .getEntry("Gyro Pitch")
+    .setNumber(getPitch());   
 
     if(getPitch() > 2 || getPitch() < -2){
       
@@ -222,7 +233,7 @@ public ErrorCode resetGyro(){
       .getEntry("Is charging station in range?")
       .setBoolean(range);       
      }
-  }
-
-
+    
+    }
+ 
 }
