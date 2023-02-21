@@ -17,13 +17,11 @@ public class RunForTag extends CommandBase {
   private double steerScale = Constants.visionConstant;
   private double adjustSteer = 0;
   private double speedSet, xSteer;
-  private AtomicReference <Double> xSteering;
+  private AtomicReference <Double> xSteering = RobotContainer.xDistanceAim;
 
   
   public RunForTag() {
-
     addRequirements(RobotContainer.mDrivetrain);
-    xSteering = RobotContainer.xDistanceAim;
     xSteer = xSteering.get();
     speedSet = 0.90;
 
@@ -33,7 +31,6 @@ public class RunForTag extends CommandBase {
 
     addRequirements(RobotContainer.mDrivetrain);
     speedSet = speed;
-    xSteering = RobotContainer.xDistanceAim;
     xSteer = xSteering.get();
   }
 

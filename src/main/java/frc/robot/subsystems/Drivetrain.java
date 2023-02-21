@@ -224,8 +224,4 @@ public ErrorCode resetGyro(){
   }
 
 
-public char[] distanceFromTargetInFeet(Supplier<Double> tagYSupplier) {
-  return null;
-}
-
 }
