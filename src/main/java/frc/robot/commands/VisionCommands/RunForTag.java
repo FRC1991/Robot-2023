@@ -47,7 +47,7 @@ public class RunForTag extends CommandBase {
     NetworkTableInstance.getDefault()
         .getTable("Shuffleboard")
         .getSubTable("Main")
-        .getEntry("Is Running for tag")
+        .getEntry("Is Chasing Tag")
         .setBoolean(true);
   }
 
@@ -77,13 +77,13 @@ public class RunForTag extends CommandBase {
     NetworkTableInstance.getDefault()
         .getTable("Shuffleboard")
         .getSubTable("Main")
-        .getEntry("Is Running for tag")
+        .getEntry("Is Chasing Tag")
         .setBoolean(false);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return RobotContainer.mDrivetrain.distanceFromTargetInFeet() < 1;
+    return RobotContainer.mDrivetrain.distanceFromTargetInFeet() <= 1;
   }
 }

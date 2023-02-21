@@ -48,11 +48,25 @@ public class RobotContainer {
   public final static AtomicReference<Double> xDistanceGamePiece = new AtomicReference<Double>();
 
 
-  DoubleTopic tagIDTopic, yDistanceAimTopic, xDistanceAimTopic, retroTapeTopic, gamePieceSeenTopic, yDistanceGamePieceTopic, xDistanceGamePieceTopic;
+  DoubleTopic tagIDTopic, 
+  yDistanceAimTopic, 
+  xDistanceAimTopic, 
+  retroTapeTopic, 
+  gamePieceSeenTopic, 
+  yDistanceGamePieceTopic, 
+  xDistanceGamePieceTopic;
   
-  double aprilTagIDListenerHandle, yDistanceAimListenerHandle, xDistanceAimListenerHandle, retroTapeListenerHandle, gamePieceSeenListenerHandle, yDistanceGamePieceListenerHandle, xDistanceGamePieceListenerHandle;
+  double aprilTagIDListenerHandle, 
+  yDistanceAimListenerHandle, 
+  xDistanceAimListenerHandle, 
+  retroTapeListenerHandle, 
+  gamePieceSeenListenerHandle, 
+  yDistanceGamePieceListenerHandle,
+  xDistanceGamePieceListenerHandle;
 
-  public static GenericEntry isTagVisibleEntry;
+  public static boolean isChasingTag = false;
+
+  public static GenericEntry isChasingTagEntry;
 //==========================  Subsystems +++++++++++++++++++++++
   public static Drivetrain mDrivetrain = new Drivetrain();
   public static Arm mArm = new Arm();
@@ -79,7 +93,7 @@ RunForTag runForTagAuto = new RunForTag();
 
   private void dashboardInit(){
 
-    
+    isChasingTagEntry = Shuffleboard.getTab("Main").add("Is Chasing Tag", isChasingTag).getEntry();
 
 
   }

@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.SparkMaxAlternateEncoder;
 import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -21,8 +22,8 @@ public class Claw extends SubsystemBase {
     clawTurretMotor = new CANSparkMax(Constants.clawTurretMotor , MotorType.kBrushless);
 
 //Reset Encoders before match
-   //+++++++++++++resetClawEncoder();
-   //____-------------___---resetClawTurretEncoder();
+   resetClawEncoder();
+   resetClawTurretEncoder();
 
 //Limiter for claw
     clawMotor.setSoftLimit(SoftLimitDirection.kForward, 35);//check how many rotations
@@ -63,7 +64,7 @@ public void setClawTurret(double speed){
 
  //Reset claw encoder  
   public void resetClawEncoder(){
-    clawMotor.getEncoder().setPosition(0);
+    clawMotor.getAlternateEncoder(SparkMaxAlternateEncoder.Type.kQuadrature, 8192).setPosition(0);
   }
 
  //Reset claw turret encoder 
