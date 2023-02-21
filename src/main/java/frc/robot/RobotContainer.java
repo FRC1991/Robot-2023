@@ -39,13 +39,13 @@ public class RobotContainer {
 
 
 //+++++++++++++++++++++++++++++++ Global Vars=================
-  public final static AtomicReference<Double> aprilTagID = new AtomicReference<Double>();
-  public final static AtomicReference<Double> yDistanceAim = new AtomicReference<Double>();
-  public final static AtomicReference <Double> xDistanceAim = new AtomicReference<Double>();
-  public final static AtomicReference<Double> retroTape = new AtomicReference<Double>();
-  public final static AtomicReference<Double> gamePieceSeen = new AtomicReference<Double>();
-  public final static AtomicReference<Double> yDistanceGamePiece = new AtomicReference<Double>();
-  public final static AtomicReference<Double> xDistanceGamePiece = new AtomicReference<Double>();
+  public final static AtomicReference<Double> aprilTagID = new AtomicReference<Double>(0.0);
+  public final static AtomicReference<Double> yDistanceAim = new AtomicReference<Double>(0.0);
+  public final static AtomicReference <Double> xDistanceAim = new AtomicReference<Double>(0.0);
+  public final static AtomicReference<Double> retroTape = new AtomicReference<Double>(0.0);
+  public final static AtomicReference<Double> gamePieceSeen = new AtomicReference<Double>(0.0);
+  public final static AtomicReference<Double> yDistanceGamePiece = new AtomicReference<Double>(0.0);
+  public final static AtomicReference<Double> xDistanceGamePiece = new AtomicReference<Double>(0.0);
 
 
   DoubleTopic tagIDTopic, 

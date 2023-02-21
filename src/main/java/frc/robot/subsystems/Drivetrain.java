@@ -220,7 +220,8 @@ public ErrorCode resetGyro(){
       .getTable("Shuffleboard")
       .getSubTable("Main")
       .getEntry("Is charging station in range?")
-      .setBoolean(range);        }
+      .setBoolean(range);       
+     }
   }
 
 
