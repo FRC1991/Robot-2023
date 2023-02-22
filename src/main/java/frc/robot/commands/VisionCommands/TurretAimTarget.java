@@ -17,7 +17,6 @@ public class TurretAimTarget extends CommandBase {
   private double steerScale = Constants.visionConstant;
   private double adjustSteer = 0;
   private double xSteer;
-  private boolean limelight;
   private AtomicReference <Double> xSteering = RobotContainer.xDistanceAim;
 
 
@@ -31,17 +30,6 @@ public class TurretAimTarget extends CommandBase {
   @Override
   public void initialize() {
 
-    if(RobotContainer.mButtonBind.getAuxB()){
-      limelight = true;
-    }else{
-      limelight =false;
-    }
-
-    if(limelight){
-      xSteering = RobotContainer.xDistanceAim;
-    }else{
-     xSteering = RobotContainer.xDistanceGamePiece;
-    }
 
     NetworkTableInstance.getDefault()
     .getTable("Shuffleboard")
