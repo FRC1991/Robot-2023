@@ -123,6 +123,12 @@ if(mButtonBind.getAuxA() == true){
   gamePieceNT.getEntry("pipeline").setNumber(1);
 }
 
+//If tracking During holding B Tag otherwise tape
+if(mButtonBind.getAuxB() == true){
+  aimmingNT.getEntry("pipeline").setNumber(0);
+}else{
+  aimmingNT.getEntry("pipeline").setNumber(1);
+}
 
 //Topics From Aimming NT
  tagIDTopic = aimmingNT.getDoubleTopic("tid");

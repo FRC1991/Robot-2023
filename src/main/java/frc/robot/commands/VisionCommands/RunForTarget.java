@@ -43,7 +43,7 @@ public class RunForTarget extends CommandBase {
     NetworkTableInstance.getDefault()
         .getTable("Shuffleboard")
         .getSubTable("Main")
-        .getEntry("Is Chasing Tag")
+        .getEntry("Is Chasing Target")
         .setBoolean(true);
   }
 
@@ -73,7 +73,7 @@ public class RunForTarget extends CommandBase {
     NetworkTableInstance.getDefault()
         .getTable("Shuffleboard")
         .getSubTable("Main")
-        .getEntry("Is Chasing Tag")
+        .getEntry("Is Chasing Target")
         .setBoolean(false);
   }
 
