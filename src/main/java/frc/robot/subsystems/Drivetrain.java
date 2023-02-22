@@ -190,8 +190,7 @@ public double getRoll(){
 }
 //Reset Gyro 
 public ErrorCode resetGyro(){
-  //return pigeon.setYaw(0);
-  return pigeon.zeroGyroBiasNow();
+  return pigeon.setYaw(0);
 }
 
 
