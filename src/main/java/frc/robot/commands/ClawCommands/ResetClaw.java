@@ -21,7 +21,7 @@ public class ResetClaw extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.mClaw.setClaw(-1);
+    RobotContainer.mClaw.setClaw(0, -1);
     //center turrnt code
   }
 

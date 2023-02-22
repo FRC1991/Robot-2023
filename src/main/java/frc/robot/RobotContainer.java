@@ -23,6 +23,8 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEvent;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -66,6 +68,8 @@ public class RobotContainer {
   public static boolean isChasingTag = false;
 
   public static GenericEntry isChasingTagEntry;
+
+  SendableChooser<Command> autoChoose;
 //==========================  Subsystems +++++++++++++++++++++++
   public static Drivetrain mDrivetrain = new Drivetrain();
   public static Arm mArm = new Arm();
@@ -91,6 +95,13 @@ RunForTag runForTagAuto = new RunForTag();
 
   private void dashboardInit(){
 
+//Auto Chooser
+  autoChoose = new SendableChooser<Command>();
+  autoChoose.setDefaultOption("Auto From Right", brakeMode);
+  autoChoose.addOption("Auto From Middle", brakeMode);
+  autoChoose.addOption("Auto From Left", brakeMode);
+  Shuffleboard.getTab("Main").add(autoChoose);
+//Vison Entries 
     isChasingTagEntry = Shuffleboard.getTab("Main").add("Is Chasing Tag", isChasingTag).getEntry();
 
 
@@ -197,8 +208,8 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-gamePiece");
    *
    * @return the command to run in autonomous
    */
-  //public Command getAutonomousCommand() {
+  public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    //return Autos.exampleAuto(m_exampleSubsystem);
-  //}
+    return autoChoose.getSelected();
+  }
 }

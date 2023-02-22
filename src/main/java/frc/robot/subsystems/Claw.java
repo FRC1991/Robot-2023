@@ -43,12 +43,14 @@ public class Claw extends SubsystemBase {
   }
   
 //Claw Motor values
-  public void setClaw(double speed){
+  public void setClaw(double forward, double back){
+    double speed = forward - back;
     clawMotor.set(speed);
   }
 
 //Claw turret Motor values
-public void setClawTurret(double speed){
+public void setClawTurret(double forward, double backward){
+  double speed = forward - backward;
   clawTurretMotor.set(speed);
 }
 

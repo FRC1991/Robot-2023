@@ -5,11 +5,12 @@
 package frc.robot.commands.ClawCommands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.RobotContainer;
 
 public class RotateClawTurret extends CommandBase {
   /** Creates a new RotateClawTurret. */
   public RotateClawTurret() {
-    // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(RobotContainer.mClaw);
   }
 
   // Called when the command is initially scheduled.
@@ -18,11 +19,19 @@ public class RotateClawTurret extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+
+    double forward = RobotContainer.mButtonBind.driveRightTrigger;
+    double back = RobotContainer.mButtonBind.driveLeftTrigger;
+    
+    RobotContainer.mClaw.setClawTurret(forward, back);
+  }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    RobotContainer.mClaw.stopClawTurret();
+  }
 
   // Returns true when the command should end.
   @Override

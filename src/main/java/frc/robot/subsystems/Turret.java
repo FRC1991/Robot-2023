@@ -5,7 +5,6 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -58,8 +57,6 @@ public class Turret extends SubsystemBase {
 //Stop turret  
   public void stopTurret() {
     turretMotors.set(0);
-    turretMotor1.setIdleMode(IdleMode.kBrake);
-    turretMotor2.setIdleMode(IdleMode.kBrake);
 
   }
 

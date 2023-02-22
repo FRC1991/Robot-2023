@@ -5,7 +5,6 @@
 package frc.robot.commands.ClawCommands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.ButtonBind;
 import frc.robot.RobotContainer;
 
 public class ManualClaw extends CommandBase {
@@ -22,14 +21,18 @@ public class ManualClaw extends CommandBase {
   @Override
   public void execute() {
 
-   double speed = ButtonBind.auxController.getRightTriggerAxis();
-   RobotContainer.mClaw.setClaw(speed);
+    double forward = RobotContainer.mButtonBind.driveRightTrigger;
+    double back = RobotContainer.mButtonBind.driveLeftTrigger;
+
+   RobotContainer.mClaw.setClaw(forward, back);
 
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    RobotContainer.mClaw.stopClaw();
+  }
 
   // Returns true when the command should end.
   @Override
