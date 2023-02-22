@@ -30,24 +30,18 @@ public class TurnTillTag extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    RobotContainer.mDrivetrain.arcadeDrive(0, turnSpeed);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
+  public void execute() { 
+    tagVis = RobotContainer.aprilTagID;
+    isTagVisibleEntry = tagVis.get();
+
     RobotContainer.mDrivetrain.arcadeDrive(0, turnSpeed);
 
-    while(Robot.isRedAlliance == true){
-      if(isTagVisibleEntry >= 1 || isTagVisibleEntry <= 4){
-        tagFound = true;
-      }
-    }
-  
-      while(Robot.isRedAlliance == false){
-      if(isTagVisibleEntry >= 5 || isTagVisibleEntry <= 8){
-          tagFound = true;
-      }
-    }
+    
   }
 
   // Called once the command ends or is interrupted.
@@ -59,6 +53,17 @@ public class TurnTillTag extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    while(Robot.isRedAlliance == true){
+      if(isTagVisibleEntry >= 1 || isTagVisibleEntry <= 4){
+        tagFound = true;
+      }
+    }
+  
+      while(Robot.isRedAlliance == false){
+      if(isTagVisibleEntry >= 5 || isTagVisibleEntry <= 8){
+          tagFound = true;
+      }
+    }
     return tagFound;
 }
 }

@@ -17,10 +17,9 @@ public class TurretAimTarget extends CommandBase {
   private double steerScale = Constants.visionConstant;
   private double adjustSteer = 0;
   private double xSteer;
-  private AtomicReference <Double> xSteering = RobotContainer.xDistanceAim;
 
 
-  public TurretAimTarget() {
+  public TurretAimTarget(AtomicReference <Double> xSteering) {
     addRequirements(RobotContainer.mTurret);
       
     xSteer = xSteering.get();
@@ -29,7 +28,8 @@ public class TurretAimTarget extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-
+    RobotContainer.mButtonBind.alternatingDriveVibrate();
+    RobotContainer.mButtonBind.alternatingAuxVibrate();
 
     NetworkTableInstance.getDefault()
     .getTable("Shuffleboard")

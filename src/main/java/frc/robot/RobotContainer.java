@@ -6,7 +6,7 @@ package frc.robot;
 
 import frc.robot.commands.DrivetrainCommands.GameDrive;
 import frc.robot.commands.MiscCommands.BrakeMode;
-import frc.robot.commands.VisionCommands.RunForTag;
+import frc.robot.commands.VisionCommands.RunForTarget;
 import frc.robot.commands.ArmCommands.CenterArm;
 import frc.robot.commands.ClawCommands.ResetClaw;
 import frc.robot.subsystems.Arm;
@@ -83,8 +83,8 @@ BrakeMode brakeMode = new BrakeMode();
 GameDrive standardGameDriveCommand = new GameDrive();
 ResetClaw resetClaw = new ResetClaw();
 CenterArm centerArm = new CenterArm();
-RunForTag runForTagDriver = new RunForTag(ButtonBind.driverController.getRightTriggerAxis());
-RunForTag runForTagAuto = new RunForTag();
+RunForTarget runForTagDriver = new RunForTarget(ButtonBind.driverController.getRightTriggerAxis(), xDistanceGamePiece);
+RunForTarget runForTagAuto = new RunForTarget(xDistanceAim);
    
 
   public RobotContainer() {
@@ -115,6 +115,14 @@ RunForTag runForTagAuto = new RunForTag();
 NetworkTableInstance ntInst = NetworkTableInstance.getDefault();
 NetworkTable aimmingNT = ntInst.getTable("limelight");
 NetworkTable gamePieceNT = ntInst.getTable("limelight-gamePiece");
+
+//If tracking during holding A cube otherwise cone
+if(mButtonBind.getAuxA() == true){
+  gamePieceNT.getEntry("pipeline").setNumber(0);
+}else{
+  gamePieceNT.getEntry("pipeline").setNumber(1);
+}
+
 
 //Topics From Aimming NT
  tagIDTopic = aimmingNT.getDoubleTopic("tid");

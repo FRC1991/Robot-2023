@@ -11,23 +11,22 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 
-public class RunForTag extends CommandBase {
+public class RunForTarget extends CommandBase {
   /** Creates a new RunForTag. */
 
   private double steerScale = Constants.visionConstant;
   private double adjustSteer = 0;
   private double speedSet, xSteer;
-  private AtomicReference <Double> xSteering = RobotContainer.xDistanceAim;
 
   
-  public RunForTag() {
+  public RunForTarget(AtomicReference <Double> xSteering) {
     addRequirements(RobotContainer.mDrivetrain);
     xSteer = xSteering.get();
     speedSet = 0.90;
 
   }
 
-  public RunForTag(double speed) {
+  public RunForTarget(double speed, AtomicReference <Double> xSteering) {
 
     addRequirements(RobotContainer.mDrivetrain);
     speedSet = speed;
