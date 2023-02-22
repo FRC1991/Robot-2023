@@ -9,7 +9,6 @@ import frc.robot.commands.MiscCommands.BrakeMode;
 import frc.robot.commands.VisionCommands.RunForTag;
 import frc.robot.commands.ArmCommands.CenterArm;
 import frc.robot.commands.ClawCommands.ResetClaw;
-import frc.robot.commands.DrivetrainCommands.ChargeStationClimb;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Drivetrain;
@@ -77,11 +76,10 @@ public class RobotContainer {
 //=============================Commands +++++++++++++++++++++++++++++++++ 
 
 BrakeMode brakeMode = new BrakeMode();
-ChargeStationClimb chargeStation = new ChargeStationClimb(); 
 GameDrive standardGameDriveCommand = new GameDrive();
 ResetClaw resetClaw = new ResetClaw();
 CenterArm centerArm = new CenterArm();
-RunForTag runForTagDriverSpeed = new RunForTag(ButtonBind.driverController.getRightTriggerAxis());
+RunForTag runForTagDriver = new RunForTag(ButtonBind.driverController.getRightTriggerAxis());
 RunForTag runForTagAuto = new RunForTag();
    
 
@@ -187,7 +185,6 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-gamePiece");
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     mDrivetrain.setDefaultCommand(standardGameDriveCommand);
 
-    mButtonBind.driveBButton.toggleOnTrue(chargeStation);
 
    
 

@@ -122,17 +122,15 @@ public void GameDrive(double forward, double backward, double curve, boolean fas
 //Distance in ft ADJUST FOR WHEELS
   public double getDistanceFeet(){ 
     double avgDistanceInRotations = (leftDriveMotor1.getEncoder().getPosition()
-      + leftDriveMotor2.getEncoder().getPosition()
       + leftDriveMotor3.getEncoder().getPosition()
-      + rightDriveMotor1.getEncoder().getPosition()
-      + rightDriveMotor2.getEncoder().getPosition()
-      + rightDriveMotor3.getEncoder().getPosition())
+      + -rightDriveMotor1.getEncoder().getPosition()
+      + -rightDriveMotor3.getEncoder().getPosition())
 
       / 6.0;
 
-    double avgDistanceInRotationsOfShaft = avgDistanceInRotations / 14.17; //replace with new gear ratio
-    return Math.PI
-     * avgDistanceInRotationsOfShaft; //6 in wheels, so circumfrence in ft is pi
+    double avgDistanceInRotationsOfShaft = avgDistanceInRotations / 15.87; //replace with new gear ratio
+    return 4.1888
+     * avgDistanceInRotationsOfShaft;
   }
 //Distance from tag
   public double distanceFromTargetInFeet(){

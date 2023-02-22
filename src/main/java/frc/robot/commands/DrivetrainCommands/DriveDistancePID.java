@@ -4,43 +4,39 @@
 
 package frc.robot.commands.DrivetrainCommands;
 
-import edu.wpi.first.math.controller.ProfiledPIDController;
-import edu.wpi.first.math.trajectory.TrapezoidProfile;
-import edu.wpi.first.wpilibj2.command.ProfiledPIDCommand;
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.Constants;
 import frc.robot.subsystems.Drivetrain;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class DriveDistancePID extends ProfiledPIDCommand {
+public class DriveDistancePID extends PIDCommand {
   /** Creates a new DriveDistancePID. */
-  public DriveDistancePID(double targetDist, Drivetrain drivetrain) {
+  public DriveDistancePID(double distanceInFeet, Drivetrain drivetrain) {
     super(
-        // The ProfiledPIDController used by the command
-        new ProfiledPIDController(
-            // The PID gains
-            Constants.kDriveP,
-            Constants.kDriveI,
-            Constants.kDriveD,
-            // The motion profile constraints
-            new TrapezoidProfile.Constraints(Constants.kMaxDistPerS, Constants.kMaxAccelerationPerS)),
-        // This should return the measurement
+        new PIDController(Constants.kDriveP, 
+        Constants.kDriveI,
+         Constants.kDriveD),
+        // Close loop on heading
         drivetrain::getDistanceFeet,
-        // This should return the goal (can also be a constant)
-       targetDist,
-        // This uses the output
-        (output, setpoint) -> { drivetrain.arcadeDrive(output, 0);
-          // Use the output (and setpoint, if desired) here
-        });
-    // Use addRequirements() here to declare subsystem dependencies.
-    // Configure additional PID options by calling `getController` here.
-    getController().setTolerance(Constants.kDistTolerance, Constants.kDistRateTolerancePerS);
+        // Set reference to target
+        distanceInFeet,
+        // Pipe output to turn robot
+        output -> drivetrain.arcadeDrive(output, 0),
+        // Require the drive
+        drivetrain);
+
+    // Set the controller tolerance - the delta tolerance ensures the robot is stationary at the
+    // setpoint before it is considered as having reached the reference
+    getController()
+        .setTolerance(Constants.kTurnToleranceDeg, Constants.kTurnRateToleranceDegPerS);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return getController().atGoal();
+    return getController().atSetpoint();
   }
 }
