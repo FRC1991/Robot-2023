@@ -65,6 +65,9 @@ public static final double kTurnRateToleranceDegPerS = 10;
   public static final double kArmExtendI = 0;
   public static final double kArmExtendD = 0;
 
+  public static final double kArmExtendRateToleranceDegPerS = 0;
+  public static final double kArmExtendToleranceDeg = 0; 
+
   public static final double kArmExtendMaxOut = 1;
   public static final double kArmExtendMinOut = -1;
 
@@ -74,6 +77,9 @@ public static final double kTurnRateToleranceDegPerS = 10;
   public static final double kArmLiftP = 1;
   public static final double kArmLiftI = 0;
   public static final double kArmLiftD = 0;
+
+  public static final double kArmLiftToleranceDeg = 0;
+  public static final double kArmLiftRateToleranceDegPerS = 0;
 
   public static final double kArmLiftMaxOut = 1;
   public static final double kArmLiftMinOut = -1;
@@ -92,6 +98,8 @@ public static final double kTurnRateToleranceDegPerS = 10;
     public static final double kMaxAccelerationPerS = 300;
 
     public static final double kDistTolerance = 5;
-    public static final double kDistRateTolerancePerS = 10; 
+    public static final double kDistRateTolerancePerS = 10;
+    
+    
 
   }

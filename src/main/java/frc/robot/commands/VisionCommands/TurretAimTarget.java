@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.ArmCommands;
+package frc.robot.commands.VisionCommands;
 
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 
-public class TurretAim extends CommandBase {
+public class TurretAimTarget extends CommandBase {
   /** Creates a new TurretAim. */
 
   private double steerScale = Constants.visionConstant;
@@ -19,7 +19,7 @@ public class TurretAim extends CommandBase {
   private double xSteer;
   private AtomicReference <Double> xSteering = RobotContainer.xDistanceAim;
  
-  public TurretAim() {
+  public TurretAimTarget() {
     addRequirements(RobotContainer.mTurret);
     xSteer = xSteering.get();
   }
