@@ -18,8 +18,8 @@ public class ArmStageOne extends ParallelCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new ArmExtensionPID(1, RobotContainer.mArm),
-      new ArmLiftPID(1, RobotContainer.mArm)
+      new ArmExtensionPID(1),
+      new ArmLiftPID(1)
       
     );
   }

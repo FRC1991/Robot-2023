@@ -18,8 +18,8 @@ public class ArmStageZero extends ParallelCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-    new ArmExtensionPID(0, RobotContainer.mArm),
-    new ArmLiftPID(0, RobotContainer.mArm)
+    new ArmExtensionPID(0),
+    new ArmLiftPID(0)
     );
   }
 }

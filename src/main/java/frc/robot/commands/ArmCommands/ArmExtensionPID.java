@@ -14,7 +14,8 @@ import frc.robot.subsystems.Arm;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class ArmExtensionPID extends PIDCommand {
   /** Creates a new ArmExtensionPID. */
-  public ArmExtensionPID(double armExtensionInFeet, Arm arm) {
+  static Arm arm;
+  public ArmExtensionPID(double armExtensionInFeet ) {
     super(
         // The controller that the command will use
         new PIDController(Constants.kArmExtendP,
@@ -26,11 +27,9 @@ public class ArmExtensionPID extends PIDCommand {
                armExtensionInFeet,
                // Pipe output to turn robot
                output -> arm.setArmExtend(output),
-               // Require the drive
+               // Require the arm
                arm);
        
-           // Set the controller tolerance - the delta tolerance ensures the robot is stationary at the
-           // setpoint before it is considered as having reached the reference
            getController()
                .setTolerance(Constants.kArmExtendToleranceDeg, Constants.kArmExtendRateToleranceDegPerS);
   }
