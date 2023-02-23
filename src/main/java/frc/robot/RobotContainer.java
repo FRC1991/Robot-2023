@@ -123,19 +123,24 @@ NetworkTableInstance ntInst = NetworkTableInstance.getDefault();
 NetworkTable aimmingNT = ntInst.getTable("limelight");
 NetworkTable gamePieceNT = ntInst.getTable("limelight-gamePiece");
 
+//Auto Pipeline switch
+
+ gamePieceNT.getEntry("pipeline").setNumber(mTurret.visionGamePipelineSwitch(gamePieceSeen));
+
+
 //If tracking during holding A cube otherwise cone
-if(mButtonBind.getAuxA() == true){
-  gamePieceNT.getEntry("pipeline").setNumber(1);
-}else{
-  gamePieceNT.getEntry("pipeline").setNumber(0);
-}
+//if(mButtonBind.getAuxA() == true){
+//  gamePieceNT.getEntry("pipeline").setNumber(1);
+//}else{
+//  gamePieceNT.getEntry("pipeline").setNumber(0);
+//}
 
 //If tracking During holding B Tag otherwise tape
-if(mButtonBind.getAuxB() == true){
-  aimmingNT.getEntry("pipeline").setNumber(1);
-}else{
-  aimmingNT.getEntry("pipeline").setNumber(0);
-}
+//if(mButtonBind.getAuxB() == true){
+//  aimmingNT.getEntry("pipeline").setNumber(1);
+//}else{
+//  aimmingNT.getEntry("pipeline").setNumber(0);
+//}
 
 //Topics From Aimming NT
  tagIDTopic = aimmingNT.getDoubleTopic("tid");

@@ -4,10 +4,13 @@
 
 package frc.robot.subsystems;
 
+import java.util.concurrent.atomic.AtomicReference;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -60,5 +63,20 @@ public class Turret extends SubsystemBase {
 
   }
 
+//Auto pipeline switch
+  public double visionGamePipelineSwitch(AtomicReference<Double> gamePipelinesTV){
+    double gamePipePick = gamePipelinesTV.get();
+    double whichPipeline = 0;
+    Timer.delay(3);
+
+    if(gamePipePick == 1){
+      whichPipeline = 0;
+    }else{
+      whichPipeline = 1;
+    }
+
+    return whichPipeline;
+
+  }
  
 }
