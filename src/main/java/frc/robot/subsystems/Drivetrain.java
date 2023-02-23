@@ -133,7 +133,7 @@ public void GameDrive(double forward, double backward, double curve, boolean fas
      * avgDistanceInRotationsOfShaft;
   }
 //Distance from tag
-  public double distanceFromTargetInFeet(){
+  public double distanceFromTagInFeet(){
     AtomicReference <Double> targetY = RobotContainer.yDistanceAim;  
     double tagY = targetY.get();
     double limelightAngleDeg = 10.0;
@@ -148,6 +148,23 @@ public void GameDrive(double forward, double backward, double curve, boolean fas
 
     return distanceToTargetFeet;
   }
+
+//Distance From tape
+public double distanceFromTapeInFeet(){
+  AtomicReference <Double> targetY = RobotContainer.yDistanceAim;  
+  double tapeY = targetY.get();
+  double limelightAngleDeg = 10.0;
+  double limelightHeightInch = 20.0;
+  double tapeHeightInch = 10.0;
+
+  double angleToTagDeg = limelightAngleDeg + tapeY;
+  double angleToTagRad = angleToTagDeg * (3.14159 / 180.0);
+
+  double distanceToTargetInches = (tapeHeightInch - limelightHeightInch) / Math.tan(angleToTagRad);
+  double distanceToTargetFeet = distanceToTargetInches / 12;
+
+  return distanceToTargetFeet;
+}
 
 
 
