@@ -22,6 +22,7 @@ import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEvent;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -70,6 +71,7 @@ public class RobotContainer {
   public static GenericEntry isChasingTagEntry;
 
   SendableChooser<Command> autoChoose;
+  int posInField = DriverStation.getLocation();
 //==========================  Subsystems +++++++++++++++++++++++
   public static Drivetrain mDrivetrain = new Drivetrain();
   public static Arm mArm = new Arm();
@@ -97,11 +99,16 @@ RunForTarget runForTagAuto = new RunForTarget(xDistanceAim);
 
 //Auto Chooser
   autoChoose = new SendableChooser<Command>();
+  if(posInField == 1){
   autoChoose.setDefaultOption("Auto From Right", brakeMode);
+  }else if(posInField == 2){
   autoChoose.addOption("Auto From Middle", brakeMode);
+  }else{
   autoChoose.addOption("Auto From Left", brakeMode);
+  }
   Shuffleboard.getTab("Main").add(autoChoose);
-//Vison Entries 
+
+  //Vison Entries 
     isChasingTagEntry = Shuffleboard.getTab("Main").add("Is Chasing Tag", isChasingTag).getEntry();
 
 
@@ -118,16 +125,16 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-gamePiece");
 
 //If tracking during holding A cube otherwise cone
 if(mButtonBind.getAuxA() == true){
-  gamePieceNT.getEntry("pipeline").setNumber(0);
-}else{
   gamePieceNT.getEntry("pipeline").setNumber(1);
+}else{
+  gamePieceNT.getEntry("pipeline").setNumber(0);
 }
 
 //If tracking During holding B Tag otherwise tape
 if(mButtonBind.getAuxB() == true){
-  aimmingNT.getEntry("pipeline").setNumber(0);
-}else{
   aimmingNT.getEntry("pipeline").setNumber(1);
+}else{
+  aimmingNT.getEntry("pipeline").setNumber(0);
 }
 
 //Topics From Aimming NT
