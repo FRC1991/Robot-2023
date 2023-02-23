@@ -14,7 +14,8 @@ import frc.robot.subsystems.Drivetrain;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class DriveDistancePID extends PIDCommand {
   /** Creates a new DriveDistancePID. */
-  public DriveDistancePID(double distanceInFeet, Drivetrain drivetrain) {
+  static Drivetrain drivetrain;
+  public DriveDistancePID(double distanceInFeet) {
     super(
         new PIDController(Constants.kDriveP, 
         Constants.kDriveI,

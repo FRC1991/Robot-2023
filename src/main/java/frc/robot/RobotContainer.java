@@ -108,7 +108,7 @@ RunForTarget runForTagAuto = new RunForTarget(xDistanceAim);
   }
   Shuffleboard.getTab("Main").add(autoChoose);
 
-  //Vison Entries 
+//Vison Entries 
     isChasingTagEntry = Shuffleboard.getTab("Main").add("Is Chasing Tag", isChasingTag).getEntry();
 
 
