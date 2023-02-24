@@ -122,17 +122,19 @@ public class Arm extends SubsystemBase {
 
 //Distance in feet for arm extension
   public double getArmExtendDist(){
-    double distInExtension = getArmExtendPos() / 60; // replace with new gear ratio
+    double distInExtension = getArmExtendPos() * 0.1; // one rotation moves it 0.1 inches
 
-    return Math.PI * distInExtension; //replace with circumfrence 
+    return distInExtension; 
   }
 
 //Distance in feet for an arm lifter
   public double getArmLiftDist(){
     double distForLift = getArmLiftOnePos()  + getArmLiftTwoPos()
-    / 60; //replace with new gear ratio
+    / 2; 
 
-    return Math.PI * distForLift;
+    double avgDistanceInRotations = distForLift * 0.255319;// one rotation moves it 0.255 inches
+
+    return avgDistanceInRotations;
   }
 
   
