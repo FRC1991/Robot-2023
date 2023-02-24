@@ -11,9 +11,11 @@ import com.ctre.phoenix.ErrorCode;
 import com.ctre.phoenix.sensors.Pigeon2;
 import com.ctre.phoenix.sensors.Pigeon2.AxisDirection;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -85,6 +87,29 @@ public void GameDrive(double forward, double backward, double curve, boolean fas
     differentialDrive.arcadeDrive(speed, rotation);
 }
 
+//Stop drivetrain
+  public void stopDrivetrain(){
+    differentialDrive.arcadeDrive(0, 0);
+    
+    leftDriveMotor1.setIdleMode(IdleMode.kBrake);
+    leftDriveMotor2.setIdleMode(IdleMode.kBrake);
+    leftDriveMotor3.setIdleMode(IdleMode.kBrake);
+    rightDriveMotor1.setIdleMode(IdleMode.kBrake);
+    rightDriveMotor2.setIdleMode(IdleMode.kBrake);
+    rightDriveMotor3.setIdleMode(IdleMode.kBrake);
+
+    Timer.delay(0.5);
+
+
+    rightDriveMotor1.setIdleMode(IdleMode.kCoast);
+    rightDriveMotor2.setIdleMode(IdleMode.kCoast);
+    rightDriveMotor3.setIdleMode(IdleMode.kCoast);
+    leftDriveMotor1.setIdleMode(IdleMode.kCoast);
+    leftDriveMotor2.setIdleMode(IdleMode.kCoast);
+    leftDriveMotor3.setIdleMode(IdleMode.kCoast);
+
+  }
+
 //Encoders
   public double getLeftDrive1Pos(){
     return leftDriveMotor1.getEncoder().getPosition();
@@ -129,38 +154,26 @@ public void GameDrive(double forward, double backward, double curve, boolean fas
       / 6.0;
 
     double avgDistanceInRotationsOfShaft = avgDistanceInRotations / 15.87; //replace with new gear ratio
-    return 4.1888
-     * avgDistanceInRotationsOfShaft;
-  }
-//Distance from tag
-  public double distanceFromTagInFeet(){
-    AtomicReference <Double> targetY = RobotContainer.yDistanceAim;  
-    double tagY = targetY.get();
-    double limelightAngleDeg = 10.0;
-    double limelightHeightInch = 20.0;
-    double tagHeightInch = 10.0;
-
-    double angleToTagDeg = limelightAngleDeg + tagY;
-    double angleToTagRad = angleToTagDeg * (3.14159 / 180.0);
-
-    double distanceToTargetInches = (tagHeightInch - limelightHeightInch) / Math.tan(angleToTagRad);
-    double distanceToTargetFeet = distanceToTargetInches / 12;
-
-    return distanceToTargetFeet;
+    return 4.1888 * avgDistanceInRotationsOfShaft;
   }
 
-//Distance From tape
-public double distanceFromTapeInFeet(){
+
+//Distance From Target
+public double distanceFromTargetInFeet(){
   AtomicReference <Double> targetY = RobotContainer.yDistanceAim;  
-  double tapeY = targetY.get();
+  double tarY = targetY.get();
   double limelightAngleDeg = 10.0;
   double limelightHeightInch = 20.0;
-  double tapeHeightInch = 10.0;
-
-  double angleToTagDeg = limelightAngleDeg + tapeY;
+  double targetHeightInch = 10.0;
+  if(RobotContainer.mTurret.visionGamePipelineSwitch() == 0){
+   targetHeightInch = 10.0;
+  }else{
+   targetHeightInch = 20.0; 
+  }
+  double angleToTagDeg = limelightAngleDeg + tarY;
   double angleToTagRad = angleToTagDeg * (3.14159 / 180.0);
 
-  double distanceToTargetInches = (tapeHeightInch - limelightHeightInch) / Math.tan(angleToTagRad);
+  double distanceToTargetInches = (targetHeightInch - limelightHeightInch) / Math.tan(angleToTagRad);
   double distanceToTargetFeet = distanceToTargetInches / 12;
 
   return distanceToTargetFeet;
@@ -219,13 +232,13 @@ public ErrorCode resetGyro(){
     .getTable("Shuffleboard")
     .getSubTable("Main")
     .getEntry("Gyro Yaw")
-    .setNumber(getYaw());   
+    .setNumber(Math.abs(getYaw()));   
 
     NetworkTableInstance.getDefault()
     .getTable("Shuffleboard")
     .getSubTable("Main")
     .getEntry("Gyro Pitch")
-    .setNumber(getPitch());   
+    .setNumber(Math.abs(getPitch()));   
 
     if(getPitch() > 2 || getPitch() < -2){
       

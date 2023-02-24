@@ -22,9 +22,9 @@ public class CenterArm extends CommandBase {
   @Override
   public void execute() {
     
-    if(RobotContainer.mTurret.getTurretPos() < 0.0){
+    if(RobotContainer.mTurret.getTurretOnePos() < 0.0){
       RobotContainer.mTurret.setTurret(0.5);
-    }else if(RobotContainer.mTurret.getTurretPos() > 0.0){
+    }else if(RobotContainer.mTurret.getTurretOnePos() > 0.0){
       RobotContainer.mTurret.setTurret(-0.5);
     }
 

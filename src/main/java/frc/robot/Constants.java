@@ -22,19 +22,21 @@ public final class Constants {
   public static final int rightDriveMotor2 = 6;
   public static final int rightDriveMotor3 = 7;
   //Turret Motors
-  public static final int turretMotor = 8;
+  public static final int turretMotor1 = 8;
+  public static final int turretMotor2 = 9;
+
   //Arm Motor
-  public static final int armMotorExtend = 9;
-  public static final int armLiftMotor = 10;
+  public static final int armMotorExtend = 10;
+  public static final int armLiftMotor1 = 11;
+  public static final int armLiftMotor2 = 12;
+
   //Claw Motors
-  public static final int clawTurretMotor = 11;
-  public static final int clawMotor = 12;
+  public static final int clawTurretMotor = 13;
+  public static final int clawMotor = 14;
   //Gyro
   public static final int pigeonIMU = 0;
   //Global Deadband and Motor Multiplier
   public static final double globalDeadband = 0.1;
-  public static final double GTADriveMultiplier = 1;
-
 
   //PID turn Constants
 public static final double kTurnP = 1;
@@ -81,8 +83,6 @@ public static final double kTurnRateToleranceDegPerS = 10;
   public static final double kArmLiftToleranceDeg = 0;
   public static final double kArmLiftRateToleranceDegPerS = 0;
 
-  public static final double kArmLiftMaxOut = 1;
-  public static final double kArmLiftMinOut = -1;
 
   //Vision constant
 

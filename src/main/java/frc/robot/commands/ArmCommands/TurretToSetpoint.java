@@ -20,14 +20,14 @@ public class TurretToSetpoint extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    initPos = RobotContainer.mTurret.getTurretPos();
+    initPos = RobotContainer.mTurret.getTurretOnePos();
     currentPos = initPos;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    currentPos = RobotContainer.mTurret.getTurretPos();
+    currentPos = RobotContainer.mTurret.getTurretOnePos();
     if(targetPos > 0){
       RobotContainer.mTurret.setTurret(speed * Math.abs(targetPos - currentPos));
     }else{

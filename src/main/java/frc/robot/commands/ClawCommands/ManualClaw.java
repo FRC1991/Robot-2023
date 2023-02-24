@@ -9,7 +9,10 @@ import frc.robot.RobotContainer;
 
 public class ManualClaw extends CommandBase {
   /** Creates a new ManualClaw. */
-  public ManualClaw() {
+
+  private double forward, back, speed;
+             
+  public ManualClaw(double forward,double back) {
     addRequirements(RobotContainer.mClaw);
   }
 
@@ -20,11 +23,10 @@ public class ManualClaw extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    
+    speed = forward - back;
 
-    double forward = RobotContainer.mButtonBind.driveRightTrigger;
-    double back = RobotContainer.mButtonBind.driveLeftTrigger;
-
-   RobotContainer.mClaw.setClaw(forward, back);
+  RobotContainer.mClaw.setClaw(speed);
 
   }
 

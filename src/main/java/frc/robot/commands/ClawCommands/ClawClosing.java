@@ -26,7 +26,7 @@ public class ClawClosing extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.mClaw.setClaw(1, 0);
+    RobotContainer.mClaw.setClaw(1);
   }
 
   // Called once the command ends or is interrupted.

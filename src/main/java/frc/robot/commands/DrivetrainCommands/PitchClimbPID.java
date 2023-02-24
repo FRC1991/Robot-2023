@@ -14,7 +14,8 @@ import frc.robot.subsystems.Drivetrain;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class PitchClimbPID extends PIDCommand {
   /** Creates a new PitchClimbPID. */
-  public PitchClimbPID(double targetAngleDegrees, Drivetrain drivetrain) {
+  static Drivetrain drivetrain;
+  public PitchClimbPID(double targetAngleDegrees) {
     super(
       new PIDController(Constants.kChargeP,
        Constants.kChargeI, 

@@ -5,25 +5,29 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Arm extends SubsystemBase {
 //Motor declaration 
 
-  private final CANSparkMax armExtendMotor, armLiftMotor;
-
-  private SparkMaxPIDController armExtendPID, armLiftMotorPID;
+  private final CANSparkMax armExtendMotor, armLiftMotor1, armLiftMotor2;
+  private final MotorControllerGroup armLiftMotors;
 
   public Arm() {
 
 //Arm Motors setup
     armExtendMotor = new CANSparkMax(Constants.armMotorExtend , MotorType.kBrushless);
-    armLiftMotor = new CANSparkMax(Constants.armLiftMotor, MotorType.kBrushless);
+    armLiftMotor1 = new CANSparkMax(Constants.armLiftMotor1, MotorType.kBrushless);
+    armLiftMotor2 = new CANSparkMax(Constants.armLiftMotor2, MotorType.kBrushless);
+
+    armLiftMotors = new MotorControllerGroup(armLiftMotor1, armLiftMotor2);
     
 //Reset encoders before match
     resetArmExtensionEncoder();
@@ -37,39 +41,21 @@ public class Arm extends SubsystemBase {
     armExtendMotor.enableSoftLimit(SoftLimitDirection.kReverse, true);
 
 //Limiters for raising
-    armLiftMotor.setSoftLimit(SoftLimitDirection.kForward, 35);//check how many rotations
-    armLiftMotor.enableSoftLimit(SoftLimitDirection.kForward, true);
+    armLiftMotor1.setSoftLimit(SoftLimitDirection.kForward, 35);//check how many rotations
+    armLiftMotor1.enableSoftLimit(SoftLimitDirection.kForward, true);
 
-    armLiftMotor.setSoftLimit(SoftLimitDirection.kReverse, 35);
-    armLiftMotor.enableSoftLimit(SoftLimitDirection.kReverse, true);
+    armLiftMotor1.setSoftLimit(SoftLimitDirection.kReverse, 35);
+    armLiftMotor1.enableSoftLimit(SoftLimitDirection.kReverse, true);
 
-  
-//Arm PID Motor setup
-    armExtendPID = armExtendMotor.getPIDController();
-    armLiftMotorPID = armLiftMotor.getPIDController();
+    armLiftMotor2.setSoftLimit(SoftLimitDirection.kForward, 35);//check how many rotations
+    armLiftMotor2.enableSoftLimit(SoftLimitDirection.kForward, true);
 
-//PID Values for extender
-    armExtendPID.setP(Constants.kArmExtendP);
-    armExtendPID.setI(Constants.kArmExtendI);
-    armExtendPID.setD(Constants.kArmExtendD);
-    armExtendPID.setOutputRange(Constants.kArmExtendMinOut, Constants.kArmExtendMaxOut);
+    armLiftMotor2.setSoftLimit(SoftLimitDirection.kReverse, 35);
+    armLiftMotor2.enableSoftLimit(SoftLimitDirection.kReverse, true);
 
-//PID values for Lifter
-    armLiftMotorPID.setP(Constants.kArmLiftP);
-    armLiftMotorPID.setI(Constants.kArmLiftI);
-    armLiftMotorPID.setD(Constants.kArmLiftD);
-    armLiftMotorPID.setOutputRange(Constants.kArmLiftMinOut, Constants.kArmLiftMaxOut);
   
   }
 
-//PID Setup
-  public void setArmExtendPID(double armExtenderPos){
-    armExtendPID.setReference(armExtenderPos, CANSparkMax.ControlType.kPosition);
-  }
-
-  public void setArmLiftPID(double armLiftPos){
-    armLiftMotorPID.setReference(armLiftPos, CANSparkMax.ControlType.kPosition);
-  }
 
 //Extender Speed Set
   public void setArmExtend(double speed){
@@ -78,7 +64,7 @@ public class Arm extends SubsystemBase {
 
 //Lifter Speed set
    public void setArmLift(double speed){
-    armLiftMotor.set(speed);
+    armLiftMotors.set(speed);
   }
 
 //get the pos of arm extender
@@ -87,8 +73,12 @@ public class Arm extends SubsystemBase {
   }
 
 //get the pos of arm lifter
-  public double getArmLiftPos(){
-    return armLiftMotor.getEncoder().getPosition();
+  public double getArmLiftOnePos(){
+    return armLiftMotor1.getEncoder().getPosition();
+  }
+
+  public double getArmLiftTwoPos(){
+    return armLiftMotor2.getEncoder().getPosition();
   }
 
 //reset arm extender pos 
@@ -98,18 +88,35 @@ public class Arm extends SubsystemBase {
 
 //reset arm lift pos
   public void resetArmLiftEncoder(){
-    armLiftMotor.getEncoder().setPosition(0);
+    armLiftMotor1.getEncoder().setPosition(0);
+    armLiftMotor2.getEncoder().setPosition(0);
+
   }
 
 //Stop the arm extension 
   public void stopArmExtension(){
     armExtendMotor.set(0);
-    //armExtendMotor.setIdleMode(IdleMode.kBrake);
+
+    armExtendMotor.setIdleMode(IdleMode.kBrake);
+
+    Timer.delay(0.5);
+
+
+    armExtendMotor.setIdleMode(IdleMode.kCoast);
   }
 
 //Stop the arm lift
   public void stopArmLift(){
-    armLiftMotor.set(0);
+    armLiftMotors.set(0);
+
+    armLiftMotor1.setIdleMode(IdleMode.kBrake);
+    armLiftMotor2.setIdleMode(IdleMode.kBrake);
+
+    Timer.delay(0.5);
+
+
+    armLiftMotor1.setIdleMode(IdleMode.kCoast);
+    armLiftMotor2.setIdleMode(IdleMode.kCoast);
   }
 
 
@@ -122,7 +129,8 @@ public class Arm extends SubsystemBase {
 
 //Distance in feet for an arm lifter
   public double getArmLiftDist(){
-    double distForLift = getArmLiftPos() / 60; //replace with new gear ratio
+    double distForLift = getArmLiftOnePos()  + getArmLiftTwoPos()
+    / 60; //replace with new gear ratio
 
     return Math.PI * distForLift;
   }

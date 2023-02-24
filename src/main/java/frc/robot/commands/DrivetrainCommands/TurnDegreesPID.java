@@ -14,7 +14,9 @@ import frc.robot.subsystems.Drivetrain;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class TurnDegreesPID extends PIDCommand {
   /** Creates a new TurnDegreesPID. */
-  public TurnDegreesPID(double targetAngleDegrees, Drivetrain drivetrain) {
+  static Drivetrain drivetrain;
+
+  public TurnDegreesPID(double targetAngleDegrees) {
     super(
       new PIDController(Constants.kTurnP,
        Constants.kTurnI, 

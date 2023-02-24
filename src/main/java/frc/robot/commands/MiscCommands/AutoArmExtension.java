@@ -4,22 +4,21 @@
 
 package frc.robot.commands.MiscCommands;
 
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.RobotContainer;
 import frc.robot.commands.ArmCommands.ArmExtensionPID;
-import frc.robot.commands.ArmCommands.ArmLiftPID;
+import frc.robot.commands.VisionCommands.TurretAimTarget;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class ArmStageZero extends ParallelCommandGroup {
-  /** Creates a new ArmStageZero. */
-  public ArmStageZero() {
+public class AutoArmExtension extends SequentialCommandGroup {
+  /** Creates a new AutoArmExtension. */
+  public AutoArmExtension() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-    new ArmExtensionPID(0),
-    new ArmLiftPID(0)
-    );
+    new TurretAimTarget(RobotContainer.xDistanceAim),  
+    new ArmExtensionPID(RobotContainer.mDrivetrain.distanceFromTargetInFeet()));
   }
 }

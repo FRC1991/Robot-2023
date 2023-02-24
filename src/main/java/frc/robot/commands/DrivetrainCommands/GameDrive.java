@@ -6,14 +6,20 @@
 package frc.robot.commands.DrivetrainCommands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.ButtonBind;
 import frc.robot.RobotContainer;
 
 public class GameDrive extends CommandBase {
 
-  
-  public GameDrive(){  
+ private double forward, backward, curve;
+  private boolean fastTurn;
+
+  public GameDrive(double forwards, double back, double curv, boolean inPlaceTurn){  
   addRequirements(RobotContainer.mDrivetrain);
+
+    forward = forwards;
+    back = backward;
+    curv = curve;
+    fastTurn = inPlaceTurn;
 }
 
 
@@ -26,12 +32,6 @@ public class GameDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-  
-    double forward = ButtonBind.driverController.getRightTriggerAxis();
-    double backward = ButtonBind.driverController.getLeftTriggerAxis();
-    double curve = ButtonBind.driverController.getLeftX();
-    boolean fastTurn = ButtonBind.driverController.rightBumper().getAsBoolean();
-    
 
     RobotContainer.mDrivetrain.GameDrive(forward, backward, curve, fastTurn);
 

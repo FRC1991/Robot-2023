@@ -4,21 +4,10 @@
 
 package frc.robot;
 
-import frc.robot.commands.DrivetrainCommands.GameDrive;
-import frc.robot.commands.MiscCommands.BrakeMode;
-import frc.robot.commands.VisionCommands.RunForTarget;
-import frc.robot.commands.ArmCommands.CenterArm;
-import frc.robot.commands.ClawCommands.ResetClaw;
-import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.Claw;
-import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.Turret;
-
 import java.util.EnumSet;
 import java.util.concurrent.atomic.AtomicReference;
 
 import edu.wpi.first.networktables.DoubleTopic;
-import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEvent;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -28,6 +17,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commands.DrivetrainCommands.GameDrive;
+import frc.robot.commands.VisionCommands.RunForTarget;
+import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Claw;
+import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Turret;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -66,10 +61,6 @@ public class RobotContainer {
   yDistanceGamePieceListenerHandle,
   xDistanceGamePieceListenerHandle;
 
-  public static boolean isChasingTag = false;
-
-  public static GenericEntry isChasingTagEntry;
-
   SendableChooser<Command> autoChoose;
   int posInField = DriverStation.getLocation();
 //==========================  Subsystems +++++++++++++++++++++++
@@ -81,10 +72,12 @@ public class RobotContainer {
 
 //=============================Commands +++++++++++++++++++++++++++++++++ 
 
-BrakeMode brakeMode = new BrakeMode();
-GameDrive standardGameDriveCommand = new GameDrive();
-ResetClaw resetClaw = new ResetClaw();
-CenterArm centerArm = new CenterArm();
+GameDrive standardGameDriveCommand = new GameDrive(mButtonBind.getDriveRightTrigger(), 
+mButtonBind.getDriveLeftTrigger(),
+mButtonBind.getDriveLeftX(),
+mButtonBind.getDriveRightBumper());
+
+
 RunForTarget runForTagDriver = new RunForTarget(ButtonBind.driverController.getRightTriggerAxis(), xDistanceGamePiece);
 RunForTarget runForTagAuto = new RunForTarget(xDistanceAim);
    
@@ -100,17 +93,13 @@ RunForTarget runForTagAuto = new RunForTarget(xDistanceAim);
 //Auto Chooser
   autoChoose = new SendableChooser<Command>();
   if(posInField == 1){
-  autoChoose.setDefaultOption("Auto From Right", brakeMode);
+  autoChoose.setDefaultOption("Auto From Right", runForTagDriver);
   }else if(posInField == 2){
-  autoChoose.addOption("Auto From Middle", brakeMode);
+  autoChoose.addOption("Auto From Middle", runForTagDriver);
   }else{
-  autoChoose.addOption("Auto From Left", brakeMode);
+  autoChoose.addOption("Auto From Left", runForTagDriver);
   }
   Shuffleboard.getTab("Main").add(autoChoose);
-
-//Vison Entries 
-    isChasingTagEntry = Shuffleboard.getTab("Main").add("Is Chasing Tag", isChasingTag).getEntry();
-
 
   }
  
@@ -125,7 +114,7 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-gamePiece");
 
 //Auto Pipeline switch
 
- gamePieceNT.getEntry("pipeline").setNumber(mTurret.visionGamePipelineSwitch(gamePieceSeen));
+ gamePieceNT.getEntry("pipeline").setNumber(mTurret.visionGamePipelineSwitch());
 
 
 //If tracking during holding A cube otherwise cone
