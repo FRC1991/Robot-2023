@@ -17,7 +17,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commands.ArmCommands.ManualTurret;
 import frc.robot.commands.DrivetrainCommands.GameDrive;
+import frc.robot.commands.MiscCommands.BrakeMode;
 import frc.robot.commands.VisionCommands.RunForTarget;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Claw;
@@ -72,10 +74,7 @@ public class RobotContainer {
 
 //=============================Commands +++++++++++++++++++++++++++++++++ 
 
-GameDrive standardGameDriveCommand = new GameDrive(mButtonBind.getDriveRightTrigger(), 
-mButtonBind.getDriveLeftTrigger(),
-mButtonBind.getDriveLeftX(),
-mButtonBind.getDriveRightBumper());
+GameDrive standardGameDriveCommand = new GameDrive();
 
 
 RunForTarget runForTagDriver = new RunForTarget(ButtonBind.driverController.getRightTriggerAxis(), xDistanceGamePiece);
@@ -211,10 +210,11 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-gamePiece");
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     mDrivetrain.setDefaultCommand(standardGameDriveCommand);
 
-
-   
-
+    mButtonBind.driveAButton.whileTrue(new BrakeMode());
     
+    mButtonBind.driveAButton.onTrue(new ManualTurret());
+    mButtonBind.driveBButton.onTrue(new ManualTurret());
+
     
   }
 

@@ -30,6 +30,10 @@ public class BrakeMode extends CommandBase {
     RobotContainer.mDrivetrain.getRightDrive1().setIdleMode(IdleMode.kBrake);
     RobotContainer.mDrivetrain.getRightDrive2().setIdleMode(IdleMode.kBrake);
     RobotContainer.mDrivetrain.getRightDrive3().setIdleMode(IdleMode.kBrake);
+    
+    RobotContainer.mTurret.getTurret1().setIdleMode(IdleMode.kBrake);
+    RobotContainer.mTurret.getTurret2().setIdleMode(IdleMode.kBrake);
+
     Timer.delay(0.3);
   }
 
@@ -42,7 +46,11 @@ public class BrakeMode extends CommandBase {
     RobotContainer.mDrivetrain.getRightDrive1().setIdleMode(IdleMode.kCoast);
     RobotContainer.mDrivetrain.getRightDrive2().setIdleMode(IdleMode.kCoast);
     RobotContainer.mDrivetrain.getRightDrive3().setIdleMode(IdleMode.kCoast);
+  
+    RobotContainer.mTurret.getTurret1().setIdleMode(IdleMode.kCoast);
+    RobotContainer.mTurret.getTurret2().setIdleMode(IdleMode.kCoast);
   }
+
 
   // Returns true when the command should end.
   @Override

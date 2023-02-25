@@ -74,6 +74,18 @@ public double getTurretTwoPos(){
     turretMotor1.setIdleMode(IdleMode.kCoast);
     turretMotor2.setIdleMode(IdleMode.kCoast);
   }
+  
+//Motor Getters 
+public CANSparkMax getTurret1(){
+  return turretMotor1;
+}
+
+public CANSparkMax getTurret2(){
+  return turretMotor2;
+}
+
+
+
 
 //Auto pipeline switch
   public double visionGamePipelineSwitch(){

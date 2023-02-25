@@ -10,8 +10,8 @@ import frc.robot.RobotContainer;
 public class RotateClawTurret extends CommandBase {
   /** Creates a new RotateClawTurret. */
 
-  private double speed, forward, back; 
-  public RotateClawTurret(double forward, double back) {
+  private double speed;
+  public RotateClawTurret() {
     addRequirements(RobotContainer.mClaw);
   }
 
@@ -23,7 +23,8 @@ public class RotateClawTurret extends CommandBase {
   @Override
   public void execute() {
 
-  speed = forward - back;
+    speed = RobotContainer.mButtonBind.getDriveRightX();
+    
     
     RobotContainer.mClaw.setClawTurret(speed);
   }

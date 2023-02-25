@@ -11,9 +11,8 @@ public class ManualArmExtension extends CommandBase {
   /** Creates a new ManualArmExtension. */
   private double speedSet;
 
-  public ManualArmExtension(double speed) {
+  public ManualArmExtension() {
     addRequirements(RobotContainer.mArm);  
-    speedSet = speed;
   }
 
   // Called when the command is initially scheduled.
@@ -23,6 +22,7 @@ public class ManualArmExtension extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    speedSet = RobotContainer.mButtonBind.driveLeftX;
     RobotContainer.mArm.setArmLift(speedSet);
   }
 
