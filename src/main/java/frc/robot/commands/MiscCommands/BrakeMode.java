@@ -34,6 +34,8 @@ public class BrakeMode extends CommandBase {
     RobotContainer.mTurret.getTurret1().setIdleMode(IdleMode.kBrake);
     RobotContainer.mTurret.getTurret2().setIdleMode(IdleMode.kBrake);
 
+    RobotContainer.mArm.getArmExtender().setIdleMode(IdleMode.kBrake);
+
     Timer.delay(0.3);
   }
 
@@ -49,6 +51,9 @@ public class BrakeMode extends CommandBase {
   
     RobotContainer.mTurret.getTurret1().setIdleMode(IdleMode.kCoast);
     RobotContainer.mTurret.getTurret2().setIdleMode(IdleMode.kCoast);
+
+    RobotContainer.mArm.getArmExtender().setIdleMode(IdleMode.kCoast);
+
   }
 
 

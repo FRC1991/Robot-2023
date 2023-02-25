@@ -9,10 +9,11 @@ import frc.robot.RobotContainer;
 
 public class ManualTurret extends CommandBase {
 
-  private boolean speedSet, speed;
-  
-  public ManualTurret() {
+  private double speedSet;
+
+  public ManualTurret(double speed) {
     addRequirements(RobotContainer.mTurret);
+    speedSet = speed;
   }
 
   // Called when the command is initially scheduled.
@@ -22,17 +23,13 @@ public class ManualTurret extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    speedSet = RobotContainer.mButtonBind.driveAButton.getAsBoolean();
-    speed = RobotContainer.mButtonBind.driveAButton.getAsBoolean();
 
-    if(speedSet = true){
-      RobotContainer.mTurret.setTurret(0.25);
-    }else if(speed = true){
-      RobotContainer.mTurret.setTurret(-0.25);
+      RobotContainer.mTurret.setTurret(speedSet);
+      
     }
 
 
-  }
+  
 
   // Called once the command ends or is interrupted.
   @Override

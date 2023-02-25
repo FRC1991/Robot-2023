@@ -11,6 +11,7 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -33,11 +34,15 @@ public class Turret extends SubsystemBase {
     //Limiters
     turretMotor1.setSoftLimit(SoftLimitDirection.kForward, 35);//check how many rotations
     turretMotor1.enableSoftLimit(SoftLimitDirection.kForward, true);
-
+    
+    turretMotor1.setSoftLimit(SoftLimitDirection.kReverse, 0);//check how many rotations
+    turretMotor1.enableSoftLimit(SoftLimitDirection.kReverse, true);
+    
     turretMotor2.setSoftLimit(SoftLimitDirection.kForward, 35);//check how many rotations
     turretMotor2.enableSoftLimit(SoftLimitDirection.kForward, true);
 
-
+    turretMotor2.setSoftLimit(SoftLimitDirection.kReverse, 0);//check how many rotations
+    turretMotor2.enableSoftLimit(SoftLimitDirection.kReverse, true);
   }
 //Turret speed set
   public void setTurret(double speed){
@@ -102,5 +107,19 @@ public CANSparkMax getTurret2(){
 
     return whichPipeline;
   }
+
+  @Override
+  public void periodic() {
+
+
+    
+      NetworkTableInstance.getDefault()
+      .getTable("Shuffleboard")
+      .getSubTable("Main")
+      .getEntry("Turret Pos check for limiter")
+      .setNumber(Math.abs(getTurretOnePos()));       
+     }
+    
+    
  
 }

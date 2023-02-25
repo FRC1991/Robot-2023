@@ -10,8 +10,9 @@ import frc.robot.RobotContainer;
 public class ManualArmLifter extends CommandBase {
   /** Creates a new ArmLifter. */
   private double speedSet;
-  public ManualArmLifter() {
+  public ManualArmLifter(double speed) {
     addRequirements(RobotContainer.mArm);
+    speedSet = speed;
   }
 
   // Called when the command is initially scheduled.
@@ -21,7 +22,6 @@ public class ManualArmLifter extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    speedSet = RobotContainer.mButtonBind.driveRightY;
     RobotContainer.mArm.setArmLift(speedSet);
   }
 

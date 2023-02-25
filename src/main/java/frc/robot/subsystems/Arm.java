@@ -118,6 +118,14 @@ public class Arm extends SubsystemBase {
     armLiftMotor1.setIdleMode(IdleMode.kCoast);
     armLiftMotor2.setIdleMode(IdleMode.kCoast);
   }
+  
+//Motor Getters 
+public CANSparkMax getArmExtender(){
+  return armExtendMotor;
+}
+
+
+
 
 
 //Distance in feet for arm extension
