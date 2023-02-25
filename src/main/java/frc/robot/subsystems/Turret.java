@@ -33,20 +33,21 @@ public class Turret extends SubsystemBase {
     resetTurretEncoder();
     //Limiters
     turretMotor1.setSoftLimit(SoftLimitDirection.kForward, 35);//check how many rotations
-    turretMotor1.enableSoftLimit(SoftLimitDirection.kForward, true);
+    //turretMotor1.enableSoftLimit(SoftLimitDirection.kForward, true);
     
     turretMotor1.setSoftLimit(SoftLimitDirection.kReverse, 0);//check how many rotations
-    turretMotor1.enableSoftLimit(SoftLimitDirection.kReverse, true);
+    //turretMotor1.enableSoftLimit(SoftLimitDirection.kReverse, true);
     
     turretMotor2.setSoftLimit(SoftLimitDirection.kForward, 35);//check how many rotations
-    turretMotor2.enableSoftLimit(SoftLimitDirection.kForward, true);
+    //turretMotor2.enableSoftLimit(SoftLimitDirection.kForward, true);
 
     turretMotor2.setSoftLimit(SoftLimitDirection.kReverse, 0);//check how many rotations
-    turretMotor2.enableSoftLimit(SoftLimitDirection.kReverse, true);
+    //turretMotor2.enableSoftLimit(SoftLimitDirection.kReverse, true);
   }
 //Turret speed set
   public void setTurret(double speed){
-    turretMotors.set(speed);
+    turretMotor1.set(speed);
+    turretMotor2.set(speed);
   } 
 
 //Get turret pos

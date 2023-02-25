@@ -10,10 +10,11 @@ import frc.robot.RobotContainer;
 public class ManualClaw extends CommandBase {
   /** Creates a new ManualClaw. */
 
-  private boolean forwardBool, backBool;
+  private double speedSet;
              
-  public ManualClaw() {
+  public ManualClaw(double speed) {
     addRequirements(RobotContainer.mClaw);
+    speedSet = speed;
   }
 
   // Called when the command is initially scheduled.
@@ -24,21 +25,15 @@ public class ManualClaw extends CommandBase {
   @Override
   public void execute() {
 
-    forwardBool = RobotContainer.mButtonBind.getDriveRightBumper();
-    backBool = RobotContainer.mButtonBind.getDriveLeftBumper();
 
-    if(forwardBool== true){
-      RobotContainer.mClaw.setClaw(1);
-    }else if(backBool == true){
-      RobotContainer.mClaw.setClaw(-1);
-    }
+      RobotContainer.mClaw.setClaw(speedSet);
+    
 
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    RobotContainer.mClaw.stopClaw();
   }
 
   // Returns true when the command should end.

@@ -10,9 +10,10 @@ import frc.robot.RobotContainer;
 public class RotateClawTurret extends CommandBase {
   /** Creates a new RotateClawTurret. */
 
-  private double speed;
-  public RotateClawTurret() {
+  private double speedSet;
+  public RotateClawTurret(double speed) {
     addRequirements(RobotContainer.mClaw);
+    speedSet = speed;
   }
 
   // Called when the command is initially scheduled.
@@ -23,10 +24,9 @@ public class RotateClawTurret extends CommandBase {
   @Override
   public void execute() {
 
-    speed = RobotContainer.mButtonBind.getDriveRightX();
     
     
-    RobotContainer.mClaw.setClawTurret(speed);
+    RobotContainer.mClaw.setClawTurret(speedSet);
   }
 
   // Called once the command ends or is interrupted.
