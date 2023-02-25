@@ -115,7 +115,7 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-gamePiece");
 
 //Auto Pipeline switch
 
- gamePieceNT.getEntry("pipeline").setNumber(mTurret.visionGamePipelineSwitch());
+ //gamePieceNT.getEntry("pipeline").setNumber(mTurret.visionGamePipelineSwitch());
 
 
 //If tracking during holding A cube otherwise cone
@@ -126,11 +126,11 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-gamePiece");
 //}
 
 //If tracking During holding B Tag otherwise tape
-//if(mButtonBind.getAuxB() == true){
-//  aimmingNT.getEntry("pipeline").setNumber(1);
-//}else{
-//  aimmingNT.getEntry("pipeline").setNumber(0);
-//}
+if(mButtonBind.getAuxB() == true){
+  aimmingNT.getEntry("pipeline").setNumber(1);
+}else{
+  aimmingNT.getEntry("pipeline").setNumber(0);
+}
 
 //Topics From Aimming NT
  tagIDTopic = aimmingNT.getDoubleTopic("tid");
@@ -220,8 +220,8 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-gamePiece");
     mButtonBind.driveDPadRight.whileTrue(new ManualArmExtension(0.1));
     mButtonBind.driveDPadLeft.whileTrue(new ManualArmExtension(-0.1));
 
-    mButtonBind.driveDPadUp.whileTrue(new ManualArmLifter(0.8));
-    mButtonBind.driveDPadDown.whileTrue(new ManualArmLifter(-0.8));
+    mButtonBind.driveDPadUp.whileTrue(new ManualArmLifter(0.2));
+    mButtonBind.driveDPadDown.whileTrue(new ManualArmLifter(-0.2));
   }
 
   /**

@@ -46,8 +46,13 @@ public class Turret extends SubsystemBase {
   }
 //Turret speed set
   public void setTurret(double speed){
+    if(speed > 0){
     turretMotor1.set(speed);
+    turretMotor2.set(0);
+    }else if(speed < 0){
+    turretMotor1.set(0);
     turretMotor2.set(speed);
+    }
   } 
 
 //Get turret pos
