@@ -194,8 +194,20 @@ if(mButtonBind.getAuxB() == true){
     event -> {
       xDistanceGamePiece.set(event.valueData.value.getDouble());
     });
-}
 
+    
+}
+//++++++=========+++++======++++++POSSIBLE NT SWAP TEST???
+  //public AtomicReference<Double> name(){
+  //xDistanceGamePieceListenerHandle = ntInst.addListener(
+    //xDistanceGamePieceTopic,
+//EnumSet.of(NetworkTableEvent.Kind.kValueAll), 
+//event -> {
+//  xDistanceGamePiece.set(event.valueData.value.getDouble());
+//});
+
+//return xDistanceGamePiece;
+//}
 
 
 
