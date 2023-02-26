@@ -32,7 +32,7 @@ public class DriveDistancePID extends PIDCommand {
     // Set the controller tolerance - the delta tolerance ensures the robot is stationary at the
     // setpoint before it is considered as having reached the reference
     getController()
-        .setTolerance(Constants.kTurnToleranceDeg, Constants.kTurnRateToleranceDegPerS);
+        .setTolerance(Constants.kDistTolerance, Constants.kDistRateTolerancePerS);
   }
 
   // Returns true when the command should end.
