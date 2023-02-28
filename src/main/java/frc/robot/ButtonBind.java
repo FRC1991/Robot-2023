@@ -215,11 +215,22 @@ public class ButtonBind {
 //Limit switches
     public final DigitalInput clawLimitSwitch = new DigitalInput(0);
     public final DigitalInput turretBeamBreak = new DigitalInput(1);
-    public final DigitalInput clawTurretBeam = new DigitalInput(2);
+    public final DigitalInput clawTurretBeamBreak = new DigitalInput(2);
+    public final DigitalInput armLiftMaxLimitSwitch = new DigitalInput(3);
+    public final DigitalInput armLiftMinLimitSwitch = new DigitalInput(4);
+    public final DigitalInput armExtendMaxLimitSwitch = new DigitalInput(5);
+    public final DigitalInput armExtendMinLimitSwitch = new DigitalInput(6);
+
+
 
     public final Trigger clawLimit = new Trigger(clawLimitSwitch::get);
     public final Trigger turretBeam = new Trigger(turretBeamBreak::get);
-    public final Trigger clawTurret = new Trigger(clawTurretBeam::get);
+    public final Trigger clawTurretBeam = new Trigger(clawTurretBeamBreak::get);
+    public final Trigger armLiftMaxLimit = new Trigger(armLiftMaxLimitSwitch::get);
+    public final Trigger armLiftMinLimit = new Trigger(armLiftMinLimitSwitch::get);
+    public final Trigger armExtendMaxLimit = new Trigger(armExtendMaxLimitSwitch::get);
+    public final Trigger armExtendMinLimit = new Trigger(armExtendMinLimitSwitch::get);
+
 
 //Rumble Controllers
 

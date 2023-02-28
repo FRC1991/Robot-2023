@@ -15,6 +15,8 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.ArmCommands.ManualArmExtension;
@@ -26,6 +28,7 @@ import frc.robot.commands.VisionCommands.RunForTarget;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.LEDStrips;
 import frc.robot.subsystems.Turret;
 
 /**
@@ -73,6 +76,7 @@ public class RobotContainer {
   public static Claw mClaw = new Claw();
   public static Turret mTurret = new Turret();
   public static ButtonBind mButtonBind = new ButtonBind();
+  public static LEDStrips mLED =  new LEDStrips();
 
 //=============================Commands +++++++++++++++++++++++++++++++++ 
 
@@ -224,6 +228,8 @@ if(mButtonBind.getAuxB() == true){
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     mDrivetrain.setDefaultCommand(standardGameDriveCommand);
 
+    mLED.setDefaultCommand(ledStripCommand);
+
     mButtonBind.driveAButton.whileTrue(new BrakeMode());
     
     mButtonBind.driveXButton.whileTrue(new ManualTurret(0.25));
@@ -234,6 +240,65 @@ if(mButtonBind.getAuxB() == true){
 
     mButtonBind.driveDPadUp.whileTrue(new ManualArmLifter(0.2));
     mButtonBind.driveDPadDown.whileTrue(new ManualArmLifter(-0.2));
+
+    //Limiters activation
+
+    mButtonBind.clawLimit.whileTrue(
+      new SequentialCommandGroup(
+          new InstantCommand(
+            () -> {
+                mClaw.setClaw(0);
+            }),
+          new InstantCommand(
+            () -> {
+                mClaw.resetClawEncoder();
+            })));
+
+    mButtonBind.armExtendMinLimit.whileTrue(
+      new SequentialCommandGroup(
+          new InstantCommand(
+            () -> {
+                mArm.setArmExtend(0);
+            }),
+          new InstantCommand(
+            () -> {
+              mArm.resetArmExtensionEncoder();
+            })));
+
+    mButtonBind.armExtendMaxLimit.whileTrue(
+        new InstantCommand(
+            () -> {
+              mArm.setArmExtend(0);
+             }));
+
+    mButtonBind.armLiftMinLimit.whileTrue(
+     new SequentialCommandGroup(
+         new InstantCommand(
+           () -> {
+               mArm.setArmLift(0);
+           }),
+         new InstantCommand(
+           () -> {
+             mArm.resetArmLiftEncoder();
+           })));
+
+   mButtonBind.armLiftMaxLimit.whileTrue(
+        new InstantCommand(
+          () -> {
+              mArm.setArmLift(0);
+          }));
+
+   mButtonBind.turretBeam.whileTrue(
+          new InstantCommand(
+          () ->{
+            mTurret.resetTurretEncoder();
+          }));
+
+    mButtonBind.clawTurretBeam.whileTrue(
+          new InstantCommand(
+          () ->{
+            mClaw.resetClawTurretEncoder();
+          }));
   }
 
   /**
