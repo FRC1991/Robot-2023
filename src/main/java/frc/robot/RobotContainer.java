@@ -228,7 +228,7 @@ if(mButtonBind.getAuxB() == true){
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     mDrivetrain.setDefaultCommand(standardGameDriveCommand);
 
-    mLED.setDefaultCommand(ledStripCommand);
+    //mLED.setDefaultCommand(ledStripCommand);
 
     mButtonBind.driveAButton.whileTrue(new BrakeMode());
     

@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class LEDStrips extends SubsystemBase {
@@ -30,7 +31,7 @@ public class LEDStrips extends SubsystemBase {
 
     rightLED.start();
     leftLED.start();
-
+//set lights to orange 
     for (var i = 0; i < rightLEDBuffer.getLength(); i++) {
       rightLEDBuffer.setRGB(i, 245, 119, 22);
    }
@@ -42,10 +43,42 @@ public class LEDStrips extends SubsystemBase {
 
   }
 
+  public void setLightsToYellow(){
+    for (var i = 0; i < rightLEDBuffer.getLength(); i++) {
+      rightLEDBuffer.setRGB(i, 250, 206, 45);
+   }
+   for (var i = 0; i < leftLEDBuffer.getLength(); i++) {
+    leftLEDBuffer.setRGB(i, 250, 206, 45);
+  }
+   rightLED.setData(rightLEDBuffer);
+   leftLED.setData(leftLEDBuffer);
+
+  }
+
+
+  public void setLightsToYellowBlink(){
+    for (var i = 0; i < rightLEDBuffer.getLength(); i++) {
+      rightLEDBuffer.setRGB(i, 250, 206, 45);
+   }
+   for (var i = 0; i < leftLEDBuffer.getLength(); i++) {
+    leftLEDBuffer.setRGB(i, 250, 206, 45);
+  }
+  
+  Timer.delay(0.3);
+  
+  rightLED.setData(rightLEDBuffer);
+  
+  Timer.delay(0.3);
+  
+  leftLED.setData(leftLEDBuffer);
+
+  } 
+
+
   @Override
   public void periodic() {
 
-    
+
 
   }
 }
