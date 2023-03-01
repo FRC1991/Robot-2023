@@ -57,6 +57,7 @@ public class LEDStrips extends SubsystemBase {
 
 
   public void setLightsToYellowBlink(){
+    
     for (var i = 0; i < rightLEDBuffer.getLength(); i++) {
       rightLEDBuffer.setRGB(i, 250, 206, 45);
    }

@@ -24,6 +24,7 @@ import frc.robot.commands.ArmCommands.ManualArmLifter;
 import frc.robot.commands.ArmCommands.ManualTurret;
 import frc.robot.commands.DrivetrainCommands.GameDrive;
 import frc.robot.commands.MiscCommands.BrakeMode;
+import frc.robot.commands.MiscCommands.LEDCommunication;
 import frc.robot.commands.VisionCommands.RunForTarget;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Claw;
@@ -240,6 +241,8 @@ if(mButtonBind.getAuxB() == true){
 
     mButtonBind.driveDPadUp.whileTrue(new ManualArmLifter(0.2));
     mButtonBind.driveDPadDown.whileTrue(new ManualArmLifter(-0.2));
+
+    mButtonBind.driveAButton.toggleOnTrue(new LEDCommunication());
 
     //Limiters activation
 
