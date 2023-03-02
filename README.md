@@ -28,6 +28,11 @@ These are quick profiles on our mentors and team leaders.
 
 > ### Mentors
 - Jay Kean
+    - Fun Fact: 
+    - Hobbies: 
+- Eileen Kean
+    - Fun Fact: Former team captain.
+    - Hobbies: Legos, Watching baseball
 
 > ### Student Leaders
  - Build Captain: Pacey Mahar
