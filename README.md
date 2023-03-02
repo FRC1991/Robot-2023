@@ -31,7 +31,10 @@ These are quick profiles on our mentors and team leaders.
 
 > ### Student Leaders
  - Build Captain: Pacey Mahar
+    Fun Fact: Knows how to play bugle.
+    Hobbies: Re-enacting, Costume design.
  - Electric/Programming Captain: Maanit Malhan
+    
  - Design Co-Leaders: Abhijith Tippireddy
  - Safety Captain: Catherine Hockenhull
  - Corprate Captain: Nasere Lewin
