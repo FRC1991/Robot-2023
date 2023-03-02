@@ -27,11 +27,14 @@ For the build starting from the drivetrain. We used two neo evo slims gearboxes 
 These are quick profiles on our mentors and team leaders.
 
 > ### Mentors
+>> - Jay Kean
 
 > ### Student Leaders
->> ### - Build Captain: Pacey Mahar
+>> - Build Captain: Pacey Mahar
 >> - Electric/Programming Captain: Maanit Malhan
 >> - Design Co-Leaders: Abhijith Tippireddy
 >> - Safety Captain: Catherine Hockenhull
+>> - Corprate Captain: Nasere Lewin
+
 
 
