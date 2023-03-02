@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 import frc.robot.RobotContainer;
 
-public class TurnTillTag extends CommandBase {
+public class TurnTillTarget extends CommandBase {
   /** Creates a new TurnTillTag. */
 
   private double isTagVisibleEntry;
@@ -18,7 +18,7 @@ public class TurnTillTag extends CommandBase {
   private boolean tagFound = false;
   private AtomicReference<Double> tagVis;
 
-  public TurnTillTag(double speed) {
+  public TurnTillTarget(double speed) {
 
     addRequirements(RobotContainer.mDrivetrain);
     turnSpeed = speed;
