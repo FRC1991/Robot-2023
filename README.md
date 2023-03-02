@@ -6,7 +6,7 @@ This is a summary of the our robot's software and hardware. Feel free to find us
 
 - [Quick information for scouting](#Quick-scouting-information)
 - [The electronics](#Electronics)
-- [The build/CAD](#Build/CAD)
+- [The build/CAD](#Build-CAD)
 - [The software](#Software)
 - [The team](#Team)
 
@@ -18,7 +18,7 @@ For this year we transitioned over to the [REV PDH](https://www.revrobotics.com/
 
 For the software our entire robot is programmed in Java using the WPILib library. We used the command based paradigm for its cleanliness. All our code for this robot is avaible in [this github repository](https://github.com/FRC1991/Robot-2023). The code will be explained by elaborating on each important file separately. First our robot container holds our button bindings, networktables and shuffleboard code. As a feature we have an automatic autonomous chooser dependent on our position which we pull in from the FMS. Our Robot file just checks which alliance we are on so we know which tags to focus on(useage explained more later) and puts the motor in coast mode once the match ends. Our constants have all the PID constants and motor controller constants. The ButtonBind file holds all the bindings for the controller which we can supply to the commands and has a feature that talks to the driver using controller rumbles. Our subsystems are very standard feel free to check them out as you please! We also have some special vision commands which enable us to follow not only the targets but also the game pieces(Reason for two limelights). Using commands that turn till we see a tag/game piece and run to that tag/game piece till we center on it. Since we have multiple targets to follow we have an auto pipeline switch method making it easier for the drivers to control the robot. We also communicate with human player and drivers using our LED strips. Our drive method is called gameDrive which makes it so the triggers control forward and backwards movement while a joystick controls turning and holding the bumper with joystick enables in place turning(just like a game). There will a control mapping picture available soon. There is still a lot more to our code but this should show some features that differentiate us from other teams. Feel free to explore our github repository we made it public for a reason!
 
-### Build/CAD
+### Build-CAD
 
 For the build starting from the drivetrain. We used two neo evo slims gearboxes the wheels are 2 slick tires in the front and 2 grip wheels in the back with smaller free floating wheels in the middle. Several part of our robot use laser cut parts from our sponsor [edro](https://www.edrocorp.com/). Many of our more complex parts are made by 3D printing on the [Onyx pro](https://www.matterhackers.com/store/l/markforged-onyx-pro-3d-printer/sk/M7G3XMM6?rcode=PMAX_PMax1&gclid=CjwKCAiAr4GgBhBFEiwAgwORrX6WDvfifAeTQ98QWj7aabm0clXXFauPA13wlM_1gyVPIr6BTqrYzxoCDzwQAvD_BwE) with fiberglass lines and carbon fiber filament. A lot of the robot was resdesigned from our first iteration due to weight distribution concerns. We used our CAD sponsor [solidworks](https://www.solidworks.com/). We also used their cutting-edge software to simulate the movements of our robot. Some of our early designed looked like this. ![this!](https://lh3.googleusercontent.com/EP0fDpMBW3EVyWayF_4vp6oz5-lGOaAfRA6-VJDr7i07YYSdM1xXrBs_4FSqYiacRX_Kcmb8kOzxAvU=w2880-h1578)
 
