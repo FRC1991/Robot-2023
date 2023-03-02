@@ -34,17 +34,17 @@ These are quick profiles on our mentors and team leaders.
     - Fun Fact: Knows how to play bugle.
     - Hobbies: Re-enacting, Costume design.
  - Electric/Programming Captain: Maanit Malhan
-    - Fun Fact:
-    - Hobbies:
+    - Fun Fact: Changed schools eight times(My parents hobby is moving).
+    - Hobbies: Cars, Soccer.
  - Design Co-Leader: Abhijith Tippireddy
-    - Fun Fact: Broke his skull.
+    - Fun Fact: Knows how to horse ride.
     - Hobbies: Running, field hockey.
  - Design Co-Leader: Justin Surace
     - Fun Fact: Black Belt.
     - Hobbies: Sim Racing, Auto-Cross.
  - Safety Captain: Catherine Hockenhull
-    - Fun Fact:
-    - Hobbies: 
+    - Fun Fact: Knows how to crochet.
+    - Hobbies: Running, Reading.
  - Corprate Captain: Nasere Lewin
     - Fun Fact: Like to build things.
     - Hobbies: Lego, Drawing.
