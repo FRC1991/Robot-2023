@@ -15,6 +15,11 @@ public class BrakeMode extends CommandBase {
   public BrakeMode() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.mDrivetrain);
+    addRequirements(RobotContainer.mArm);
+    addRequirements(RobotContainer.mClaw);
+    addRequirements(RobotContainer.mTurret);
+
+
   }
 
   // Called when the command is initially scheduled.
@@ -24,6 +29,17 @@ public class BrakeMode extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+
+    RobotContainer.mDrivetrain.arcadeDrive(0, 0);
+
+    RobotContainer.mTurret.setTurret(0);
+
+    RobotContainer.mArm.setArmExtend(0);
+    RobotContainer.mArm.setArmLift(0);
+
+    RobotContainer.mClaw.setClaw(0);
+    RobotContainer.mClaw.setClawTurret(0);
+
     RobotContainer.mDrivetrain.getLeftDrive1().setIdleMode(IdleMode.kBrake);
     RobotContainer.mDrivetrain.getLeftDrive2().setIdleMode(IdleMode.kBrake);
     RobotContainer.mDrivetrain.getLeftDrive3().setIdleMode(IdleMode.kBrake);
@@ -35,6 +51,12 @@ public class BrakeMode extends CommandBase {
     RobotContainer.mTurret.getTurret2().setIdleMode(IdleMode.kBrake);
 
     RobotContainer.mArm.getArmExtender().setIdleMode(IdleMode.kBrake);
+    RobotContainer.mArm.getArmLifterOne().setIdleMode(IdleMode.kBrake);
+    RobotContainer.mArm.getArmLifterTwo().setIdleMode(IdleMode.kBrake);
+
+    RobotContainer.mClaw.getClawMotor().setIdleMode(IdleMode.kBrake);
+    RobotContainer.mClaw.getClawTurretMotor().setIdleMode(IdleMode.kBrake);
+
 
     Timer.delay(0.3);
   }
@@ -53,6 +75,12 @@ public class BrakeMode extends CommandBase {
     RobotContainer.mTurret.getTurret2().setIdleMode(IdleMode.kCoast);
 
     RobotContainer.mArm.getArmExtender().setIdleMode(IdleMode.kCoast);
+    RobotContainer.mArm.getArmLifterOne().setIdleMode(IdleMode.kCoast);
+    RobotContainer.mArm.getArmLifterTwo().setIdleMode(IdleMode.kCoast);
+
+    RobotContainer.mClaw.getClawMotor().setIdleMode(IdleMode.kCoast);
+    RobotContainer.mClaw.getClawTurretMotor().setIdleMode(IdleMode.kCoast);
+
 
   }
 

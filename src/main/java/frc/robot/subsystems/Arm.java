@@ -124,8 +124,13 @@ public CANSparkMax getArmExtender(){
   return armExtendMotor;
 }
 
+public CANSparkMax getArmLifterOne(){
+  return armLiftMotor1;
+}
 
-
+public CANSparkMax getArmLifterTwo(){
+  return armLiftMotor2;
+}
 
 
 //Distance in feet for arm extension

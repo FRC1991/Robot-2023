@@ -20,7 +20,7 @@ public class Claw extends SubsystemBase {
   private final  CANSparkMax clawMotor, clawTurretMotor;
 
   public Claw() {
-    clawMotor = new CANSparkMax(Constants.clawMotor , MotorType.kBrushed);
+    clawMotor = new CANSparkMax(Constants.clawMotor , MotorType.kBrushless);
     clawTurretMotor = new CANSparkMax(Constants.clawTurretMotor , MotorType.kBrushless);
 
 //Reset Encoders before match
@@ -88,6 +88,16 @@ public void setClawTurret( double speed){
     Timer.delay(0.5);
 
     clawTurretMotor.setIdleMode(IdleMode.kCoast);
+  }
+
+  //Motor Getters
+
+public CANSparkMax getClawMotor(){
+    return clawMotor;
+  }
+
+  public CANSparkMax getClawTurretMotor(){
+    return clawTurretMotor;
   }
 
 

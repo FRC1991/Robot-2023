@@ -231,7 +231,7 @@ if(mButtonBind.getAuxB() == true){
 
     //mLED.setDefaultCommand(ledStripCommand);
 
-    mButtonBind.driveAButton.whileTrue(new BrakeMode());
+    mButtonBind.driveAButton.toggleOnTrue(new BrakeMode());
     
     mButtonBind.driveXButton.whileTrue(new ManualTurret(0.25));
     mButtonBind.driveBButton.whileTrue(new ManualTurret(-0.25));
