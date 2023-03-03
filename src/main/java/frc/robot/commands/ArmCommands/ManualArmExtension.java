@@ -23,12 +23,13 @@ public class ManualArmExtension extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.mArm.setArmLift(speedSet);
+    RobotContainer.mArm.setArmExtend(speedSet);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    RobotContainer.mArm.setArmExtend(0);
   }
 
   // Returns true when the command should end.

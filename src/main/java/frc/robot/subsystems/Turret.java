@@ -29,6 +29,10 @@ public class Turret extends SubsystemBase {
 
     turretMotors = new MotorControllerGroup(turretMotor1, turretMotor2);
 
+    //Idle mode
+    turretMotor1.setIdleMode(IdleMode.kBrake);
+    turretMotor2.setIdleMode(IdleMode.kBrake);
+
     //reset before match starts
     resetTurretEncoder();
     //Limiters
@@ -46,6 +50,8 @@ public class Turret extends SubsystemBase {
   }
 //Turret speed set
   public void setTurret(double speed){
+    turretMotor1.setIdleMode(IdleMode.kCoast);
+    turretMotor2.setIdleMode(IdleMode.kCoast);
     if(speed > 0){
     turretMotor1.set(speed);
     turretMotor2.set(0);

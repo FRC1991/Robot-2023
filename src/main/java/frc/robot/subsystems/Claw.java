@@ -6,11 +6,9 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkMaxAlternateEncoder;
-import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -82,12 +80,6 @@ public void setClawTurret( double speed){
 //Stop claw turret 
   public void stopClawTurret(){
     clawTurretMotor.set(0);
-
-    clawTurretMotor.setIdleMode(IdleMode.kBrake);
-    
-    Timer.delay(0.5);
-
-    clawTurretMotor.setIdleMode(IdleMode.kCoast);
   }
 
   //Motor Getters
