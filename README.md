@@ -1,6 +1,6 @@
 # FRC Team 1991 The Dragons Robot for 2023
 --------------------------------------------------------------
-This is a summary of the our robot's software and hardware. Feel free to find us and ask for more information!!! Also go find out even more about us on our new [website](https://team1991-grommet.vercel.app/).
+This is a summary of the our robot's software and hardware. Feel free to find us and ask for more information!!! Also go find out even more about us on our new [website](https://team1991-grommet.vercel.app/). 
 
 ## I want to learn about...
 
@@ -26,7 +26,7 @@ For the build starting from the drivetrain. We used two neo evo slims gearboxes 
 
 These are quick profiles on our mentors and team leaders.
 
-> ### Mentors
+ #### Mentors
 - Jay Kean
     - Fun Fact: 
     - Hobbies: 
@@ -34,7 +34,7 @@ These are quick profiles on our mentors and team leaders.
     - Fun Fact: Former team captain.
     - Hobbies: Legos, Watching baseball
 
-> ### Student Leaders
+ #### Student Leaders
  - Build Captain: Pacey Mahar
     - Fun Fact: Knows how to play bugle.
     - Hobbies: Re-enacting, Costume design.
