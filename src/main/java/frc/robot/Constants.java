@@ -67,11 +67,13 @@ public static final double kTurnRateToleranceDegPerS = 10;
   public static final double kArmExtendI = 0;
   public static final double kArmExtendD = 0;
 
-  public static final double kArmExtendRateToleranceDegPerS = 0;
-  public static final double kArmExtendToleranceDeg = 0; 
+  public static final double kMaxArmExtendRatePerS = 100;
+  public static final  double kMaxArmExtendAccelerationPerSSquared = 300;
 
-  public static final double kArmExtendMaxOut = 1;
-  public static final double kArmExtendMinOut = -1;
+  public static final double kArmExtendRateTolerancePerS = 0;
+  public static final double kArmExtendTolerance = 0; 
+
+  
 
 
   //PID for arm Lifter
@@ -79,6 +81,9 @@ public static final double kTurnRateToleranceDegPerS = 10;
   public static final double kArmLiftP = 1;
   public static final double kArmLiftI = 0;
   public static final double kArmLiftD = 0;
+
+  public static final double kMaxArmLiftRatePerS = 100;
+  public static final  double kMaxArmLiftAccelerationPerSSquared = 300;
 
   public static final double kArmLiftToleranceDeg = 0;
   public static final double kArmLiftRateToleranceDegPerS = 0;

@@ -159,8 +159,8 @@ public void GameDrive(double forward, double backward, double curve, boolean fas
 
 
 //Distance From Target
-public double distanceFromTargetInFeet(){
-  AtomicReference <Double> targetY = RobotContainer.yDistanceAim;  
+public double distanceFromTargetInFeet(AtomicReference <Double> whichYValue){
+  AtomicReference <Double> targetY = whichYValue;  
   double tarY = targetY.get();
   double limelightAngleDeg = 10.0;
   double limelightHeightInch = 20.0;

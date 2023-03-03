@@ -6,7 +6,6 @@ package frc.robot.commands.MiscCommands;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.RobotContainer;
-import frc.robot.commands.ArmCommands.ArmExtensionPID;
 import frc.robot.commands.VisionCommands.TurretAimTarget;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -18,7 +17,7 @@ public class AutoArmExtension extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-    new TurretAimTarget(RobotContainer.xDistanceAim),  
-    new ArmExtensionPID(RobotContainer.mDrivetrain.distanceFromTargetInFeet()));
+    new TurretAimTarget(RobotContainer.xDistanceAim));  
+    //new ArmExtensionPID(RobotContainer.mDrivetrain.distanceFromTargetInFeet()));
   }
 }

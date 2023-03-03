@@ -13,7 +13,7 @@ import frc.robot.RobotContainer;
 public class TurnTillTarget extends CommandBase {
   /** Creates a new TurnTillTag. */
 
-  private double isTagVisibleEntry;
+  private double tagNum;
   private double turnSpeed;
   private boolean tagFound = false;
   private AtomicReference<Double> tagVis;
@@ -23,47 +23,48 @@ public class TurnTillTarget extends CommandBase {
     addRequirements(RobotContainer.mDrivetrain);
     turnSpeed = speed;
     tagVis = RobotContainer.aprilTagID;
-    isTagVisibleEntry = tagVis.get();
+    tagNum = tagVis.get();
 
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    RobotContainer.mDrivetrain.arcadeDrive(0, turnSpeed);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() { 
     tagVis = RobotContainer.aprilTagID;
-    isTagVisibleEntry = tagVis.get();
+    tagNum = tagVis.get();
 
     RobotContainer.mDrivetrain.arcadeDrive(0, turnSpeed);
 
+    if (Robot.isRedAlliance == true){
+      if(tagNum >= 1 || tagNum <= 4){
+         tagFound = true;
+       }
+     }
+   
+      if(Robot.isRedAlliance == false){
+       if(tagNum >= 5 || tagNum <= 8){
+           tagFound = true;
+       }
+     }
     
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    RobotContainer.mDrivetrain.arcadeDrive(0, 0);
+    RobotContainer.mDrivetrain.arcadeDrive(0, 01);
+
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    while(Robot.isRedAlliance == true){
-      if(isTagVisibleEntry >= 1 || isTagVisibleEntry <= 4){
-        tagFound = true;
-      }
-    }
-  
-      while(Robot.isRedAlliance == false){
-      if(isTagVisibleEntry >= 5 || isTagVisibleEntry <= 8){
-          tagFound = true;
-      }
-    }
+    
     return tagFound;
 }
 }
