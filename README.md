@@ -26,7 +26,7 @@ For the build starting from the drivetrain. We used two neo evo slims gearboxes 
 
 These are quick profiles on our mentors and team leaders.
 
- #### Mentors
+ #### ***Mentors***
 - Jay Kean
     - Fun Fact: 
     - Hobbies: 
@@ -34,7 +34,7 @@ These are quick profiles on our mentors and team leaders.
     - Fun Fact: Former team captain.
     - Hobbies: Legos, Watching baseball
 
- #### Student Leaders
+ #### ***Student Leaders***
  - Build Captain: Pacey Mahar
     - Fun Fact: Knows how to play bugle.
     - Hobbies: Re-enacting, Costume design.
