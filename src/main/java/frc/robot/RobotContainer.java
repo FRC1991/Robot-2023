@@ -233,14 +233,14 @@ if(mButtonBind.getAuxB() == true){
 
     mButtonBind.driveAButton.toggleOnTrue(new BrakeMode());
     
-    mButtonBind.driveXButton.whileTrue(new ManualTurret(0.25));
-    mButtonBind.driveBButton.whileTrue(new ManualTurret(-0.25));
+    mButtonBind.driveXButton.onTrue(new ManualTurret(0.25));
+    mButtonBind.driveBButton.onTrue(new ManualTurret(-0.25));
 
-    mButtonBind.driveDPadRight.whileTrue(new ManualArmExtension(0.1));
-    mButtonBind.driveDPadLeft.whileTrue(new ManualArmExtension(-0.1));
+    mButtonBind.driveDPadRight.onTrue(new ManualArmExtension(0.1));
+    mButtonBind.driveDPadLeft.onTrue(new ManualArmExtension(-0.1));
 
-    mButtonBind.driveDPadUp.whileTrue(new ManualArmLifter(0.2));
-    mButtonBind.driveDPadDown.whileTrue(new ManualArmLifter(-0.2));
+    mButtonBind.driveDPadUp.onTrue(new ManualArmLifter(0.2));
+    mButtonBind.driveDPadDown.onTrue(new ManualArmLifter(-0.2));
 
     mButtonBind.driveAButton.toggleOnTrue(new LEDCommunication());
 
