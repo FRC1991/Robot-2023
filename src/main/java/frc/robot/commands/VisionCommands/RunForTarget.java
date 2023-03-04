@@ -37,8 +37,8 @@ public class RunForTarget extends CommandBase {
   @Override
   public void initialize() {
 
-    RobotContainer.mButtonBind.singleDriveVibrate();
-    RobotContainer.mButtonBind.singleAuxVibrate();
+    //RobotContainer.mButtonBind.singleDriveVibrate();
+    //RobotContainer.mButtonBind.singleAuxVibrate();
 
     NetworkTableInstance.getDefault()
         .getTable("Shuffleboard")
