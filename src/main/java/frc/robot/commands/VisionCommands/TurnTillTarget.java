@@ -57,7 +57,7 @@ public class TurnTillTarget extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    RobotContainer.mDrivetrain.arcadeDrive(0, 01);
+    RobotContainer.mDrivetrain.arcadeDrive(0, 0);
 
   }
 
