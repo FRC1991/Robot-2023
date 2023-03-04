@@ -25,6 +25,9 @@ public class Claw extends SubsystemBase {
    resetClawEncoder();
    resetClawTurretEncoder();
 
+// Current limiter for neo 550
+    clawMotor.setSmartCurrentLimit(20, 40);
+
 //Limiter for claw
     clawMotor.setSoftLimit(SoftLimitDirection.kForward, 35);//check how many rotations
    // clawMotor.enableSoftLimit(SoftLimitDirection.kForward, true);
