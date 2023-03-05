@@ -35,6 +35,12 @@ public class ManualArmExtension extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    if(RobotContainer.mButtonBind.armExtendMaxLimit.getAsBoolean() == false){
+      return true;
+    }else if(RobotContainer.mButtonBind.armExtendMinLimit.getAsBoolean() == false){
+      return true;
+    }else{
+      return false;
+    }
   }
 }

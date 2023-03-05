@@ -5,7 +5,6 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.SparkMaxAlternateEncoder;
 import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -67,7 +66,7 @@ public void setClawTurret( double speed){
 
  //Reset claw encoder  
   public void resetClawEncoder(){
-    clawMotor.getAlternateEncoder(SparkMaxAlternateEncoder.Type.kQuadrature, 8192).setPosition(0);
+    clawMotor.getEncoder().setPosition(0);
   }
 
  //Reset claw turret encoder 
