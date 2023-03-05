@@ -22,6 +22,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.ArmCommands.ManualArmExtension;
 import frc.robot.commands.ArmCommands.ManualArmLifter;
 import frc.robot.commands.ArmCommands.ManualTurret;
+import frc.robot.commands.ClawCommands.ManualClaw;
 import frc.robot.commands.DrivetrainCommands.GameDrive;
 import frc.robot.commands.MiscCommands.BrakeMode;
 import frc.robot.commands.VisionCommands.RunForTarget;
@@ -230,14 +231,8 @@ if(mButtonBind.getAuxB() == true){
 
     mButtonBind.driveAButton.toggleOnTrue(new BrakeMode());
     
-    mButtonBind.driveXButton.onTrue(new ManualTurret(0.25));
-    mButtonBind.driveBButton.onTrue(new ManualTurret(-0.25));
-
-    mButtonBind.driveDPadRight.onTrue(new ManualArmExtension(0.1));
-    mButtonBind.driveDPadLeft.onTrue(new ManualArmExtension(-0.1));
-
-    mButtonBind.driveDPadUp.onTrue(new ManualArmLifter(0.2));
-    mButtonBind.driveDPadDown.onTrue(new ManualArmLifter(-0.2));
+    mButtonBind.driveBButton.whileTrue(new ManualClaw(0.5));
+    mButtonBind.driveXButton.whileTrue(new ManualClaw(-0.5));
 
 
     //Limiters activation
