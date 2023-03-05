@@ -24,12 +24,10 @@ import frc.robot.commands.ArmCommands.ManualArmLifter;
 import frc.robot.commands.ArmCommands.ManualTurret;
 import frc.robot.commands.DrivetrainCommands.GameDrive;
 import frc.robot.commands.MiscCommands.BrakeMode;
-import frc.robot.commands.MiscCommands.LEDCommunication;
 import frc.robot.commands.VisionCommands.RunForTarget;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.LEDStrips;
 import frc.robot.subsystems.Turret;
 
 /**
@@ -77,7 +75,6 @@ public class RobotContainer {
   public static Claw mClaw = new Claw();
   public static Turret mTurret = new Turret();
   public static ButtonBind mButtonBind = new ButtonBind();
-  public static LEDStrips mLED =  new LEDStrips();
 
 //=============================Commands +++++++++++++++++++++++++++++++++ 
 
@@ -242,11 +239,10 @@ if(mButtonBind.getAuxB() == true){
     mButtonBind.driveDPadUp.onTrue(new ManualArmLifter(0.2));
     mButtonBind.driveDPadDown.onTrue(new ManualArmLifter(-0.2));
 
-    mButtonBind.driveAButton.toggleOnTrue(new LEDCommunication());
 
     //Limiters activation
 
-    mButtonBind.clawLimit.whileTrue(
+    mButtonBind.clawLimit.onTrue(
       new SequentialCommandGroup(
           new InstantCommand(
             () -> {
@@ -257,7 +253,7 @@ if(mButtonBind.getAuxB() == true){
                 mClaw.resetClawEncoder();
             })));
 
-    mButtonBind.armExtendMinLimit.whileTrue(
+    mButtonBind.armExtendMinLimit.onTrue(
       new SequentialCommandGroup(
           new InstantCommand(
             () -> {
@@ -268,13 +264,13 @@ if(mButtonBind.getAuxB() == true){
               mArm.resetArmExtensionEncoder();
             })));
 
-    mButtonBind.armExtendMaxLimit.whileTrue(
+    mButtonBind.armExtendMaxLimit.onTrue(
         new InstantCommand(
             () -> {
               mArm.setArmExtend(0);
              }));
 
-    mButtonBind.armLiftMinLimit.whileTrue(
+    mButtonBind.armLiftMinLimit.onTrue(
      new SequentialCommandGroup(
          new InstantCommand(
            () -> {
@@ -285,19 +281,19 @@ if(mButtonBind.getAuxB() == true){
              mArm.resetArmLiftEncoder();
            })));
 
-   mButtonBind.armLiftMaxLimit.whileTrue(
+   mButtonBind.armLiftMaxLimit.onTrue(
         new InstantCommand(
           () -> {
               mArm.setArmLift(0);
           }));
 
-   mButtonBind.turretBeam.whileTrue(
+   mButtonBind.turretBeam.onTrue(
           new InstantCommand(
           () ->{
             mTurret.resetTurretEncoder();
           }));
 
-    mButtonBind.clawTurretBeam.whileTrue(
+    mButtonBind.clawTurretBeam.onTrue(
           new InstantCommand(
           () ->{
             mClaw.resetClawTurretEncoder();

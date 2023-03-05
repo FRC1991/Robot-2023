@@ -43,10 +43,10 @@ public static final double kTurnP = 1;
 public static final double kTurnI = 0;
 public static final double kTurnD = 0;
 
-public static final double kMaxTurnRateDegPerS = 100;
-public static final  double kMaxTurnAccelerationDegPerSSquared = 300;
+public static final double kMaxTurnRateDegPerS = 50;
+public static final  double kMaxTurnAccelerationDegPerSSquared = 100;
 
-public static final double kTurnToleranceDeg = 5;
+public static final double kTurnToleranceDeg = 2;
 public static final double kTurnRateToleranceDegPerS = 10; 
 
   //PID ChargeStation Constants
@@ -99,10 +99,10 @@ public static final double kTurnRateToleranceDegPerS = 10;
     public static final double kDriveI = 0;
     public static final double kDriveD = 0;
 
-    public static final double kMaxDistPerS = 100;
-    public static final double kMaxAccelerationPerS = 300;
+    public static final double kMaxDistPerS = 50;
+    public static final double kMaxAccelerationPerS = 100;
 
-    public static final double kDistTolerance = 5;
+    public static final double kDistTolerance = 0.183333;
     public static final double kDistRateTolerancePerS = 10;
     
     

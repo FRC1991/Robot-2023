@@ -213,9 +213,9 @@ public class ButtonBind {
 
 
 //Limit switches
-    public final DigitalInput clawLimitSwitch = new DigitalInput(0);
-    public final DigitalInput turretBeamBreak = new DigitalInput(1);
-    public final DigitalInput clawTurretBeamBreak = new DigitalInput(2);
+    public final DigitalInput clawLimitSwitch = new DigitalInput(2);
+    public final DigitalInput turretBeamBreak = new DigitalInput(0);
+    public final DigitalInput clawTurretBeamBreak = new DigitalInput(1);
     public final DigitalInput armLiftMaxLimitSwitch = new DigitalInput(3);
     public final DigitalInput armLiftMinLimitSwitch = new DigitalInput(4);
     public final DigitalInput armExtendMaxLimitSwitch = new DigitalInput(5);

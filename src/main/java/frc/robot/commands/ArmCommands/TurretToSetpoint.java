@@ -11,9 +11,9 @@ public class TurretToSetpoint extends CommandBase {
   /** Creates a new TurretToSetpoint. */
   double targetPos, speed, initPos, currentPos;
 
-  public TurretToSetpoint(double targetPosition, double speedSet) {
+  public TurretToSetpoint(double encoderValue, double speedSet) {
     addRequirements(RobotContainer.mTurret);
-    targetPos = targetPosition;
+    targetPos = encoderValue;
     speedSet = speed;
   }
 

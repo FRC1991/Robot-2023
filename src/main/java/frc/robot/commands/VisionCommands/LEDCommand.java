@@ -2,15 +2,14 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.MiscCommands;
+package frc.robot.commands.VisionCommands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotContainer;
 
-public class LEDCommunication extends CommandBase {
-  /** Creates a new LEDCommunication. */
-  public LEDCommunication() {
-    addRequirements(RobotContainer.mLED);
+public class LEDCommand extends CommandBase {
+  /** Creates a new LEDCommand. */
+  public LEDCommand() {
+    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
@@ -19,9 +18,7 @@ public class LEDCommunication extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    RobotContainer.mLED.setLightsToYellow();
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override

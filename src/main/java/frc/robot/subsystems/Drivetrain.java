@@ -68,6 +68,13 @@ private boolean rightDriveInverted = true;
     leftDriveMotors.setInverted(leftDriveInverted);
     rightDriveMotors.setInverted(rightDriveInverted);
 
+    // set motor profile to avoid tipping
+    rightDriveMotor1.setOpenLoopRampRate(1);
+    rightDriveMotor2.setOpenLoopRampRate(1);
+    rightDriveMotor3.setOpenLoopRampRate(1);
+    leftDriveMotor1.setOpenLoopRampRate(1);
+    leftDriveMotor2.setOpenLoopRampRate(1);
+    leftDriveMotor3.setOpenLoopRampRate(1);
 
   }
   
@@ -147,14 +154,15 @@ public void GameDrive(double forward, double backward, double curve, boolean fas
 //Distance in ft ADJUST FOR WHEELS
   public double getDistanceFeet(){ 
     double avgDistanceInRotations = (leftDriveMotor1.getEncoder().getPosition()
+      + leftDriveMotor2.getEncoder().getPosition()
       + leftDriveMotor3.getEncoder().getPosition()
       + -rightDriveMotor1.getEncoder().getPosition()
+      + -rightDriveMotor2.getEncoder().getPosition()
       + -rightDriveMotor3.getEncoder().getPosition())
 
       / 6.0;
 
-    double avgDistanceInRotationsOfShaft = avgDistanceInRotations / 15.87; //replace with new gear ratio
-    return 4.1888 * avgDistanceInRotationsOfShaft;
+    return 0.183333 * avgDistanceInRotations;
   }
 
 
