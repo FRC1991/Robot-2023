@@ -15,6 +15,6 @@ public class ClawForCone extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(new ResetClaw());
-    addCommands(new ClawClosing(0.1));
+    addCommands(new ClawClosing(50));
   }
 }

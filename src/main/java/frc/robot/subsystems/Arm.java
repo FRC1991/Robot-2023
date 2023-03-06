@@ -32,7 +32,10 @@ public class Arm extends SubsystemBase {
 //Reset encoders before match
     resetArmExtensionEncoder();
     resetArmLiftEncoder();
-    
+// Change idle Mode
+  armLiftMotor1.setIdleMode(IdleMode.kBrake);
+  armLiftMotor2.setIdleMode(IdleMode.kBrake);
+
 //Limiters for extension
     armExtendMotor.setSoftLimit(SoftLimitDirection.kForward, 35);//check how many rotations
     //armExtendMotor.enableSoftLimit(SoftLimitDirection.kForward, true);
@@ -64,6 +67,9 @@ public class Arm extends SubsystemBase {
 
 //Lifter Speed set
    public void setArmLift(double speed){
+    armLiftMotor1.setIdleMode(IdleMode.kCoast);
+    armLiftMotor2.setIdleMode(IdleMode.kCoast);
+    
     armLiftMotors.set(speed);
   }
 

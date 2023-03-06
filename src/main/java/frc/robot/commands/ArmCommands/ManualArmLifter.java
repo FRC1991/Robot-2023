@@ -4,6 +4,8 @@
 
 package frc.robot.commands.ArmCommands;
 
+import com.revrobotics.CANSparkMax.IdleMode;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
@@ -29,6 +31,8 @@ public class ManualArmLifter extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     RobotContainer.mArm.setArmLift(0);
+    RobotContainer.mArm.getArmLifterOne().setIdleMode(IdleMode.kBrake);
+    RobotContainer.mArm.getArmLifterTwo().setIdleMode(IdleMode.kBrake);
 
   }
 

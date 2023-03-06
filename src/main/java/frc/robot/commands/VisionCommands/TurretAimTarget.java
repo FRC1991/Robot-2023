@@ -6,6 +6,7 @@ package frc.robot.commands.VisionCommands;
 
 import java.util.concurrent.atomic.AtomicReference;
 
+
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
@@ -62,13 +63,16 @@ public class TurretAimTarget extends CommandBase {
   public void end(boolean interrupted) {
     RobotContainer.mButtonBind.alternatingDriveVibrate();
     RobotContainer.mButtonBind.alternatingAuxVibrate();
+    
     RobotContainer.mTurret.stopTurret();
+    
     NetworkTableInstance.getDefault()
     .getTable("Shuffleboard")
     .getSubTable("Main")
     .getEntry("Is Turret Aimming")
     .setBoolean(false);
-
+    
+    
   }
 
   // Returns true when the command should end.

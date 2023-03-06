@@ -8,6 +8,7 @@ import java.util.EnumSet;
 import java.util.concurrent.atomic.AtomicReference;
 
 import edu.wpi.first.networktables.DoubleTopic;
+import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEvent;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -16,19 +17,16 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.commands.ArmCommands.ManualArmExtension;
-import frc.robot.commands.ArmCommands.ManualArmLifter;
-import frc.robot.commands.ArmCommands.ManualTurret;
-import frc.robot.commands.ClawCommands.ManualClaw;
 import frc.robot.commands.DrivetrainCommands.GameDrive;
+import frc.robot.commands.MiscCommands.BotReset;
 import frc.robot.commands.MiscCommands.BrakeMode;
 import frc.robot.commands.VisionCommands.RunForTarget;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.LED;
 import frc.robot.subsystems.Turret;
 
 /**
@@ -69,6 +67,7 @@ public class RobotContainer {
   xDistanceGamePieceListenerHandle;
 
   SendableChooser<Command> autoChoose;
+  GenericEntry aimLLPipeline, gameLLPipeline;
   int posInField = DriverStation.getLocation();
 //==========================  Subsystems +++++++++++++++++++++++
   public static Drivetrain mDrivetrain = new Drivetrain();
@@ -76,11 +75,11 @@ public class RobotContainer {
   public static Claw mClaw = new Claw();
   public static Turret mTurret = new Turret();
   public static ButtonBind mButtonBind = new ButtonBind();
+  public static LED mLED = new LED();
 
 //=============================Commands +++++++++++++++++++++++++++++++++ 
 
 GameDrive standardGameDriveCommand = new GameDrive();
-
 
 RunForTarget runForTagDriver = new RunForTarget(ButtonBind.driverController.getRightTriggerAxis(), xDistanceGamePiece);
 RunForTarget runForTagAuto = new RunForTarget(xDistanceAim);
@@ -105,7 +104,11 @@ RunForTarget runForTagAuto = new RunForTarget(xDistanceAim);
   }
   Shuffleboard.getTab("Main").add(autoChoose);
 
-  }
+  //Vision Pipline Selector
+
+}
+
+
  
 
 
@@ -129,11 +132,11 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-gamePiece");
 //}
 
 //If tracking During holding B Tag otherwise tape
-if(mButtonBind.getAuxB() == true){
-  aimmingNT.getEntry("pipeline").setNumber(1);
-}else{
-  aimmingNT.getEntry("pipeline").setNumber(0);
-}
+//if(mButtonBind.getAuxB() == true){
+// aimmingNT.getEntry("pipeline").setNumber(1);
+//}else{
+//  aimmingNT.getEntry("pipeline").setNumber(0);
+//}
 
 //Topics From Aimming NT
  tagIDTopic = aimmingNT.getDoubleTopic("tid");
@@ -224,75 +227,23 @@ if(mButtonBind.getAuxB() == true){
    * joysticks}.
    */
   private void configureBindings() {
-    // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
+    //=====================Driver binding=====================
+    // Game Drive Command
     mDrivetrain.setDefaultCommand(standardGameDriveCommand);
-
-    //mLED.setDefaultCommand(ledStripCommand);
-
+    //Brake mode Command
     mButtonBind.driveAButton.toggleOnTrue(new BrakeMode());
+    //Bot reset
+    mButtonBind.driveStartButton.onTrue(new BotReset());
+    //Arm Range extend
+    //mButtonBind.driveBButton.onTrue(new ArmExtendRange(gamePieceSeenListenerHandle, aprilTagIDListenerHandle, aprilTagID))
+    //Vision command
+
+    //=======================Aux bindings=========================
+
     
-    mButtonBind.driveBButton.whileTrue(new ManualClaw(0.5));
-    mButtonBind.driveXButton.whileTrue(new ManualClaw(-0.5));
 
-
-    //Limiters activation
-
-    mButtonBind.clawLimit.onTrue(
-      new SequentialCommandGroup(
-          new InstantCommand(
-            () -> {
-                mClaw.setClaw(0);
-            }),
-          new InstantCommand(
-            () -> {
-                mClaw.resetClawEncoder();
-            })));
-
-    mButtonBind.armExtendMinLimit.onTrue(
-      new SequentialCommandGroup(
-          new InstantCommand(
-            () -> {
-                mArm.setArmExtend(0);
-            }),
-          new InstantCommand(
-            () -> {
-              mArm.resetArmExtensionEncoder();
-            })));
-
-    mButtonBind.armExtendMaxLimit.onTrue(
-        new InstantCommand(
-            () -> {
-              mArm.setArmExtend(0);
-             }));
-
-    mButtonBind.armLiftMinLimit.onTrue(
-     new SequentialCommandGroup(
-         new InstantCommand(
-           () -> {
-               mArm.setArmLift(0);
-           }),
-         new InstantCommand(
-           () -> {
-             mArm.resetArmLiftEncoder();
-           })));
-
-   mButtonBind.armLiftMaxLimit.onTrue(
-        new InstantCommand(
-          () -> {
-              mArm.setArmLift(0);
-          }));
-
-   mButtonBind.turretBeam.onTrue(
-          new InstantCommand(
-          () ->{
-            mTurret.resetTurretEncoder();
-          }));
-
-    mButtonBind.clawTurretBeam.onTrue(
-          new InstantCommand(
-          () ->{
-            mClaw.resetClawTurretEncoder();
-          }));
+    //=========================LED Binds============================
+    new InstantCommand(() -> mLED.setToOrange());
   }
 
   /**

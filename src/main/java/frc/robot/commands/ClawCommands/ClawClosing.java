@@ -26,7 +26,8 @@ public class ClawClosing extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.mClaw.setClaw(1);
+    RobotContainer.mClaw.setClaw(0.8);
+    RobotContainer.mClaw.getClawPos();
   }
 
   // Called once the command ends or is interrupted.
@@ -38,6 +39,11 @@ public class ClawClosing extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (Math.abs(RobotContainer.mClaw.getClawPos()) >= closingDistance);
+    
+     if((Math.abs(RobotContainer.mClaw.getClawPos()) >= closingDistance) == true){
+      return true;
+     }else{
+      return false;
+     }
   }
 }

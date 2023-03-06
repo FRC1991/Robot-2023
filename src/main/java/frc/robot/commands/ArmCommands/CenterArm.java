@@ -4,6 +4,8 @@
 
 package frc.robot.commands.ArmCommands;
 
+import com.revrobotics.CANSparkMax.IdleMode;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
@@ -35,6 +37,8 @@ public class CenterArm extends CommandBase {
   public void end(boolean interrupted) {
     RobotContainer.mTurret.stopTurret();
     RobotContainer.mTurret.resetTurretEncoder();
+    RobotContainer.mTurret.getTurret1().setIdleMode(IdleMode.kBrake);
+    RobotContainer.mTurret.getTurret2().setIdleMode(IdleMode.kBrake);
   }
 
   // Returns true when the command should end.

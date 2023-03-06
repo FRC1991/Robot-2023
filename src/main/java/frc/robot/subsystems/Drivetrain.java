@@ -20,9 +20,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.RobotContainer;
 
-//==============================ADD SHAFT ENCODING============================
 
 public class Drivetrain extends SubsystemBase {
 
@@ -68,13 +66,7 @@ private boolean rightDriveInverted = true;
     leftDriveMotors.setInverted(leftDriveInverted);
     rightDriveMotors.setInverted(rightDriveInverted);
 
-    // set motor profile to avoid tipping
-    rightDriveMotor1.setOpenLoopRampRate(1);
-    rightDriveMotor2.setOpenLoopRampRate(1);
-    rightDriveMotor3.setOpenLoopRampRate(1);
-    leftDriveMotor1.setOpenLoopRampRate(1);
-    leftDriveMotor2.setOpenLoopRampRate(1);
-    leftDriveMotor3.setOpenLoopRampRate(1);
+    
 
   }
   
@@ -173,11 +165,11 @@ public double distanceFromTargetInFeet(AtomicReference <Double> whichYValue){
   double limelightAngleDeg = 10.0;
   double limelightHeightInch = 20.0;
   double targetHeightInch = 10.0;
-  if(RobotContainer.mTurret.visionGamePipelineSwitch() == 0){
-   targetHeightInch = 10.0;
-  }else{
-   targetHeightInch = 20.0; 
-  }
+  //if(RobotContainer.mTurret.visionGamePipelineSwitch() == 0){
+  // targetHeightInch = 10.0;
+  //}else{
+  // targetHeightInch = 20.0; 
+ // }
   double angleToTagDeg = limelightAngleDeg + tarY;
   double angleToTagRad = angleToTagDeg * (3.14159 / 180.0);
 

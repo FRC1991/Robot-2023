@@ -47,12 +47,9 @@ public class BrakeMode extends CommandBase {
     RobotContainer.mDrivetrain.getRightDrive2().setIdleMode(IdleMode.kBrake);
     RobotContainer.mDrivetrain.getRightDrive3().setIdleMode(IdleMode.kBrake);
     
-    RobotContainer.mTurret.getTurret1().setIdleMode(IdleMode.kBrake);
-    RobotContainer.mTurret.getTurret2().setIdleMode(IdleMode.kBrake);
 
     RobotContainer.mArm.getArmExtender().setIdleMode(IdleMode.kBrake);
-    RobotContainer.mArm.getArmLifterOne().setIdleMode(IdleMode.kBrake);
-    RobotContainer.mArm.getArmLifterTwo().setIdleMode(IdleMode.kBrake);
+    
 
     RobotContainer.mClaw.getClawMotor().setIdleMode(IdleMode.kBrake);
     RobotContainer.mClaw.getClawTurretMotor().setIdleMode(IdleMode.kBrake);
@@ -71,12 +68,9 @@ public class BrakeMode extends CommandBase {
     RobotContainer.mDrivetrain.getRightDrive2().setIdleMode(IdleMode.kCoast);
     RobotContainer.mDrivetrain.getRightDrive3().setIdleMode(IdleMode.kCoast);
   
-    RobotContainer.mTurret.getTurret1().setIdleMode(IdleMode.kCoast);
-    RobotContainer.mTurret.getTurret2().setIdleMode(IdleMode.kCoast);
 
     RobotContainer.mArm.getArmExtender().setIdleMode(IdleMode.kCoast);
-    RobotContainer.mArm.getArmLifterOne().setIdleMode(IdleMode.kCoast);
-    RobotContainer.mArm.getArmLifterTwo().setIdleMode(IdleMode.kCoast);
+    
 
     RobotContainer.mClaw.getClawMotor().setIdleMode(IdleMode.kCoast);
     RobotContainer.mClaw.getClawTurretMotor().setIdleMode(IdleMode.kCoast);

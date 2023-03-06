@@ -2,13 +2,13 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.VisionCommands;
+package frc.robot.commands.ClawCommands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class LEDCommand extends CommandBase {
-  /** Creates a new LEDCommand. */
-  public LEDCommand() {
+public class MoveClawPositive extends CommandBase {
+  /** Creates a new MoveClawPositive. */
+  public MoveClawPositive() {
     // Use addRequirements() here to declare subsystem dependencies.
   }
 

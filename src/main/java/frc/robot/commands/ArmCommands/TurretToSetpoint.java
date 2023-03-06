@@ -4,6 +4,7 @@
 
 package frc.robot.commands.ArmCommands;
 
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
@@ -40,6 +41,7 @@ public class TurretToSetpoint extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     RobotContainer.mTurret.stopTurret();
+    
   }
 
   // Returns true when the command should end.

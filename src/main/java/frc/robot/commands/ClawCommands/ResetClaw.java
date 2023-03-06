@@ -35,6 +35,10 @@ public class ResetClaw extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return RobotContainer.mButtonBind.clawLimit.getAsBoolean() == true;
+    if(RobotContainer.mButtonBind.clawLimit.getAsBoolean() == false){
+      return true;
+    }else{
+    return false;
+  }
   }
 }

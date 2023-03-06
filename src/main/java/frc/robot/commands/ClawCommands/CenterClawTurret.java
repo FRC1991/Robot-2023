@@ -22,9 +22,9 @@ public class CenterClawTurret extends CommandBase {
   public void execute() {
 
     if(RobotContainer.mClaw.getClawTurretPos() < 0.0){
-      RobotContainer.mClaw.setClawTurret(0.5);
+      RobotContainer.mClaw.setClawTurret(0.3);
     }else if(RobotContainer.mClaw.getClawTurretPos() > 0.0){
-      RobotContainer.mClaw.setClawTurret(-0.5);
+      RobotContainer.mClaw.setClawTurret(-0.3);
     }
 
   }
