@@ -249,7 +249,6 @@ public class ButtonBind {
        }
        public void alternatingDriveVibrate(){
             driveRumble.setRumble(RumbleType.kLeftRumble, 1);
-            Timer.delay(0.25);
             driveRumble.setRumble(RumbleType.kRightRumble, 1);
        }
 
@@ -268,7 +267,6 @@ public class ButtonBind {
        }
        public void alternatingAuxVibrate(){
         auxRumble.setRumble(RumbleType.kLeftRumble, 1);
-        Timer.delay(0.25);
         auxRumble.setRumble(RumbleType.kRightRumble, 1);
        }
         

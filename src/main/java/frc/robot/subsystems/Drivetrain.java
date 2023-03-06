@@ -66,8 +66,8 @@ private boolean rightDriveInverted = true;
     leftDriveMotors.setInverted(leftDriveInverted);
     rightDriveMotors.setInverted(rightDriveInverted);
 
-    
-
+//deadband
+    differentialDrive.setDeadband(Constants.globalDeadband);
   }
   
 
@@ -75,15 +75,20 @@ private boolean rightDriveInverted = true;
 public void GameDrive(double forward, double backward, double curve, boolean fastTurn){
   double netspeed = forward - backward;
   differentialDrive.curvatureDrive(netspeed, curve, fastTurn);
+  differentialDrive.feed();
 }
 
 //Tankdrive 
   public void tankDrive(double leftSpeed, double rightSpeed){
     differentialDrive.tankDrive(leftSpeed, rightSpeed);
+    differentialDrive.feed();
+
   }
 //Arcadedrive
   public void arcadeDrive(double speed, double rotation){
     differentialDrive.arcadeDrive(speed, rotation);
+    differentialDrive.feed();
+
 }
 
 //Stop drivetrain
