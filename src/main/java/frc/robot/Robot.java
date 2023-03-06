@@ -83,7 +83,6 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-    RobotContainer.mDrivetrain.resetGyro();
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
@@ -110,7 +109,6 @@ public class Robot extends TimedRobot {
     RobotContainer.mDrivetrain.getRightDrive1().setIdleMode(IdleMode.kCoast);
     RobotContainer.mDrivetrain.getRightDrive2().setIdleMode(IdleMode.kCoast);
     RobotContainer.mDrivetrain.getRightDrive3().setIdleMode(IdleMode.kCoast);
-    RobotContainer.mDrivetrain.resetGyro();
 
   }
 
@@ -122,8 +120,8 @@ public class Robot extends TimedRobot {
   @Override
   public void testInit() {
     // Cancels all running commands at the start of test mode.
-    CommandScheduler.getInstance().cancelAll();
-    
+
+
   }
 
   /** This function is called periodically during test mode. */

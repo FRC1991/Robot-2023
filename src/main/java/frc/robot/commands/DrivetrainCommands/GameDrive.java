@@ -21,19 +21,19 @@ public class GameDrive extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize(){
-    
-  }
-
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-  // set motor profile to avoid tipping
+     // set motor profile to avoid tipping
   RobotContainer.mDrivetrain.getRightDrive1().setOpenLoopRampRate(3);
   RobotContainer.mDrivetrain.getRightDrive2().setOpenLoopRampRate(3);
   RobotContainer.mDrivetrain.getRightDrive3().setOpenLoopRampRate(3);
   RobotContainer.mDrivetrain.getLeftDrive1().setOpenLoopRampRate(3);
   RobotContainer.mDrivetrain.getLeftDrive2().setOpenLoopRampRate(3);
   RobotContainer.mDrivetrain.getLeftDrive3().setOpenLoopRampRate(3);
+  }
+
+  // Called every time the scheduler runs while the command is scheduled.
+  @Override
+  public void execute() {
+ 
 
     double forward = ButtonBind.driverController.getRightTriggerAxis();
     double backward = ButtonBind.driverController.getLeftTriggerAxis();
