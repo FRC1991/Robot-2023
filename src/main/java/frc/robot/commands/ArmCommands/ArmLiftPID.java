@@ -13,6 +13,7 @@ import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj2.command.ProfiledPIDCommand;
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
 import frc.robot.subsystems.Arm;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -48,7 +49,14 @@ public class ArmLiftPID extends ProfiledPIDCommand {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-     return getController().atGoal();
-
+    if(getController().atGoal() == true){
+     return true;
+    }else if(RobotContainer.mButtonBind.armLiftMaxLimit.getAsBoolean() == false){
+      return true;
+    }else if(RobotContainer.mButtonBind.armLiftMinLimit.getAsBoolean() == false){
+      return true;
+    }else{
+      return false;
+    }
   }
 }
