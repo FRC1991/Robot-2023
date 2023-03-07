@@ -30,6 +30,7 @@ import frc.robot.commands.ClawCommands.ResetClaw;
 import frc.robot.commands.ClawCommands.RotateClawTurret;
 import frc.robot.commands.DrivetrainCommands.GameDrive;
 import frc.robot.commands.MiscCommands.BrakeMode;
+import frc.robot.commands.VisionCommands.AutoArmExtension;
 import frc.robot.commands.VisionCommands.RunForTarget;
 import frc.robot.commands.VisionCommands.TurretAimTarget;
 import frc.robot.subsystems.Arm;
@@ -282,6 +283,8 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-gamePiece");
   }else if(trackingGameCargo == false){
     mButtonBind.auxLeftTriggerButton.onTrue(new TurretAimTarget(xDistanceAim));
   }
+
+  mButtonBind.auxRightTriggerButton.onTrue(new AutoArmExtension(mDrivetrain.distanceFromTapeHighInFeet()));
 
 
 //=========================LED Binds============================

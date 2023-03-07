@@ -67,11 +67,11 @@ public static final double kTurnRateToleranceDegPerS = 10;
   public static final double kArmExtendI = 0;
   public static final double kArmExtendD = 0;
 
-  public static final double kMaxArmExtendRatePerS = 100;
-  public static final  double kMaxArmExtendAccelerationPerSSquared = 300;
+  public static final double kMaxArmExtendRatePerS = 5;
+  public static final  double kMaxArmExtendAccelerationPerSSquared = 10;
 
-  public static final double kArmExtendRateTolerancePerS = 0;
-  public static final double kArmExtendTolerance = 0; 
+  public static final double kArmExtendRateTolerancePerS = 0.166667;
+  public static final double kArmExtendTolerance = 2; 
 
   
 

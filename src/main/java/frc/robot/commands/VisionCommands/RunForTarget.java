@@ -85,6 +85,12 @@ public class RunForTarget extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return RobotContainer.mDrivetrain.distanceFromTargetInFeet(RobotContainer.yDistanceAim) <= 1;
+    if(RobotContainer.mDrivetrain.distanceFromTagInFeet() <= 1){
+    return true;
+    }else if(RobotContainer.mDrivetrain.distanceFromCargoInFeet() <= 1){
+      return true;
+    }else{
+      return false;
+    }
   }
 }

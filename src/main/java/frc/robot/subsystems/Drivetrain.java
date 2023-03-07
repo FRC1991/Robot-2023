@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
 
 
 public class Drivetrain extends SubsystemBase {
@@ -164,8 +165,8 @@ public void GameDrive(double forward, double backward, double curve, boolean fas
 
 
 //Distance From Target
-public double distanceFromTargetInFeet(AtomicReference <Double> whichYValue){
-  AtomicReference <Double> targetY = whichYValue;  
+public double distanceFromTagInFeet(){
+  AtomicReference <Double> targetY = RobotContainer.yDistanceAim;  
   double tarY = targetY.get();
   double limelightAngleDeg = 17.0;//For aimming limelight
   double limelightHeightInch = 17.3;//For the aimming limelight
@@ -175,6 +176,56 @@ public double distanceFromTargetInFeet(AtomicReference <Double> whichYValue){
   //}else{
   // targetHeightInch = 20.0; 
  // }
+  double angleToTagDeg = limelightAngleDeg + tarY;
+  double angleToTagRad = angleToTagDeg * (3.14159 / 180.0);
+
+  double distanceToTargetInches = (targetHeightInch - limelightHeightInch) / Math.tan(angleToTagRad);
+  double distanceToTargetFeet = distanceToTargetInches / 12;
+
+  return distanceToTargetFeet;
+}
+
+
+public double distanceFromTapeLowInFeet(){
+  AtomicReference <Double> targetY = RobotContainer.yDistanceAim;  
+  double tarY = targetY.get();
+  double limelightAngleDeg = 17.0;//For aimming limelight
+  double limelightHeightInch = 17.3;//For the aimming limelight
+  double targetHeightInch = 22.5;
+ 
+  double angleToTagDeg = limelightAngleDeg + tarY;
+  double angleToTagRad = angleToTagDeg * (3.14159 / 180.0);
+
+  double distanceToTargetInches = (targetHeightInch - limelightHeightInch) / Math.tan(angleToTagRad);
+  double distanceToTargetFeet = distanceToTargetInches / 12;
+
+  return distanceToTargetFeet;
+}
+
+
+public double distanceFromTapeHighInFeet(){
+  AtomicReference <Double> targetY = RobotContainer.yDistanceAim;  
+  double tarY = targetY.get();
+  double limelightAngleDeg = 17.0;//For aimming limelight
+  double limelightHeightInch = 17.3;//For the aimming limelight
+  double targetHeightInch = 42.0;
+ 
+  double angleToTagDeg = limelightAngleDeg + tarY;
+  double angleToTagRad = angleToTagDeg * (3.14159 / 180.0);
+
+  double distanceToTargetInches = (targetHeightInch - limelightHeightInch) / Math.tan(angleToTagRad);
+  double distanceToTargetFeet = distanceToTargetInches / 12;
+
+  return distanceToTargetFeet;
+}
+
+public double distanceFromCargoInFeet(){
+  AtomicReference <Double> targetY = RobotContainer.yDistanceGamePiece;  
+  double tarY = targetY.get();
+  double limelightAngleDeg = 17.0;//For aimming limelight
+  double limelightHeightInch = 17.3;//For the aimming limelight
+  double targetHeightInch = 2.0;
+ 
   double angleToTagDeg = limelightAngleDeg + tarY;
   double angleToTagRad = angleToTagDeg * (3.14159 / 180.0);
 
