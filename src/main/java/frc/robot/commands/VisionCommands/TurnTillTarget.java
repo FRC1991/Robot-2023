@@ -7,7 +7,6 @@ package frc.robot.commands.VisionCommands;
 import java.util.concurrent.atomic.AtomicReference;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Robot;
 import frc.robot.RobotContainer;
 
 public class TurnTillTarget extends CommandBase {
@@ -15,7 +14,6 @@ public class TurnTillTarget extends CommandBase {
 
   private double tagNum;
   private double turnSpeed;
-  private boolean tagFound = false;
   private AtomicReference<Double> tagVis;
 
   public TurnTillTarget(double speed) {
@@ -40,17 +38,6 @@ public class TurnTillTarget extends CommandBase {
 
     RobotContainer.mDrivetrain.arcadeDrive(0, turnSpeed);
 
-    if (Robot.isRedAlliance == true){
-      if(tagNum >= 1 || tagNum <= 4){
-         tagFound = true;
-       }
-     }
-   
-      if(Robot.isRedAlliance == false){
-       if(tagNum >= 5 || tagNum <= 8){
-           tagFound = true;
-       }
-     }
     
   }
 
@@ -65,6 +52,6 @@ public class TurnTillTarget extends CommandBase {
   @Override
   public boolean isFinished() {
     
-    return tagFound;
+    return tagNum > 0;
 }
 }

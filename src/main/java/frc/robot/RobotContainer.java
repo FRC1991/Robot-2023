@@ -7,6 +7,7 @@ package frc.robot;
 import java.util.EnumSet;
 import java.util.concurrent.atomic.AtomicReference;
 
+
 import edu.wpi.first.networktables.DoubleTopic;
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.networktables.NetworkTable;
@@ -19,10 +20,18 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commands.ArmCommands.ManualArmExtension;
+import frc.robot.commands.ArmCommands.ManualArmLifter;
+import frc.robot.commands.ArmCommands.ManualTurret;
+import frc.robot.commands.ClawCommands.ClawForCone;
+import frc.robot.commands.ClawCommands.ClawForCube;
+import frc.robot.commands.ClawCommands.ManualClaw;
+import frc.robot.commands.ClawCommands.ResetClaw;
+import frc.robot.commands.ClawCommands.RotateClawTurret;
 import frc.robot.commands.DrivetrainCommands.GameDrive;
-import frc.robot.commands.MiscCommands.BotReset;
 import frc.robot.commands.MiscCommands.BrakeMode;
 import frc.robot.commands.VisionCommands.RunForTarget;
+import frc.robot.commands.VisionCommands.TurretAimTarget;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Drivetrain;
@@ -69,6 +78,7 @@ public class RobotContainer {
   SendableChooser<Command> autoChoose;
   GenericEntry aimLLPipeline, gameLLPipeline;
   int posInField = DriverStation.getLocation();
+  boolean trackingGameCargo = false;
 //==========================  Subsystems +++++++++++++++++++++++
   public static Drivetrain mDrivetrain = new Drivetrain();
   public static Arm mArm = new Arm();
@@ -105,6 +115,19 @@ RunForTarget runForTagAuto = new RunForTarget(xDistanceAim);
   Shuffleboard.getTab("Main").add(autoChoose);
 
   //Vision Pipline Selector
+if(trackingGameCargo == true){
+  NetworkTableInstance.getDefault()
+  .getTable("Shuffleboard")
+  .getSubTable("Main")
+  .getEntry("Tracking Game cargo")
+  .setBoolean(trackingGameCargo); 
+}else if(trackingGameCargo == false){
+  NetworkTableInstance.getDefault()
+  .getTable("Shuffleboard")
+  .getSubTable("Main")
+  .getEntry("Tracking Game Cargo")
+  .setBoolean(trackingGameCargo); 
+}
 
 }
 
@@ -227,22 +250,41 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-gamePiece");
    * joysticks}.
    */
   private void configureBindings() {
-    //=====================Driver binding=====================
+//==========================Driver binding========================
     // Game Drive Command
     mDrivetrain.setDefaultCommand(standardGameDriveCommand);
     //Brake mode Command
     mButtonBind.driveAButton.toggleOnTrue(new BrakeMode());
-    //Bot reset
-    mButtonBind.driveStartButton.onTrue(new BotReset());
-    //Arm Range extend
-    //mButtonBind.driveBButton.onTrue(new ArmExtendRange(gamePieceSeenListenerHandle, aprilTagIDListenerHandle, aprilTagID))
-    //Vision command
-
-    //=======================Aux bindings=========================
-
+    //Tracking game cargo or targets
+    mButtonBind.driveStartButton.toggleOnTrue(new InstantCommand(
+      () -> trackingGameCargo = true
+    ));
     
+//=======================Aux bindings=============================
+  // Manual Movement
+  mButtonBind.auxRightBumper.whileTrue(new ManualTurret(0.3));
+  mButtonBind.auxLeftStick.whileTrue(new ManualTurret(-0.3));
 
-    //=========================LED Binds============================
+  mButtonBind.auxLeftStick.whileTrue(new ManualArmLifter(mButtonBind.auxLeftY * 0.3));
+  mButtonBind.auxLeftStick.whileTrue(new ManualArmExtension(mButtonBind.auxLeftX * 0.3));
+
+  mButtonBind.auxRightStick.whileTrue(new ManualClaw(mButtonBind.auxRightY * 0.8));
+  mButtonBind.auxRightStick.whileTrue(new RotateClawTurret(mButtonBind.auxLeftX * 0.4));
+  
+  // Claw Commands
+  mButtonBind.auxXButton.onTrue(new ResetClaw());
+  mButtonBind.auxAButton.onTrue(new ClawForCone());
+  mButtonBind.auxBButton.onTrue(new ClawForCube());
+  
+  //Vision Commands
+  if(trackingGameCargo == true){
+  mButtonBind.auxLeftTriggerButton.onTrue(new TurretAimTarget(xDistanceGamePiece));
+  }else if(trackingGameCargo == false){
+    mButtonBind.auxLeftTriggerButton.onTrue(new TurretAimTarget(xDistanceAim));
+  }
+
+
+//=========================LED Binds============================
     new InstantCommand(() -> mLED.setToOrange());
   }
 

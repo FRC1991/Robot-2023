@@ -181,6 +181,9 @@ public class ButtonBind {
 //Aux Bindings for Triggers
     public final double auxLeftTrigger = auxController.getLeftTriggerAxis();
     public final double auxRightTrigger = auxController.getRightTriggerAxis();
+    public final Trigger auxRightTriggerButton = auxController.leftTrigger();
+    public final Trigger auxLeftTriggerButton = auxController.rightTrigger();
+
 
     public double getAuxRightTrigger(){
         return auxRightTrigger;
@@ -188,6 +191,14 @@ public class ButtonBind {
 
     public double getAuxLeftTrigger(){
         return auxLeftTrigger;
+    }
+
+    public Trigger getAuxRightTriggerButton(){
+        return auxRightTriggerButton;
+    }
+
+    public Trigger getAuxLeftTriggerButton(){
+        return auxLeftTriggerButton;
     }
 //Aux Bindings for DPad
     public final Trigger auxDPadDown = auxController.povDown();

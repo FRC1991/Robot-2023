@@ -18,12 +18,12 @@ public class TurretAimTarget extends CommandBase {
   private double steerScale = Constants.visionConstant;
   private double adjustSteer = 0;
   private double xSteer;
-
+  private AtomicReference<Double> xSteerSup;
 
   public TurretAimTarget(AtomicReference <Double> xSteering) {
     addRequirements(RobotContainer.mTurret);
-      
-    xSteer = xSteering.get();
+    xSteerSup = xSteering;
+    xSteer = xSteerSup.get();
   }
 
   // Called when the command is initially scheduled.
@@ -43,6 +43,9 @@ public class TurretAimTarget extends CommandBase {
   @Override
   public void execute() {
 
+    
+    xSteer = xSteerSup.get();
+
     if(xSteer > 3){
       adjustSteer = xSteer * 0.015;
       adjustSteer = adjustSteer * steerScale;
@@ -55,7 +58,7 @@ public class TurretAimTarget extends CommandBase {
 
 
 
-    RobotContainer.mTurret.setTurret(adjustSteer);
+    RobotContainer.mTurret.setTurret(adjustSteer * 1000); //Fix later we are way behind schedule
   }
 
   // Called once the command ends or is interrupted.

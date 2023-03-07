@@ -16,13 +16,16 @@ public class RunForTarget extends CommandBase {
 
   private double steerScale = Constants.visionConstant;
   private double adjustSteer = 0;
-  private double speedSet, xSteer;
+  private double speedSet, xSteer; 
+   private AtomicReference<Double> xSteerSup;
+
 
   
   public RunForTarget(AtomicReference <Double> xSteering) {
     addRequirements(RobotContainer.mDrivetrain);
-    xSteer = xSteering.get();
-    speedSet = 0.90;
+    xSteerSup = xSteering;
+    xSteer = xSteerSup.get();
+    speedSet = 0.65;
 
   }
 
@@ -30,8 +33,9 @@ public class RunForTarget extends CommandBase {
 
     addRequirements(RobotContainer.mDrivetrain);
     speedSet = speed;
-    xSteer = xSteering.get();
-  }
+    xSteerSup = xSteering;
+    xSteer = xSteerSup.get();
+    }
 
   // Called when the command is initially scheduled.
   @Override
@@ -54,17 +58,18 @@ public class RunForTarget extends CommandBase {
     // if target is off by more than 1 degree, adjust steering, otherwise, do nothing
     // note that this is a very rough approximation, and may need to be adjusted
     // multiplying by 0.015 to normalize the degree value to between -1 and 1
-    if (xSteer > 0.2) {
+    xSteer = xSteerSup.get();
+    
+    if(xSteer > 0.2){
       adjustSteer = xSteer * 0.015;
       adjustSteer = adjustSteer * steerScale;
-    } else if (xSteer < -0.2) {
+    }else if(xSteer < -0.2){
       adjustSteer = xSteer * 0.015;
       adjustSteer = adjustSteer * steerScale;
-    } else {
-      steerScale = 0;
+    }else{
+      adjustSteer = 0;
     }
-
-    RobotContainer.mDrivetrain.arcadeDrive(speedSet, adjustSteer);
+    RobotContainer.mDrivetrain.arcadeDrive(speedSet, adjustSteer * -1000 * 1.65);
   }
 
   // Called once the command ends or is interrupted.

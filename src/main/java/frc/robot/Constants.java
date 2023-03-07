@@ -36,7 +36,7 @@ public final class Constants {
   //Gyro
   public static final int pigeonIMU = 0;
   //Global Deadband and Motor Multiplier
-  public static final double globalDeadband = 0.05;
+  public static final double globalDeadband = 0.1;
 
   //PID turn Constants
 public static final double kTurnP = 1;

@@ -167,8 +167,8 @@ public void GameDrive(double forward, double backward, double curve, boolean fas
 public double distanceFromTargetInFeet(AtomicReference <Double> whichYValue){
   AtomicReference <Double> targetY = whichYValue;  
   double tarY = targetY.get();
-  double limelightAngleDeg = 10.0;
-  double limelightHeightInch = 20.0;
+  double limelightAngleDeg = 17.0;//For aimming limelight
+  double limelightHeightInch = 17.3;//For the aimming limelight
   double targetHeightInch = 10.0;
   //if(RobotContainer.mTurret.visionGamePipelineSwitch() == 0){
   // targetHeightInch = 10.0;
@@ -231,19 +231,6 @@ public ErrorCode resetGyro(){
 
 @Override
   public void periodic() {
-
-
-    NetworkTableInstance.getDefault()
-    .getTable("Shuffleboard")
-    .getSubTable("Main")
-    .getEntry("Gyro Yaw")
-    .setNumber(Math.abs(getYaw()));   
-
-    NetworkTableInstance.getDefault()
-    .getTable("Shuffleboard")
-    .getSubTable("Main")
-    .getEntry("Gyro Pitch")
-    .setNumber(Math.abs(getPitch()));   
 
     if(getPitch() > 2 || getPitch() < -2){
       
