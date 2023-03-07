@@ -20,6 +20,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commands.ArmCommands.ArmExtensionPID;
+import frc.robot.commands.ArmCommands.ArmLiftPID;
 import frc.robot.commands.ArmCommands.ManualArmExtension;
 import frc.robot.commands.ArmCommands.ManualArmLifter;
 import frc.robot.commands.ArmCommands.ManualTurret;
@@ -28,7 +30,9 @@ import frc.robot.commands.ClawCommands.ClawForCube;
 import frc.robot.commands.ClawCommands.ManualClaw;
 import frc.robot.commands.ClawCommands.ResetClaw;
 import frc.robot.commands.ClawCommands.RotateClawTurret;
+import frc.robot.commands.DrivetrainCommands.DriveDistance;
 import frc.robot.commands.DrivetrainCommands.GameDrive;
+import frc.robot.commands.DrivetrainCommands.TurnDegree;
 import frc.robot.commands.MiscCommands.BrakeMode;
 import frc.robot.commands.VisionCommands.AutoArmExtension;
 import frc.robot.commands.VisionCommands.RunForTarget;
@@ -260,6 +264,11 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-gamePiece");
     mButtonBind.driveStartButton.toggleOnTrue(new InstantCommand(
       () -> trackingGameCargo = true
     ));
+    //For PID Tunes
+    mButtonBind.driveBButton.onTrue(new TurnDegree(90));
+    mButtonBind.driveXButton.onTrue(new DriveDistance(3));
+    mButtonBind.driveYButton.onTrue(new ArmLiftPID(0.5, mArm));
+    mButtonBind.driveXButton.onTrue(new ArmExtensionPID(0.5, mArm));
     
 //=======================Aux bindings=============================
   // Manual Movement
@@ -284,7 +293,7 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-gamePiece");
     mButtonBind.auxLeftTriggerButton.onTrue(new TurretAimTarget(xDistanceAim));
   }
 
-  mButtonBind.auxRightTriggerButton.onTrue(new AutoArmExtension(mDrivetrain.distanceFromTapeHighInFeet()));
+  //mButtonBind.auxRightTriggerButton.onTrue(new AutoArmExtension(mDrivetrain.distanceFromTapeHighInFeet()));
 
 
 //=========================LED Binds============================

@@ -19,8 +19,8 @@ public class DriveDistance extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
     new InstantCommand(() -> RobotContainer.mDrivetrain.resetEncoders()),
-    new DriveDistancePID(targetDist, RobotContainer.mDrivetrain),
-    new BrakeMode()
+    new DriveDistancePID(targetDist, RobotContainer.mDrivetrain)
+    //new BrakeMode()
     
     );
   }

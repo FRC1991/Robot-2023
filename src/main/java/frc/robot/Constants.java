@@ -82,11 +82,11 @@ public static final double kTurnRateToleranceDegPerS = 10;
   public static final double kArmLiftI = 0;
   public static final double kArmLiftD = 0;
 
-  public static final double kMaxArmLiftRatePerS = 100;
-  public static final  double kMaxArmLiftAccelerationPerSSquared = 300;
+  public static final double kMaxArmLiftRatePerS = 5;
+  public static final  double kMaxArmLiftAccelerationPerSSquared = 10;
 
-  public static final double kArmLiftToleranceDeg = 0;
-  public static final double kArmLiftRateToleranceDegPerS = 0;
+  public static final double kArmLiftToleranceDeg = 0.0833333;
+  public static final double kArmLiftRateToleranceDegPerS = 2;
 
 
   //Vision constant

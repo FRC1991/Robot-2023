@@ -17,6 +17,6 @@ public class AutoArmExtension extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-  new ArmExtensionPID(whichTarget, RobotContainer.mArm));
+   new ArmExtensionPID(whichTarget, RobotContainer.mArm));
   }
 }

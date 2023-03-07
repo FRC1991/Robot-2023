@@ -12,9 +12,9 @@ import frc.robot.RobotContainer;
 public class TurnTillTarget extends CommandBase {
   /** Creates a new TurnTillTag. */
 
-  private double tagNum;
+  private double tagNum, cargoNum;
   private double turnSpeed;
-  private AtomicReference<Double> tagVis;
+  private AtomicReference<Double> tagVis, cargoVis;
 
   public TurnTillTarget(double speed) {
 
@@ -22,7 +22,8 @@ public class TurnTillTarget extends CommandBase {
     turnSpeed = speed;
     tagVis = RobotContainer.aprilTagID;
     tagNum = tagVis.get();
-
+    cargoVis = RobotContainer.gamePieceSeen;
+    cargoNum = cargoVis.get();
   }
 
   // Called when the command is initially scheduled.
@@ -35,6 +36,9 @@ public class TurnTillTarget extends CommandBase {
   public void execute() { 
     tagVis = RobotContainer.aprilTagID;
     tagNum = tagVis.get();
+
+    cargoVis = RobotContainer.gamePieceSeen;
+    cargoNum = cargoVis.get();
 
     RobotContainer.mDrivetrain.arcadeDrive(0, turnSpeed);
 
@@ -52,6 +56,12 @@ public class TurnTillTarget extends CommandBase {
   @Override
   public boolean isFinished() {
     
-    return tagNum > 0;
+    if(tagNum > 0){
+      return true;
+    }else if(cargoNum > 0){
+      return true;
+    }else{
+      return false;
+    }
 }
 }
