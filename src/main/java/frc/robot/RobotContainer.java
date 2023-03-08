@@ -128,7 +128,7 @@ if(trackingConeTape == true){
   .getSubTable("Main")
   .getEntry("Tracking Tape and Cones")
   .setBoolean(trackingConeTape); 
-
+}
   //Drivetrain data
   if(mDrivetrain.getPitch() > 2 || mDrivetrain.getPitch() < -2){
       
@@ -158,7 +158,11 @@ if(trackingConeTape == true){
    .getEntry("Distance from tag")
    .setNumber(Math.round(mDrivetrain.distanceFromTagInFeet()));
 
-}
+   NetworkTableInstance.getDefault()
+   .getTable("Shuffleboard")
+   .getSubTable("Main")
+   .getEntry("Distance from tag")
+   .setBoolean(Robot.isRedAlliance);
 }
 
 
