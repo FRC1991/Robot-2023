@@ -46,10 +46,10 @@ public class TurretAimTarget extends CommandBase {
     
     xSteer = xSteerSup.get();
 
-    if(xSteer > 3){
+    if(xSteer > 0.2){
       adjustSteer = xSteer * 0.015;
       adjustSteer = adjustSteer * steerScale;
-    }else if(xSteer < -3){
+    }else if(xSteer < -0.2){
       adjustSteer = xSteer * 0.015;
       adjustSteer = adjustSteer * steerScale;
     }else{
@@ -58,7 +58,7 @@ public class TurretAimTarget extends CommandBase {
 
 
 
-    RobotContainer.mTurret.setTurret(adjustSteer * 1000); //Fix later we are way behind schedule
+    RobotContainer.mTurret.setTurret(adjustSteer * 1000 * 1.65); //Fix later we are way behind schedule
   }
 
   // Called once the command ends or is interrupted.
