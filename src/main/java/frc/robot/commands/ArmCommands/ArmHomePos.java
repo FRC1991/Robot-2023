@@ -5,7 +5,7 @@
 package frc.robot.commands.ArmCommands;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.RobotContainer;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -16,10 +16,8 @@ public class ArmHomePos extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(new CenterArm(),
-    new ManualArmExtension(0.4),
-    new WaitCommand(1),
-    new ManualArmLifter(0.4),
-    new WaitCommand(1)
+    new ArmExtensionPID(0, RobotContainer.mArm),
+    new ArmLiftPID(0, RobotContainer.mArm)
     );
   }
 }

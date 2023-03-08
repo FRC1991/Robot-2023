@@ -55,11 +55,11 @@ public static final double kTurnRateToleranceDegPerS = 10;
   public static final double kChargeI = 0;
   public static final double kChargeD = 0;
   
-  public static final double kMaxChargeRateDegPerS = 100;
-  public static final  double kMaxChargeAccelerationDegPerSSquared = 300;
+  public static final double kMaxChargeRateDegPerS = 40;
+  public static final  double kMaxChargeAccelerationDegPerSSquared = 85;
   
   public static final double kChargeToleranceDeg = 2;
-  public static final double kChargeRateToleranceDegPerS = 4;
+  public static final double kChargeRateToleranceDegPerS = 10;
 
   //PID For Arm Extension
 
