@@ -5,10 +5,9 @@
 package frc.robot.commands.AutoCommand;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.RobotContainer;
-import frc.robot.commands.ArmCommands.ArmExtensionPID;
+import frc.robot.commands.ArmCommands.ArmExtendBangBang;
 import frc.robot.commands.ArmCommands.ArmHomePos;
-import frc.robot.commands.ArmCommands.ArmLiftPID;
+import frc.robot.commands.ArmCommands.ArmLiftBangBang;
 import frc.robot.commands.ArmCommands.TurretToSetpoint;
 import frc.robot.commands.ClawCommands.ResetClaw;
 
@@ -20,9 +19,9 @@ public class TurnArmScore extends SequentialCommandGroup {
   public TurnArmScore() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new TurretToSetpoint(35, 0.5),
-    new ArmLiftPID(2, RobotContainer.mArm),
-    new ArmExtensionPID(1, RobotContainer.mArm),
+    addCommands(new TurretToSetpoint(35),
+    new ArmLiftBangBang(25),
+    new ArmExtendBangBang(10),
     new ResetClaw(),
     new ArmHomePos()
     );

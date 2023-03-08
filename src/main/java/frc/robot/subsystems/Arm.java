@@ -42,23 +42,23 @@ public class Arm extends SubsystemBase {
 
 //Limiters for extension
     armExtendMotor.setSoftLimit(SoftLimitDirection.kForward, 0);//check how many rotations
-    armExtendMotor.enableSoftLimit(SoftLimitDirection.kForward, true);
+    armExtendMotor.enableSoftLimit(SoftLimitDirection.kForward, false);
 
     armExtendMotor.setSoftLimit(SoftLimitDirection.kReverse, 120);
-    armExtendMotor.enableSoftLimit(SoftLimitDirection.kReverse, true);
+    armExtendMotor.enableSoftLimit(SoftLimitDirection.kReverse, false);
 
 //Limiters for raising
     armLiftMotor1.setSoftLimit(SoftLimitDirection.kForward, 0);//check how many rotations
-    armLiftMotor1.enableSoftLimit(SoftLimitDirection.kForward, true);
+    armLiftMotor1.enableSoftLimit(SoftLimitDirection.kForward, false);
 
     armLiftMotor1.setSoftLimit(SoftLimitDirection.kReverse, 20);
-    armLiftMotor1.enableSoftLimit(SoftLimitDirection.kReverse, true);
+    armLiftMotor1.enableSoftLimit(SoftLimitDirection.kReverse, false);
 
     armLiftMotor2.setSoftLimit(SoftLimitDirection.kForward, 0);//check how many rotations
-    armLiftMotor2.enableSoftLimit(SoftLimitDirection.kForward, true);
+    armLiftMotor2.enableSoftLimit(SoftLimitDirection.kForward, false);
 
     armLiftMotor2.setSoftLimit(SoftLimitDirection.kReverse, 20);
-    armLiftMotor2.enableSoftLimit(SoftLimitDirection.kReverse, true);
+    armLiftMotor2.enableSoftLimit(SoftLimitDirection.kReverse, false);
 
   
   }

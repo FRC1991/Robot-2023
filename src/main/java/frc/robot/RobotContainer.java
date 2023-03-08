@@ -284,7 +284,7 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-cargo");
   mButtonBind.auxLeftBumper.whileTrue(new ManualTurret(-0.3));
 
   mButtonBind.auxDPadDown.whileTrue(new ManualArmLifter( -0.3));
-  mButtonBind.auxDPadUp.whileTrue(new ManualArmExtension(0.3));
+  mButtonBind.auxDPadUp.whileTrue(new ManualArmLifter(0.3));
 
   mButtonBind.auxDPadLeft.whileTrue(new ManualArmExtension(-0.5));
   mButtonBind.auxDPadRight.whileTrue(new ManualArmExtension(0.5));

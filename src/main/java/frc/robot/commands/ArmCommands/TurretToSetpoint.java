@@ -10,12 +10,11 @@ import frc.robot.RobotContainer;
 
 public class TurretToSetpoint extends CommandBase {
   /** Creates a new TurretToSetpoint. */
-  private double targetPos, speed, initPos, currentPos;
+  double targetPos, speed, initPos, currentPos;
 
-  public TurretToSetpoint(double encoderValue, double speedSet) {
+  public TurretToSetpoint(double encoderValue) {
     addRequirements(RobotContainer.mTurret);
     targetPos = encoderValue;
-    speedSet = speed;
   }
 
   // Called when the command is initially scheduled.
@@ -29,10 +28,10 @@ public class TurretToSetpoint extends CommandBase {
   @Override
   public void execute() {
     currentPos = RobotContainer.mTurret.getTurretOnePos();
-    if(currentPos > targetPos){
-      RobotContainer.mTurret.setTurret(speed);
-    }else if(currentPos < targetPos){
-      RobotContainer.mTurret.setTurret(-speed);
+    if(RobotContainer.mTurret.getTurretOnePos() > targetPos){
+      RobotContainer.mTurret.setTurret(-0.4);
+    }else if(RobotContainer.mTurret.getTurretOnePos() < targetPos){
+      RobotContainer.mTurret.setTurret(0.4);
 
     }
   }
@@ -47,6 +46,6 @@ public class TurretToSetpoint extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Math.round(targetPos) == Math.round(currentPos);
+    return Math.round(targetPos) == Math.round(RobotContainer.mTurret.getTurretOnePos());
   }
 }

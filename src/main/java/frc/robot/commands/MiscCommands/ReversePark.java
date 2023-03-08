@@ -23,7 +23,7 @@ public class ReversePark extends SequentialCommandGroup {
 
     addCommands(new DriveDistancePID(-2 * speed, null),
 
-    new TurretToSetpoint(turretSpeedSet, -180),
+    new TurretToSetpoint(37),
 
     new RunForTarget(pickTagPipeline, 2));
 }
