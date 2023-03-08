@@ -32,16 +32,16 @@ public class Turret extends SubsystemBase {
     //reset before match starts
     resetTurretEncoder();
     //Limiters
-    turretMotor1.setSoftLimit(SoftLimitDirection.kForward, 35);//check how many rotations
+    turretMotor1.setSoftLimit(SoftLimitDirection.kForward, 40);//check how many rotations
     //turretMotor1.enableSoftLimit(SoftLimitDirection.kForward, true);
     
-    turretMotor1.setSoftLimit(SoftLimitDirection.kReverse, 0);//check how many rotations
+    turretMotor1.setSoftLimit(SoftLimitDirection.kReverse, 40);//check how many rotations
     //turretMotor1.enableSoftLimit(SoftLimitDirection.kReverse, true);
     
-    turretMotor2.setSoftLimit(SoftLimitDirection.kForward, 35);//check how many rotations
+    turretMotor2.setSoftLimit(SoftLimitDirection.kForward, 40);//check how many rotations
     //turretMotor2.enableSoftLimit(SoftLimitDirection.kForward, true);
 
-    turretMotor2.setSoftLimit(SoftLimitDirection.kReverse, 0);//check how many rotations
+    turretMotor2.setSoftLimit(SoftLimitDirection.kReverse, 40);//check how many rotations
     //turretMotor2.enableSoftLimit(SoftLimitDirection.kReverse, true);
 
     

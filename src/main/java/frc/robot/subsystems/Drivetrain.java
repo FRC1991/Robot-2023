@@ -160,7 +160,7 @@ public void GameDrive(double forward, double backward, double curve, boolean fas
 
       / 6.0;
 
-    return 0.183333 * avgDistanceInRotations;
+    return 2.1 * avgDistanceInRotations;
   }
 
 

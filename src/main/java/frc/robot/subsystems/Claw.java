@@ -35,11 +35,11 @@ public class Claw extends SubsystemBase {
    // clawMotor.enableSoftLimit(SoftLimitDirection.kReverse, true);
 
 //Limiter for claw turret   
-    clawTurretMotor.setSoftLimit(SoftLimitDirection.kForward, 35);//check how many rotations
-    //clawTurretMotor.enableSoftLimit(SoftLimitDirection.kForward, true);
+    clawTurretMotor.setSoftLimit(SoftLimitDirection.kForward, 18);//check how many rotations
+    clawTurretMotor.enableSoftLimit(SoftLimitDirection.kForward, true);
 
-    clawTurretMotor.setSoftLimit(SoftLimitDirection.kReverse, 35);//check how many rotations
-  //  clawTurretMotor.enableSoftLimit(SoftLimitDirection.kReverse, true);
+    clawTurretMotor.setSoftLimit(SoftLimitDirection.kReverse, 18);//check how many rotations
+    clawTurretMotor.enableSoftLimit(SoftLimitDirection.kReverse, true);
 
 
   }
