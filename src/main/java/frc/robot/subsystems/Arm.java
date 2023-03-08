@@ -100,7 +100,7 @@ public class Arm extends SubsystemBase {
 
 //reset arm lift pos
   public void resetArmLiftEncoder(){
-    armLiftMotor1.getEncoder().setPosition(0);
+    armLiftMotor1.getAlternateEncoder(SparkMaxAlternateEncoder.Type.kQuadrature, 8192).getPosition();
     armLiftMotor2.getEncoder().setPosition(0);
 
   }

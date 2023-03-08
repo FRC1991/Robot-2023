@@ -29,8 +29,8 @@ public class TurretAimTarget extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    RobotContainer.mButtonBind.alternatingDriveVibrate();
-    RobotContainer.mButtonBind.alternatingAuxVibrate();
+    //RobotContainer.mButtonBind.alternatingDriveVibrate();
+    //RobotContainer.mButtonBind.alternatingAuxVibrate();
 
     NetworkTableInstance.getDefault()
     .getTable("Shuffleboard")
@@ -64,8 +64,8 @@ public class TurretAimTarget extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    RobotContainer.mButtonBind.alternatingDriveVibrate();
-    RobotContainer.mButtonBind.alternatingAuxVibrate();
+    //RobotContainer.mButtonBind.alternatingDriveVibrate();
+    //RobotContainer.mButtonBind.alternatingAuxVibrate();
     
     RobotContainer.mTurret.stopTurret();
     

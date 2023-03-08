@@ -4,35 +4,35 @@
 
 package frc.robot.commands.ArmCommands;
 
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
-public class TurretToSetpoint extends CommandBase {
-  /** Creates a new TurretToSetpoint. */
-  private double targetPos, speed, initPos, currentPos;
+public class ArmLiftBangBang extends CommandBase {
+  /** Creates a new ArmLiftBangBang. */
+  private double targetPos, speedSet, initPos, currentPos;
 
-  public TurretToSetpoint(double encoderValue, double speedSet) {
-    addRequirements(RobotContainer.mTurret);
-    targetPos = encoderValue;
-    speedSet = speed;
+  public ArmLiftBangBang(double altEncoderValue, double speed) {
+addRequirements(RobotContainer.mArm);
+  targetPos = altEncoderValue;
+  speed = speedSet;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    initPos = RobotContainer.mTurret.getTurretOnePos();
+    initPos = RobotContainer.mArm.getArmLiftOnePos();
     currentPos = initPos;
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    currentPos = RobotContainer.mTurret.getTurretOnePos();
+    currentPos = RobotContainer.mArm.getArmLiftOnePos();
     if(currentPos > targetPos){
-      RobotContainer.mTurret.setTurret(speed);
+      RobotContainer.mArm.setArmLift(speedSet);
     }else if(currentPos < targetPos){
-      RobotContainer.mTurret.setTurret(-speed);
+      RobotContainer.mArm.setArmLift(-speedSet);
 
     }
   }
@@ -40,8 +40,7 @@ public class TurretToSetpoint extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    RobotContainer.mTurret.stopTurret();
-    
+    RobotContainer.mArm.stopArmLift();
   }
 
   // Returns true when the command should end.

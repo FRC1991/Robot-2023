@@ -33,7 +33,7 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
-    isRedAlliance = DriverStation.getAlliance().compareTo(DriverStation.Alliance.Red) == 0;
+    isRedAlliance = DriverStation.getAlliance().compareTo(DriverStation.Alliance.Blue) == 0;
   //  LiveWindow.setEnabled(false);
   }
 
