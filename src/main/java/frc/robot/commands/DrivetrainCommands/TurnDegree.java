@@ -18,12 +18,12 @@ public class TurnDegree extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new InstantCommand(() -> RobotContainer.mDrivetrain.resetGyro()),
-      new InstantCommand(()-> RobotContainer.mDrivetrain.getLeftDrive1().setOpenLoopRampRate(0)),
-      new InstantCommand(()-> RobotContainer.mDrivetrain.getLeftDrive2().setOpenLoopRampRate(0)),
-      new InstantCommand(()-> RobotContainer.mDrivetrain.getLeftDrive3().setOpenLoopRampRate(0)),
-      new InstantCommand(()-> RobotContainer.mDrivetrain.getRightDrive1().setOpenLoopRampRate(0)),
-      new InstantCommand(()-> RobotContainer.mDrivetrain.getRightDrive2().setOpenLoopRampRate(0)),
-      new InstantCommand(()-> RobotContainer.mDrivetrain.getRightDrive3().setOpenLoopRampRate(0)),
+     // new InstantCommand(()-> RobotContainer.mDrivetrain.getLeftDrive1().setOpenLoopRampRate(0)),
+     // new InstantCommand(()-> RobotContainer.mDrivetrain.getLeftDrive2().setOpenLoopRampRate(0)),
+     // new InstantCommand(()-> RobotContainer.mDrivetrain.getLeftDrive3().setOpenLoopRampRate(0)),
+     // new InstantCommand(()-> RobotContainer.mDrivetrain.getRightDrive1().setOpenLoopRampRate(0)),
+     // new InstantCommand(()-> RobotContainer.mDrivetrain.getRightDrive2().setOpenLoopRampRate(0)),
+     // new InstantCommand(()-> RobotContainer.mDrivetrain.getRightDrive3().setOpenLoopRampRate(0)),
       new TurnDegreesPID(targetDeg, RobotContainer.mDrivetrain));
   //new BrakeMode());
     }

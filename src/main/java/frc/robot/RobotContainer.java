@@ -25,16 +25,14 @@ import frc.robot.commands.ArmCommands.ArmLiftPID;
 import frc.robot.commands.ArmCommands.ManualArmExtension;
 import frc.robot.commands.ArmCommands.ManualArmLifter;
 import frc.robot.commands.ArmCommands.ManualTurret;
+import frc.robot.commands.AutoCommand.TurnArmScore;
 import frc.robot.commands.ClawCommands.ClawForCone;
 import frc.robot.commands.ClawCommands.ClawForCube;
-import frc.robot.commands.ClawCommands.ManualClaw;
 import frc.robot.commands.ClawCommands.ResetClaw;
-import frc.robot.commands.ClawCommands.RotateClawTurret;
 import frc.robot.commands.DrivetrainCommands.DriveDistance;
 import frc.robot.commands.DrivetrainCommands.GameDrive;
 import frc.robot.commands.DrivetrainCommands.TurnDegree;
 import frc.robot.commands.MiscCommands.BrakeMode;
-import frc.robot.commands.VisionCommands.AutoArmExtension;
 import frc.robot.commands.VisionCommands.RunForTarget;
 import frc.robot.commands.VisionCommands.TurretAimTarget;
 import frc.robot.subsystems.Arm;
@@ -84,6 +82,7 @@ public class RobotContainer {
   GenericEntry aimLLPipeline, gameLLPipeline;
   int posInField = DriverStation.getLocation();
   boolean trackingGameCargo = false;
+  boolean trackingConeTape = false;
 //==========================  Subsystems +++++++++++++++++++++++
   public static Drivetrain mDrivetrain = new Drivetrain();
   public static Arm mArm = new Arm();
@@ -111,11 +110,11 @@ RunForTarget runForTagAuto = new RunForTarget(xDistanceAim);
 //Auto Chooser
   autoChoose = new SendableChooser<Command>();
   if(posInField == 1){
-  autoChoose.setDefaultOption("Auto From Right", runForTagDriver);
+  autoChoose.setDefaultOption("Auto From Right", new TurnArmScore());
   }else if(posInField == 2){
-  autoChoose.addOption("Auto From Middle", runForTagDriver);
+  autoChoose.addOption("Auto From Middle", new TurnArmScore());
   }else{
-  autoChoose.addOption("Auto From Left", runForTagDriver);
+  autoChoose.addOption("Auto From Left", new TurnArmScore());
   }
   Shuffleboard.getTab("Main").add(autoChoose);
 
@@ -134,6 +133,19 @@ if(trackingGameCargo == true){
   .setBoolean(trackingGameCargo); 
 }
 
+if(trackingConeTape == true){
+  NetworkTableInstance.getDefault()
+  .getTable("Shuffleboard")
+  .getSubTable("Main")
+  .getEntry("Tracking Game cargo")
+  .setBoolean(trackingGameCargo); 
+}else if(trackingConeTape == false){
+  NetworkTableInstance.getDefault()
+  .getTable("Shuffleboard")
+  .getSubTable("Main")
+  .getEntry("Tracking Game Cargo")
+  .setBoolean(trackingGameCargo); 
+}
 }
 
 
@@ -144,8 +156,8 @@ if(trackingGameCargo == true){
   private void NTListenInit(){
 //Network tables setup
 NetworkTableInstance ntInst = NetworkTableInstance.getDefault();
-NetworkTable aimmingNT = ntInst.getTable("limelight");
-NetworkTable gamePieceNT = ntInst.getTable("limelight-gamePiece");
+NetworkTable aimmingNT = ntInst.getTable("limelight-aimming");
+NetworkTable gamePieceNT = ntInst.getTable("limelight-cargo");
 
 //Auto Pipeline switch
 
@@ -261,9 +273,17 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-gamePiece");
     //Brake mode Command
     mButtonBind.driveAButton.toggleOnTrue(new BrakeMode());
     //Tracking game cargo or targets
-    mButtonBind.driveStartButton.toggleOnTrue(new InstantCommand(
-      () -> trackingGameCargo = true
+    mButtonBind.driveStartButton.toggleOnTrue(new InstantCommand(()-> trackingGameCargo = true));
+    mButtonBind.driveStartButton.toggleOnTrue(new InstantCommand(()-> 
+    NetworkTableInstance.getDefault()
+  .getTable("Shuffleboard")
+  .getSubTable("Main")
+  .getEntry("Tracking Game Cargo")
+  .setBoolean(trackingGameCargo) 
     ));
+  //Run for target
+    mButtonBind.driveLeftBumper.onTrue(new RunForTarget(xDistanceGamePiece));
+    
     //For PID Tunes
     mButtonBind.driveBButton.onTrue(new TurnDegree(90));
     mButtonBind.driveXButton.onTrue(new DriveDistance(3));
@@ -275,11 +295,11 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-gamePiece");
   mButtonBind.auxRightBumper.whileTrue(new ManualTurret(0.3));
   mButtonBind.auxLeftStick.whileTrue(new ManualTurret(-0.3));
 
-  mButtonBind.auxLeftStick.whileTrue(new ManualArmLifter(mButtonBind.auxLeftY * 0.3));
-  mButtonBind.auxLeftStick.whileTrue(new ManualArmExtension(mButtonBind.auxLeftX * 0.3));
+  mButtonBind.auxDPadDown.whileTrue(new ManualArmLifter(mButtonBind.auxLeftY * 0.3));
+  mButtonBind.auxDPadUp.whileTrue(new ManualArmExtension(mButtonBind.auxLeftX * 0.3));
 
-  mButtonBind.auxRightStick.whileTrue(new ManualClaw(mButtonBind.auxRightY * 0.8));
-  mButtonBind.auxRightStick.whileTrue(new RotateClawTurret(mButtonBind.auxLeftX * 0.4));
+  mButtonBind.auxDPadLeft.whileTrue(new ManualArmExtension(0.5));
+  mButtonBind.auxDPadRight.whileTrue(new ManualArmExtension(0.5));
   
   // Claw Commands
   mButtonBind.auxXButton.onTrue(new ResetClaw());
@@ -293,6 +313,9 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-gamePiece");
     mButtonBind.auxLeftTriggerButton.onTrue(new TurretAimTarget(xDistanceAim));
   }
 
+  if(trackingConeTape == true){
+    //mButtonBind.auxStartButton.onTrue(new T)
+  }
   //mButtonBind.auxRightTriggerButton.onTrue(new AutoArmExtension(mDrivetrain.distanceFromTapeHighInFeet()));
 
 

@@ -37,8 +37,8 @@ public class ManualArmExtension extends CommandBase {
   public boolean isFinished() {
     if(RobotContainer.mButtonBind.armExtendMaxLimit.getAsBoolean() == false){
       return true;
-    }else if(RobotContainer.mButtonBind.armExtendMinLimit.getAsBoolean() == false){
-      return true;
+   // }else if(RobotContainer.mButtonBind.armExtendMinLimit.getAsBoolean() == false){
+   //   return true;
     }else{
       return false;
     }
