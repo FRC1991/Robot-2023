@@ -4,6 +4,8 @@
 
 package frc.robot.commands.VisionCommands;
 
+import java.util.concurrent.atomic.AtomicReference;
+
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.RobotContainer;
 import frc.robot.commands.ArmCommands.ArmExtensionPID;
@@ -11,12 +13,13 @@ import frc.robot.commands.ArmCommands.ArmExtensionPID;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class AutoArmExtension extends SequentialCommandGroup {
+public class AutoPickup extends SequentialCommandGroup {
   /** Creates a new AutoArmExtension. */
-  public AutoArmExtension(double whichTarget) {
+  public AutoPickup(double whichTarget, AtomicReference<Double> xSteers) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
+    new RunForTarget(xSteers),
    new ArmExtensionPID(whichTarget, RobotContainer.mArm));
   }
 }

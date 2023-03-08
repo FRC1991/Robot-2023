@@ -15,7 +15,6 @@ import com.revrobotics.SparkMaxAlternateEncoder;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
@@ -274,37 +273,4 @@ public ErrorCode resetGyro(){
 }
 
 
-@Override
-  public void periodic() {
-
-    if(getPitch() > 2 || getPitch() < -2){
-      
-      boolean range = false;
-
-      NetworkTableInstance.getDefault()
-      .getTable("Shuffleboard")
-      .getSubTable("Main")
-      .getEntry("Is charging station in range?")
-      .setBoolean(range);    
-      
-    }else{
-    
-      boolean range = true;
-    
-      NetworkTableInstance.getDefault()
-      .getTable("Shuffleboard")
-      .getSubTable("Main")
-      .getEntry("Is charging station in range?")
-      .setBoolean(range);
-      
-     }
-    
-     NetworkTableInstance.getDefault()
-     .getTable("Shuffleboard")
-     .getSubTable("Main")
-     .getEntry("Distance from tag")
-     .setNumber(Math.round(distanceFromTagInFeet()));
-
-    }
- 
 }

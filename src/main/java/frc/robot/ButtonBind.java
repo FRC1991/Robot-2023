@@ -29,6 +29,7 @@ public class ButtonBind {
     public final Trigger driveLeftBumper = driverController.leftBumper();
     public final Trigger driveRightBumper = driverController.rightBumper();
     public final Trigger driveStartButton = driverController.start();
+    public final Trigger driveBackButton = driverController.back();
 
     public boolean getDriveA(){
         return driveAButton.getAsBoolean();
@@ -127,6 +128,8 @@ public class ButtonBind {
     public final Trigger auxLeftBumper = auxController.leftBumper();
     public final Trigger auxRightBumper = auxController.rightBumper();
     public final Trigger auxStartButton = auxController.start();
+    public final Trigger auxBackButton = auxController.back();
+
     
     public boolean getAuxA(){
         return auxAButton.getAsBoolean();
@@ -155,7 +158,7 @@ public class ButtonBind {
     public boolean getAuxStart(){
         return auxStartButton.getAsBoolean();
     }
-//Aux Binding for Joysticks
+//Aux Binding for Joysticks==========================================================
     public final Trigger auxLeftStick = auxController.leftStick();
     public final double auxLeftX = auxController.getLeftX();
     public final double auxLeftY = auxController.getLeftY();

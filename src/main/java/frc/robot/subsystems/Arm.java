@@ -10,7 +10,6 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -108,11 +107,6 @@ public class Arm extends SubsystemBase {
     armExtendMotor.set(0);
 
     armExtendMotor.setIdleMode(IdleMode.kBrake);
-
-    Timer.delay(0.5);
-
-
-    armExtendMotor.setIdleMode(IdleMode.kCoast);
   }
 
 //Stop the arm lift
@@ -121,12 +115,6 @@ public class Arm extends SubsystemBase {
 
     armLiftMotor1.setIdleMode(IdleMode.kBrake);
     armLiftMotor2.setIdleMode(IdleMode.kBrake);
-
-    Timer.delay(0.5);
-
-
-    armLiftMotor1.setIdleMode(IdleMode.kCoast);
-    armLiftMotor2.setIdleMode(IdleMode.kCoast);
   }
   
 //Motor Getters 
