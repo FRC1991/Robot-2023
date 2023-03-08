@@ -16,25 +16,27 @@ public class RunForTarget extends CommandBase {
 
   private double steerScale = Constants.visionConstant;
   private double adjustSteer = 0;
-  private double speedSet, xSteer; 
+  private double speedSet, xSteer, stopDist; 
    private AtomicReference<Double> xSteerSup;
 
 
   
-  public RunForTarget(AtomicReference <Double> xSteering) {
+  public RunForTarget(AtomicReference <Double> xSteering, double whenToStop) {
     addRequirements(RobotContainer.mDrivetrain);
     xSteerSup = xSteering;
     xSteer = xSteerSup.get();
     speedSet = 0.65;
+    whenToStop = stopDist;
 
   }
 
-  public RunForTarget(double speed, AtomicReference <Double> xSteering) {
+  public RunForTarget(double speed, AtomicReference <Double> xSteering, double whenToStop) {
 
     addRequirements(RobotContainer.mDrivetrain);
     speedSet = speed;
     xSteerSup = xSteering;
     xSteer = xSteerSup.get();
+    whenToStop = stopDist;
     }
 
   // Called when the command is initially scheduled.
@@ -85,9 +87,9 @@ public class RunForTarget extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(RobotContainer.mDrivetrain.distanceFromTagInFeet() <= 1){
+    if(RobotContainer.mDrivetrain.distanceFromTagInFeet() <= stopDist){
     return true;
-    }else if(RobotContainer.mDrivetrain.distanceFromCargoInFeet() <= 1){
+    }else if(RobotContainer.mDrivetrain.distanceFromCargoInFeet() <= stopDist){
       return true;
     }else{
       return false;

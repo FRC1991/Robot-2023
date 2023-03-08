@@ -25,6 +25,6 @@ public class ReversePark extends SequentialCommandGroup {
 
     new TurretToSetpoint(turretSpeedSet, -180),
 
-    new RunForTarget(pickTagPipeline));
+    new RunForTarget(pickTagPipeline, 2));
 }
 }

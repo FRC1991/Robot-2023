@@ -215,7 +215,7 @@ public double distanceFromTapeHighInFeet(){
 public double distanceFromCargoInFeet(){
   AtomicReference <Double> targetY = RobotContainer.yDistanceGamePiece;  
   double tarY = targetY.get();
-  double limelightAngleDeg = 17.0;//For aimming limelight
+  double limelightAngleDeg = 5.0;//For aimming limelight
   double limelightHeightInch = 17.3;//For the aimming limelight
   double targetHeightInch = 2.0;
  

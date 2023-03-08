@@ -25,6 +25,7 @@ import frc.robot.commands.ArmCommands.ArmLiftPID;
 import frc.robot.commands.ArmCommands.ManualArmExtension;
 import frc.robot.commands.ArmCommands.ManualArmLifter;
 import frc.robot.commands.ArmCommands.ManualTurret;
+import frc.robot.commands.AutoCommand.ScoreAndGrabCube;
 import frc.robot.commands.AutoCommand.TurnArmScore;
 import frc.robot.commands.ClawCommands.ClawForCone;
 import frc.robot.commands.ClawCommands.ClawForCube;
@@ -93,9 +94,6 @@ public class RobotContainer {
 
 GameDrive standardGameDriveCommand = new GameDrive();
 
-RunForTarget runForTagDriver = new RunForTarget(ButtonBind.driverController.getRightTriggerAxis(), xDistanceGamePiece);
-RunForTarget runForTagAuto = new RunForTarget(xDistanceAim);
-   
 
   public RobotContainer() {
     NTListenInit();
@@ -108,9 +106,9 @@ RunForTarget runForTagAuto = new RunForTarget(xDistanceAim);
 //Auto Chooser
   autoChoose = new SendableChooser<Command>();
   if(posInField == 1){
-  autoChoose.setDefaultOption("Auto From Right", new TurnArmScore());
+  autoChoose.setDefaultOption("Score", new TurnArmScore());
   }else if(posInField == 2){
-  autoChoose.addOption("Auto From Middle", new TurnArmScore());
+  autoChoose.addOption("Score and Grab", new ScoreAndGrabCube());
   }else{
   autoChoose.addOption("Auto From Left", new TurnArmScore());
   }
@@ -174,24 +172,6 @@ NetworkTableInstance ntInst = NetworkTableInstance.getDefault();
 NetworkTable aimmingNT = ntInst.getTable("limelight-aimming");
 NetworkTable gamePieceNT = ntInst.getTable("limelight-cargo");
 
-//Auto Pipeline switch
-
- //gamePieceNT.getEntry("pipeline").setNumber(mTurret.visionGamePipelineSwitch());
-
-
-//If tracking during holding A cube otherwise cone
-//if(mButtonBind.getAuxA() == true){
-//  gamePieceNT.getEntry("pipeline").setNumber(1);
-//}else{
-//  gamePieceNT.getEntry("pipeline").setNumber(0);
-//}
-
-//If tracking During holding B Tag otherwise tape
-//if(mButtonBind.getAuxB() == true){
-// aimmingNT.getEntry("pipeline").setNumber(1);
-//}else{
-//  aimmingNT.getEntry("pipeline").setNumber(0);
-//}
 
 //Topics From Aimming NT
  tagIDTopic = aimmingNT.getDoubleTopic("tid");
@@ -258,17 +238,6 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-cargo");
 
     
 }
-//++++++=========+++++======++++++POSSIBLE NT SWAP TEST???
-  //public AtomicReference<Double> name(){
-  //xDistanceGamePieceListenerHandle = ntInst.addListener(
-    //xDistanceGamePieceTopic,
-//EnumSet.of(NetworkTableEvent.Kind.kValueAll), 
-//event -> {
-//  xDistanceGamePiece.set(event.valueData.value.getDouble());
-//});
-
-//return xDistanceGamePiece;
-//}
 
 
 
@@ -297,7 +266,7 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-cargo");
   .setBoolean(trackingConeTape) 
     ));
   //Run for target
-    mButtonBind.driveLeftBumper.onTrue(new RunForTarget(xDistanceGamePiece));
+    mButtonBind.driveLeftBumper.onTrue(new RunForTarget(xDistanceGamePiece, 1));
     
     //For PID Tunes
     mButtonBind.driveBButton.onTrue(new TurnDegree(90));
@@ -310,10 +279,10 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-cargo");
   mButtonBind.auxRightBumper.whileTrue(new ManualTurret(0.3));
   mButtonBind.auxLeftBumper.whileTrue(new ManualTurret(-0.3));
 
-  mButtonBind.auxDPadDown.whileTrue(new ManualArmLifter( 0.3));
-  mButtonBind.auxDPadUp.whileTrue(new ManualArmExtension(-0.3));
+  mButtonBind.auxDPadDown.whileTrue(new ManualArmLifter( -0.3));
+  mButtonBind.auxDPadUp.whileTrue(new ManualArmExtension(0.3));
 
-  mButtonBind.auxDPadLeft.whileTrue(new ManualArmExtension(0.5));
+  mButtonBind.auxDPadLeft.whileTrue(new ManualArmExtension(-0.5));
   mButtonBind.auxDPadRight.whileTrue(new ManualArmExtension(0.5));
   
   // Claw Commands

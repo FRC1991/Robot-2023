@@ -28,7 +28,10 @@ public class Arm extends SubsystemBase {
     armLiftMotor2 = new CANSparkMax(Constants.armLiftMotor2, MotorType.kBrushless);
 
     armLiftMotors = new MotorControllerGroup(armLiftMotor1, armLiftMotor2);
-    
+//invert motor
+    armLiftMotor1.setInverted(true);
+    armLiftMotor2.setInverted(true);
+    armExtendMotor.setInverted(true);
 //Reset encoders before match
     resetArmExtensionEncoder();
     resetArmLiftEncoder();

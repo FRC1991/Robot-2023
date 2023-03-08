@@ -15,11 +15,11 @@ import frc.robot.commands.ArmCommands.ArmExtensionPID;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class AutoPickup extends SequentialCommandGroup {
   /** Creates a new AutoArmExtension. */
-  public AutoPickup(double whichTarget, AtomicReference<Double> xSteers) {
+  public AutoPickup(double distFromTarget, AtomicReference<Double> xSteers) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-    new RunForTarget(xSteers),
-   new ArmExtensionPID(whichTarget, RobotContainer.mArm));
+    new RunForTarget(xSteers, 2),
+   new ArmExtensionPID(distFromTarget, RobotContainer.mArm));
   }
 }
