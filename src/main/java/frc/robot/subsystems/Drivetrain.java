@@ -166,7 +166,7 @@ public double distanceFromTagInFeet(){
   AtomicReference <Double> targetY = RobotContainer.yDistanceAim;  
   double tarY = targetY.get();
   double limelightAngleDeg = 17.0;//For aimming limelight
-  double limelightHeightInch = 17.3;//For the aimming limelight
+  double limelightHeightInch = 16.8;//For the aimming limelight
   double targetHeightInch = 10.0;
  
   double angleToTagDeg = limelightAngleDeg + tarY;
@@ -183,7 +183,7 @@ public double distanceFromTapeLowInFeet(){
   AtomicReference <Double> targetY = RobotContainer.yDistanceAim;  
   double tarY = targetY.get();
   double limelightAngleDeg = 17.0;//For aimming limelight
-  double limelightHeightInch = 17.3;//For the aimming limelight
+  double limelightHeightInch = 16.8;//For the aimming limelight
   double targetHeightInch = 22.5;
  
   double angleToTagDeg = limelightAngleDeg + tarY;
@@ -200,7 +200,7 @@ public double distanceFromTapeHighInFeet(){
   AtomicReference <Double> targetY = RobotContainer.yDistanceAim;  
   double tarY = targetY.get();
   double limelightAngleDeg = 17.0;//For aimming limelight
-  double limelightHeightInch = 17.3;//For the aimming limelight
+  double limelightHeightInch = 16.8;//For the aimming limelight
   double targetHeightInch = 42.0;
  
   double angleToTagDeg = limelightAngleDeg + tarY;
@@ -215,8 +215,8 @@ public double distanceFromTapeHighInFeet(){
 public double distanceFromCargoInFeet(){
   AtomicReference <Double> targetY = RobotContainer.yDistanceGamePiece;  
   double tarY = targetY.get();
-  double limelightAngleDeg = 5.0;//For aimming limelight
-  double limelightHeightInch = 17.3;//For the aimming limelight
+  double limelightAngleDeg = 5.0;//For cargo limelight
+  double limelightHeightInch = 20;//For the cargo limelight
   double targetHeightInch = 2.0;
  
   double angleToTagDeg = limelightAngleDeg + tarY;

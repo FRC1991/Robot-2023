@@ -161,7 +161,7 @@ if(trackingConeTape == true){
    NetworkTableInstance.getDefault()
    .getTable("Shuffleboard")
    .getSubTable("Main")
-   .getEntry("Distance from tag")
+   .getEntry("Which alliance this is a test")
    .setBoolean(Robot.isRedAlliance);
 }
 
