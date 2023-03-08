@@ -39,12 +39,12 @@ public final class Constants {
   public static final double globalDeadband = 0.1;
 
   //PID turn Constants
-public static final double kTurnP = 1;
+public static final double kTurnP = 0.1;
 public static final double kTurnI = 0;
-public static final double kTurnD = 0;
+public static final double kTurnD = 0.01;
 
-public static final double kMaxTurnRateDegPerS = 50;
-public static final  double kMaxTurnAccelerationDegPerSSquared = 100;
+public static final double kMaxTurnRateDegPerS = 45;
+public static final  double kMaxTurnAccelerationDegPerSSquared = 90;
 
 public static final double kTurnToleranceDeg = 2;
 public static final double kTurnRateToleranceDegPerS = 10; 

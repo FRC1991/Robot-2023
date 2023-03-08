@@ -169,11 +169,7 @@ public double distanceFromTagInFeet(){
   double limelightAngleDeg = 17.0;//For aimming limelight
   double limelightHeightInch = 17.3;//For the aimming limelight
   double targetHeightInch = 10.0;
-  //if(RobotContainer.mTurret.visionGamePipelineSwitch() == 0){
-  // targetHeightInch = 10.0;
-  //}else{
-  // targetHeightInch = 20.0; 
- // }
+ 
   double angleToTagDeg = limelightAngleDeg + tarY;
   double angleToTagRad = angleToTagDeg * (3.14159 / 180.0);
 
@@ -307,7 +303,7 @@ public ErrorCode resetGyro(){
      .getTable("Shuffleboard")
      .getSubTable("Main")
      .getEntry("Distance from tag")
-     .setNumber(distanceFromTagInFeet());
+     .setNumber(Math.round(distanceFromTagInFeet()));
 
     }
  

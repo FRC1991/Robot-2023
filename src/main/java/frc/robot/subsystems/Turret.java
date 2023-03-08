@@ -9,7 +9,6 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -33,16 +32,16 @@ public class Turret extends SubsystemBase {
     resetTurretEncoder();
     //Limiters
     turretMotor1.setSoftLimit(SoftLimitDirection.kForward, 40);//check how many rotations
-    //turretMotor1.enableSoftLimit(SoftLimitDirection.kForward, true);
+    turretMotor1.enableSoftLimit(SoftLimitDirection.kForward, true);
     
     turretMotor1.setSoftLimit(SoftLimitDirection.kReverse, 40);//check how many rotations
-    //turretMotor1.enableSoftLimit(SoftLimitDirection.kReverse, true);
+    turretMotor1.enableSoftLimit(SoftLimitDirection.kReverse, true);
     
     turretMotor2.setSoftLimit(SoftLimitDirection.kForward, 40);//check how many rotations
-    //turretMotor2.enableSoftLimit(SoftLimitDirection.kForward, true);
+    turretMotor2.enableSoftLimit(SoftLimitDirection.kForward, true);
 
     turretMotor2.setSoftLimit(SoftLimitDirection.kReverse, 40);//check how many rotations
-    //turretMotor2.enableSoftLimit(SoftLimitDirection.kReverse, true);
+    turretMotor2.enableSoftLimit(SoftLimitDirection.kReverse, true);
 
     
   }
@@ -94,38 +93,5 @@ public CANSparkMax getTurret1(){
 public CANSparkMax getTurret2(){
   return turretMotor2;
 }
-
-
-
-
-//Auto pipeline switch
- // public double visionGamePipelineSwitch(){
-  //  AtomicReference<Double> gamePipelinesTV = RobotContainer.gamePieceSeen;
-  //  double gamePipePick = gamePipelinesTV.get();
-  //  double whichPipeline = 0;
-   // Timer.delay(3);
-
-   // if(gamePipePick == 1){
-   //   whichPipeline = 0;
-   // }else{
-   //   whichPipeline = 1;
-   // }
-
-  //  return whichPipeline;
- // }
-
-  @Override
-  public void periodic() {
-
-
-    
-      NetworkTableInstance.getDefault()
-      .getTable("Shuffleboard")
-      .getSubTable("Main")
-      .getEntry("Turret Pos check for limiter")
-      .setNumber(Math.abs(getTurretOnePos()));       
-     }
-    
-    
  
 }

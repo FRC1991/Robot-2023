@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.SparkMaxAlternateEncoder;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -35,6 +36,7 @@ public class Arm extends SubsystemBase {
 // Change idle Mode
   armLiftMotor1.setIdleMode(IdleMode.kBrake);
   armLiftMotor2.setIdleMode(IdleMode.kBrake);
+  armExtendMotor.setIdleMode(IdleMode.kBrake);
 
 //Limiters for extension
     armExtendMotor.setSoftLimit(SoftLimitDirection.kForward, 0);//check how many rotations
@@ -62,6 +64,8 @@ public class Arm extends SubsystemBase {
 
 //Extender Speed Set
   public void setArmExtend(double speed){
+    armExtendMotor.setIdleMode(IdleMode.kCoast);
+
     armExtendMotor.set(speed);
   }
 
@@ -80,7 +84,7 @@ public class Arm extends SubsystemBase {
 
 //get the pos of arm lifter
   public double getArmLiftOnePos(){
-    return armLiftMotor1.getEncoder().getPosition();
+    return armLiftMotor1.getAlternateEncoder(SparkMaxAlternateEncoder.Type.kQuadrature, 8192).getPosition();
   }
 
   public double getArmLiftTwoPos(){
@@ -144,16 +148,6 @@ public CANSparkMax getArmLifterTwo(){
     double distInExtension = getArmExtendPos() * 0.1; // one rotation moves it 0.1 inches
 
     return distInExtension; 
-  }
-
-//Distance in feet for an arm lifter
-  public double getArmLiftDist(){
-    double distForLift = getArmLiftOnePos()  + getArmLiftTwoPos()
-    / 2; 
-
-    double avgDistanceInRotations = distForLift * 0.255319;// one rotation moves it 0.255 inches
-
-    return avgDistanceInRotations;
   }
 
   

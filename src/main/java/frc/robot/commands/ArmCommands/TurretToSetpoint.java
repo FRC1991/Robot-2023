@@ -29,10 +29,10 @@ public class TurretToSetpoint extends CommandBase {
   @Override
   public void execute() {
     currentPos = RobotContainer.mTurret.getTurretOnePos();
-    if(targetPos > 0){
-      RobotContainer.mTurret.setTurret(speed * Math.abs(targetPos - currentPos));
-    }else{
-      RobotContainer.mTurret.setTurret(-speed * Math.abs(targetPos - currentPos));
+    if(RobotContainer.mTurret.getTurretOnePos() > targetPos){
+      RobotContainer.mTurret.setTurret(speed);
+    }else if(RobotContainer.mTurret.getTurretOnePos() < targetPos){
+      RobotContainer.mTurret.setTurret(-speed);
 
     }
   }
@@ -47,6 +47,6 @@ public class TurretToSetpoint extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Math.abs(targetPos - currentPos) < 0.1;
+    return Math.round(targetPos) == Math.round(RobotContainer.mTurret.getTurretOnePos());
   }
 }
