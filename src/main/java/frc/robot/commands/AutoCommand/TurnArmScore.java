@@ -6,9 +6,7 @@ package frc.robot.commands.AutoCommand;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.ArmCommands.ArmHomePos;
-import frc.robot.commands.ArmCommands.TurretToSetpoint;
 import frc.robot.commands.BangPID.ArmExtendBangBang;
-import frc.robot.commands.BangPID.ArmLiftBangBang;
 import frc.robot.commands.ClawCommands.ResetClaw;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -19,8 +17,7 @@ public class TurnArmScore extends SequentialCommandGroup {
   public TurnArmScore() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new TurretToSetpoint(32),
-    new ArmLiftBangBang(35),
+    addCommands(new TurnAndExtend(),
     new ArmExtendBangBang(130),
     new ResetClaw(),
     new ArmHomePos()

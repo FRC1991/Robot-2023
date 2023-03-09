@@ -4,6 +4,7 @@
 
 package frc.robot.commands.AutoCommand;
 
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.RobotContainer;
 import frc.robot.commands.ArmCommands.ArmHomePos;
@@ -23,8 +24,8 @@ public class ScoreAndGrabCone extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(new TurnArmScore(),
       new DriveDistancePID(5, RobotContainer.mDrivetrain),
-      new RunForTarget(RobotContainer.xDistanceGamePiece , 2),
-      new ArmLiftBangBang(10),
+      new ParallelCommandGroup( new RunForTarget(RobotContainer.xDistanceGamePiece , 2),
+      new ArmLiftBangBang(10)),
       new ArmExtendBangBang(130),
       new ClawForCone(),
       new ArmHomePos());
