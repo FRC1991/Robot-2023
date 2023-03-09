@@ -29,6 +29,7 @@ import frc.robot.commands.AutoCommand.ScoreAndGrabCone;
 import frc.robot.commands.AutoCommand.TurnArmScore;
 import frc.robot.commands.ClawCommands.ManualClaw;
 import frc.robot.commands.ClawCommands.ResetClaw;
+import frc.robot.commands.ClawCommands.RotateClawTurret;
 import frc.robot.commands.DrivetrainCommands.GameDrive;
 import frc.robot.commands.MiscCommands.BrakeMode;
 import frc.robot.commands.VisionCommands.PipelineSwitch;
@@ -93,6 +94,7 @@ public class RobotContainer {
 //=============================Commands +++++++++++++++++++++++++++++++++ 
 
 GameDrive standardGameDriveCommand = new GameDrive();
+ManualArmLifter standardArmLiftCommand = new ManualArmLifter();
 
 
   public RobotContainer() {
@@ -243,16 +245,18 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-cargo");
    * joysticks}.
    */
   private void configureBindings() {
+
+
     mDrivetrain.setDefaultCommand(standardGameDriveCommand);
-    mArm.setDefaultCommand(new ManualArmLifter());
+    mArm.setDefaultCommand(standardArmLiftCommand);
+    mClaw.setDefaultCommand(new RotateClawTurret());
     mArm.setDefaultCommand(new ManualArmExtension());
 //==========================Driver binding========================
-    // Game Drive Command
     
     //Brake mode Command
     mButtonBind.driveStartButton.toggleOnTrue(new BrakeMode());
     //Tracking Command
-    mButtonBind.driveBButton.onTrue(new TurnTillTarget(0.5));
+    mButtonBind.driveBButton.toggleOnTrue(new RunForTarget(xDistanceGamePiece));
     mButtonBind.driveDPadUp.toggleOnTrue(new ParallelCommandGroup( new PipelineSwitch(),
     new InstantCommand(()-> 
     NetworkTableInstance.getDefault()
@@ -271,7 +275,7 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-cargo");
   mButtonBind.auxRightBumper.whileTrue(new ManualTurret(0.3));
   // Claw Commands
  mButtonBind.auxAButton.onTrue(new ResetClaw());
- mButtonBind.auxRightTriggerButton.whileTrue(new ManualClaw(0.5));
+ mButtonBind.auxBButton.whileTrue(new ManualClaw(0.5));
   //Turret command
   mButtonBind.auxBackButton.onTrue(new ArmHomePos());
  // mButtonBind.auxDPadDown.onTrue( new InstantCommand(()-> topLL = false));
@@ -286,7 +290,7 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-cargo");
   //  ));
   //mButtonBind.auxAButton.onTrue(new AutoPickup(aprilTagIDListenerHandle, aprilTagID))
   //Vision Commands
-  mButtonBind.auxXButton.toggleOnTrue(new ParallelCommandGroup( new PipelineSwitch(),
+  mButtonBind.auxStartButton.toggleOnTrue(new ParallelCommandGroup( new PipelineSwitch(),
   new InstantCommand(()-> 
   NetworkTableInstance.getDefault()
   .getTable("Shuffleboard")

@@ -5,6 +5,7 @@
 package frc.robot.commands.ArmCommands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.ButtonBind;
 import frc.robot.RobotContainer;
 
 public class ManualArmExtension extends CommandBase {
@@ -21,14 +22,15 @@ public class ManualArmExtension extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double speedSet = RobotContainer.mButtonBind.auxLeftX;
+    double speedSet = ButtonBind.auxController.getLeftY();
     RobotContainer.mArm.setArmExtend(speedSet * 0.4);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    RobotContainer.mArm.setArmExtend(0);
+    RobotContainer.mArm.stopArmExtension();
+
   }
 
   // Returns true when the command should end.

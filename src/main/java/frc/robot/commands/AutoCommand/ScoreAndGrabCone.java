@@ -22,12 +22,12 @@ public class ScoreAndGrabCone extends SequentialCommandGroup {
   public ScoreAndGrabCone() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new TurnArmScore(),
-      new DriveDistancePID(5, RobotContainer.mDrivetrain),
-      new ParallelCommandGroup( new RunForTarget(RobotContainer.xDistanceGamePiece , 2),
-      new ArmLiftBangBang(10)),
-      new ArmExtendBangBang(130),
-      new ClawForCone(),
-      new ArmHomePos());
+    //addCommands(new TurnArmScore(),
+     // new DriveDistancePID(5, RobotContainer.mDrivetrain),
+     // new ParallelCommandGroup( new RunForTarget(RobotContainer.xDistanceGamePiece , 2),
+     // new ArmLiftBangBang(10)),
+     // new ArmExtendBangBang(130),
+      //new ClawForCone(),
+      //new ArmHomePos());
   }
 }

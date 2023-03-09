@@ -5,15 +5,16 @@
 package frc.robot.commands.ClawCommands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.ButtonBind;
 import frc.robot.RobotContainer;
 
 public class RotateClawTurret extends CommandBase {
   /** Creates a new RotateClawTurret. */
 
   private double speedSet;
-  public RotateClawTurret(double speed) {
+  public RotateClawTurret(){//double speed) {
     addRequirements(RobotContainer.mClaw);
-    speedSet = speed;
+    //speedSet = speed;
   }
 
   // Called when the command is initially scheduled.
@@ -24,9 +25,10 @@ public class RotateClawTurret extends CommandBase {
   @Override
   public void execute() {
 
-    
-    
-    RobotContainer.mClaw.setClawTurret(speedSet);
+    double forSpeed = ButtonBind.auxController.getLeftTriggerAxis();
+    double backSpeed = ButtonBind.auxController.getRightTriggerAxis();
+    double netSpeed = forSpeed - backSpeed;
+    RobotContainer.mClaw.setClawTurret(netSpeed);//speedSet);
   }
 
   // Called once the command ends or is interrupted.

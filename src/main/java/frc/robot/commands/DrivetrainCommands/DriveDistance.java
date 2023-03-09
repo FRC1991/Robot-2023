@@ -19,6 +19,12 @@ public class DriveDistance extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
     new InstantCommand(() -> RobotContainer.mDrivetrain.resetEncoders()),
+    new InstantCommand(()-> RobotContainer.mDrivetrain.getLeftDrive1().setOpenLoopRampRate(0)),
+    new InstantCommand(()-> RobotContainer.mDrivetrain.getLeftDrive2().setOpenLoopRampRate(0)),
+    new InstantCommand(()-> RobotContainer.mDrivetrain.getLeftDrive3().setOpenLoopRampRate(0)),
+    new InstantCommand(()-> RobotContainer.mDrivetrain.getRightDrive1().setOpenLoopRampRate(0)),
+    new InstantCommand(()-> RobotContainer.mDrivetrain.getRightDrive2().setOpenLoopRampRate(0)),
+    new InstantCommand(()-> RobotContainer.mDrivetrain.getRightDrive3().setOpenLoopRampRate(0)),
     new DriveDistancePID(targetDist, RobotContainer.mDrivetrain)
     //new BrakeMode()
     
