@@ -167,7 +167,7 @@ public double distanceFromTagInFeet(){
   double tarY = targetY.get();
   double limelightAngleDeg = 17.0;//For aimming limelight
   double limelightHeightInch = 19.0;//For the aimming limelight
-  double targetHeightInch = 8.0;
+  double targetHeightInch = 23.0;
  
   double angleToTagDeg = limelightAngleDeg + tarY;
   double angleToTagRad = angleToTagDeg * (3.14159 / 180.0);

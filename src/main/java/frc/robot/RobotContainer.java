@@ -18,23 +18,15 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.commands.ArmCommands.ManualArmExtension;
-import frc.robot.commands.ArmCommands.ManualArmLifter;
-import frc.robot.commands.ArmCommands.ManualTurret;
 import frc.robot.commands.AutoCommand.ScoreAndGrabCone;
 import frc.robot.commands.AutoCommand.TurnArmScore;
-import frc.robot.commands.BangPID.ArmExtensionPID;
-import frc.robot.commands.BangPID.ArmLiftPID;
-import frc.robot.commands.ClawCommands.ClawForCone;
-import frc.robot.commands.ClawCommands.ClawForCube;
-import frc.robot.commands.ClawCommands.ResetClaw;
-import frc.robot.commands.DrivetrainCommands.DriveDistance;
 import frc.robot.commands.DrivetrainCommands.GameDrive;
-import frc.robot.commands.DrivetrainCommands.TurnDegree;
 import frc.robot.commands.MiscCommands.BrakeMode;
 import frc.robot.commands.VisionCommands.RunForTarget;
+import frc.robot.commands.VisionCommands.TurnTillTarget;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Drivetrain;
@@ -105,13 +97,13 @@ GameDrive standardGameDriveCommand = new GameDrive();
 
 //Auto Chooser
   autoChoose = new SendableChooser<Command>();
-  if(posInField == 1){
+  //if(posInField == 1){
   autoChoose.setDefaultOption("Score", new TurnArmScore());
-  }else if(posInField == 2){
+ // }else if(posInField == 2){
   autoChoose.addOption("Score and Grab", new ScoreAndGrabCone());
-  }else{
-  autoChoose.addOption("Auto From Left", new TurnArmScore());
-  }
+ // }else{
+  autoChoose.addOption("Climb", new TurnArmScore());
+ // }
   Shuffleboard.getTab("Main").add(autoChoose);
 
   //Vision Pipline Selector
@@ -176,6 +168,11 @@ NetworkTableInstance ntInst = NetworkTableInstance.getDefault();
 NetworkTable aimmingNT = ntInst.getTable("limelight-aimming");
 NetworkTable gamePieceNT = ntInst.getTable("limelight-cargo");
 
+if (trackingConeTape == true) {
+  aimmingNT.getEntry("pipeline").setNumber(0);
+} else {
+  aimmingNT.getEntry("pipeline").setNumber(1);
+}
 
 //Topics From Aimming NT
  tagIDTopic = aimmingNT.getDoubleTopic("tid");
@@ -259,49 +256,26 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-cargo");
     // Game Drive Command
     mDrivetrain.setDefaultCommand(standardGameDriveCommand);
     //Brake mode Command
-    mButtonBind.driveAButton.toggleOnTrue(new BrakeMode());
-    //Tracking game cargo or targets
-    mButtonBind.driveStartButton.toggleOnTrue(new InstantCommand(()-> trackingConeTape = true));
-    mButtonBind.driveStartButton.toggleOnTrue(new InstantCommand(()-> 
-    NetworkTableInstance.getDefault()
-  .getTable("Shuffleboard")
-  .getSubTable("Main")
-  .getEntry("Tracking Tape and Cone")
-  .setBoolean(trackingConeTape) 
-    ));
-  //Run for target
-    mButtonBind.driveLeftBumper.onTrue(new RunForTarget(xDistanceGamePiece, 1));
+    mButtonBind.driveStartButton.toggleOnTrue(new BrakeMode());
+    //Tracking Command
+    mButtonBind.driveBButton.onTrue(new TurnTillTarget(0.5));
+    mButtonBind.driveXButton.onTrue(new SequentialCommandGroup(new InstantCommand(() -> trackingConeTape = false),
+      new RunForTarget(xDistanceAim, 2))
+    );
     
-    //For PID Tunes
-    mButtonBind.driveBButton.onTrue(new TurnDegree(90));
-    mButtonBind.driveXButton.onTrue(new DriveDistance(3));
-    mButtonBind.driveYButton.onTrue(new ArmLiftPID(0.5, mArm));
-    mButtonBind.driveXButton.onTrue(new ArmExtensionPID(0.5, mArm));
+    
+    //Brake mode
+  
     
 //=======================Aux bindings=============================
   // Manual Movement
-  mButtonBind.auxRightBumper.whileTrue(new ManualTurret(0.3));
-  mButtonBind.auxLeftBumper.whileTrue(new ManualTurret(-0.3));
-
-  mButtonBind.auxDPadDown.whileTrue(new ManualArmLifter( -0.3));
-  mButtonBind.auxDPadUp.whileTrue(new ManualArmLifter(0.3));
-
-  mButtonBind.auxDPadLeft.whileTrue(new ManualArmExtension(-0.5));
-  mButtonBind.auxDPadRight.whileTrue(new ManualArmExtension(0.5));
-  
+ 
   // Claw Commands
-  mButtonBind.auxXButton.onTrue(new ResetClaw());
-  mButtonBind.auxAButton.onTrue(new ClawForCone());
-  mButtonBind.auxBButton.onTrue(new ClawForCube());
+ 
   
   //Vision Commands
 
-  if(trackingConeTape == true){
-    //mButtonBind.auxStartButton.onTrue(new T)
-  }
-  //mButtonBind.auxRightTriggerButton.onTrue(new AutoArmExtension(mDrivetrain.distanceFromTapeHighInFeet()));
-
-
+  
 //=========================LED Binds============================
     new InstantCommand(() -> mLED.setToOrange());
   }

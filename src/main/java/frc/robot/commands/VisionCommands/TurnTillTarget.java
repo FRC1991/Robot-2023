@@ -20,7 +20,7 @@ public class TurnTillTarget extends CommandBase {
 
     addRequirements(RobotContainer.mDrivetrain);
     turnSpeed = speed;
-    tagVis = RobotContainer.aprilTagID;
+    tagVis = RobotContainer.retroTape;
     tagNum = tagVis.get();
     cargoVis = RobotContainer.gamePieceSeen;
     cargoNum = cargoVis.get();
@@ -34,7 +34,7 @@ public class TurnTillTarget extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() { 
-    tagVis = RobotContainer.aprilTagID;
+    tagVis = RobotContainer.retroTape;
     tagNum = tagVis.get();
 
     cargoVis = RobotContainer.gamePieceSeen;
