@@ -18,14 +18,13 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.AutoCommand.ScoreAndGrabCone;
 import frc.robot.commands.AutoCommand.TurnArmScore;
 import frc.robot.commands.DrivetrainCommands.GameDrive;
 import frc.robot.commands.MiscCommands.BrakeMode;
-import frc.robot.commands.VisionCommands.RunForTarget;
+import frc.robot.commands.VisionCommands.PipelineSwitch;
 import frc.robot.commands.VisionCommands.TurnTillTarget;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Claw;
@@ -73,7 +72,6 @@ public class RobotContainer {
   SendableChooser<Command> autoChoose;
   GenericEntry aimLLPipeline, gameLLPipeline;
   int posInField = DriverStation.getLocation();
-  boolean trackingConeTape = false;
 //==========================  Subsystems +++++++++++++++++++++++
   public static Drivetrain mDrivetrain = new Drivetrain();
   public static Arm mArm = new Arm();
@@ -108,19 +106,7 @@ GameDrive standardGameDriveCommand = new GameDrive();
 
   //Vision Pipline Selector
 
-if(trackingConeTape == true){
-  NetworkTableInstance.getDefault()
-  .getTable("Shuffleboard")
-  .getSubTable("Main")
-  .getEntry("Tracking Tape and Cones")
-  .setBoolean(trackingConeTape); 
-}else if(trackingConeTape == false){
-  NetworkTableInstance.getDefault()
-  .getTable("Shuffleboard")
-  .getSubTable("Main")
-  .getEntry("Tracking Tape and Cones")
-  .setBoolean(trackingConeTape); 
-}
+
   //Drivetrain data
   if(mDrivetrain.getPitch() > 2 || mDrivetrain.getPitch() < -2){
       
@@ -168,11 +154,6 @@ NetworkTableInstance ntInst = NetworkTableInstance.getDefault();
 NetworkTable aimmingNT = ntInst.getTable("limelight-aimming");
 NetworkTable gamePieceNT = ntInst.getTable("limelight-cargo");
 
-if (trackingConeTape == true) {
-  aimmingNT.getEntry("pipeline").setNumber(0);
-} else {
-  aimmingNT.getEntry("pipeline").setNumber(1);
-}
 
 //Topics From Aimming NT
  tagIDTopic = aimmingNT.getDoubleTopic("tid");
@@ -259,9 +240,7 @@ if (trackingConeTape == true) {
     mButtonBind.driveStartButton.toggleOnTrue(new BrakeMode());
     //Tracking Command
     mButtonBind.driveBButton.onTrue(new TurnTillTarget(0.5));
-    mButtonBind.driveXButton.onTrue(new SequentialCommandGroup(new InstantCommand(() -> trackingConeTape = false),
-      new RunForTarget(xDistanceAim, 2))
-    );
+    mButtonBind.driveXButton.toggleOnTrue(new PipelineSwitch());
     
     
     //Brake mode
