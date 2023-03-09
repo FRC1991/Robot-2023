@@ -19,7 +19,7 @@ public class AutoPickup extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-    new RunForTarget(xSteers, 2),
+    new RunForTarget(xSteers),
     new TurretAimTarget(xSteers),
     new ArmLiftBangBang(10),
     new ArmExtendBangBang(130));

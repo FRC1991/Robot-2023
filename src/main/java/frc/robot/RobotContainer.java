@@ -22,6 +22,8 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.ArmCommands.ArmHomePos;
+import frc.robot.commands.ArmCommands.ManualArmExtension;
+import frc.robot.commands.ArmCommands.ManualArmLifter;
 import frc.robot.commands.ArmCommands.ManualTurret;
 import frc.robot.commands.AutoCommand.ScoreAndGrabCone;
 import frc.robot.commands.AutoCommand.TurnArmScore;
@@ -241,9 +243,12 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-cargo");
    * joysticks}.
    */
   private void configureBindings() {
+    mDrivetrain.setDefaultCommand(standardGameDriveCommand);
+    mArm.setDefaultCommand(new ManualArmLifter());
+    mArm.setDefaultCommand(new ManualArmExtension());
 //==========================Driver binding========================
     // Game Drive Command
-    mDrivetrain.setDefaultCommand(standardGameDriveCommand);
+    
     //Brake mode Command
     mButtonBind.driveStartButton.toggleOnTrue(new BrakeMode());
     //Tracking Command
@@ -255,8 +260,8 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-cargo");
     .getSubTable("Main")
     .getEntry("Cones And Tag")
     .setBoolean(true))));
-    mButtonBind.driveXButton.onTrue(new RunForTarget(xDistanceAim, 2));
-    mButtonBind.driveYButton.onTrue(new InstantCommand(()-> System.out.println(mDrivetrain.distanceFromTagInFeet())));
+    mButtonBind.driveXButton.toggleOnTrue(new RunForTarget(xDistanceAim));
+   // mButtonBind.driveYButton.onTrue(new InstantCommand(()-> System.out.println(mDrivetrain.distanceFromTagInFeet())));
     //Brake mode
   
     
@@ -269,15 +274,16 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-cargo");
  mButtonBind.auxRightTriggerButton.whileTrue(new ManualClaw(0.5));
   //Turret command
   mButtonBind.auxBackButton.onTrue(new ArmHomePos());
-  mButtonBind.auxDPadDown.onTrue( new InstantCommand(()-> topLL = false));
-  mButtonBind.auxBButton.onTrue( new InstantCommand(()->{
-    if(topLL == true)
-    new TurretAimTarget(xDistanceGamePiece);
-  else
-    new TurretAimTarget(xDistanceAim);
-  
-}
-    ));
+ // mButtonBind.auxDPadDown.onTrue( new InstantCommand(()-> topLL = false));
+  //mButtonBind.auxBButton.onTrue( new InstantCommand(()->{
+   // if(topLL == true)
+   // new TurretAimTarget(xDistanceGamePiece);
+  //else
+  //  new TurretAimTarget(xDistanceAim);
+  mButtonBind.auxYButton.onTrue(new TurretAimTarget(xDistanceGamePiece));
+  mButtonBind.auxXButton.onTrue(new TurretAimTarget(xDistanceAim));
+//}
+  //  ));
   //mButtonBind.auxAButton.onTrue(new AutoPickup(aprilTagIDListenerHandle, aprilTagID))
   //Vision Commands
   mButtonBind.auxXButton.toggleOnTrue(new ParallelCommandGroup( new PipelineSwitch(),

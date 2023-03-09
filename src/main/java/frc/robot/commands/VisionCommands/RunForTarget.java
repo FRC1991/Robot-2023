@@ -21,12 +21,12 @@ public class RunForTarget extends CommandBase {
 
 
   
-  public RunForTarget(AtomicReference <Double> xSteering, double whenToStop) {
+  public RunForTarget(AtomicReference <Double> xSteering){//, double whenToStop) {
     addRequirements(RobotContainer.mDrivetrain);
     xSteerSup = xSteering;
     xSteer = xSteerSup.get();
     speedSet = 0.65;
-    whenToStop = stopDist;
+   // whenToStop = stopDist;
 
   }
 
@@ -87,12 +87,12 @@ public class RunForTarget extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(RobotContainer.mDrivetrain.distanceFromTagInFeet() <= stopDist){
-    return true;
-    }else if(RobotContainer.mDrivetrain.distanceFromCargoInFeet() <= stopDist){
-      return true;
-    }else{
+   // if(RobotContainer.mDrivetrain.distanceFromTagInFeet() <= stopDist){
+   // return true;
+   // }else if(RobotContainer.mDrivetrain.distanceFromCargoInFeet() <= stopDist){
+    //  return true;
+    //}else{
       return false;
     }
   }
-}
+//}
