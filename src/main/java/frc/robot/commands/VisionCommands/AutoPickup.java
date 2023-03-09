@@ -8,6 +8,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.BangPID.ArmExtendBangBang;
+import frc.robot.commands.BangPID.ArmLiftBangBang;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -19,6 +20,8 @@ public class AutoPickup extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
     new RunForTarget(xSteers, 2),
-   new ArmExtendBangBang(130));
+    new TurretAimTarget(xSteers),
+    new ArmLiftBangBang(10),
+    new ArmExtendBangBang(130));
   }
 }
