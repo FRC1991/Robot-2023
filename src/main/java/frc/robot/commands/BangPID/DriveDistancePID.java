@@ -3,7 +3,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.DrivetrainCommands;
+package frc.robot.commands.BangPID;
 
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
@@ -14,31 +14,30 @@ import frc.robot.subsystems.Drivetrain;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class TurnDegreesPID extends ProfiledPIDCommand {
+public class DriveDistancePID extends ProfiledPIDCommand {
   /** Creates a new TurnDegrees. */
-  public TurnDegreesPID(double targetAngle, Drivetrain drivetrain) {
+  public DriveDistancePID(double targetDistance, Drivetrain drivetrain) {
     super(
         // The ProfiledPIDController used by the command
         new ProfiledPIDController(
             // The PID gains
-            Constants.kTurnP,
-            Constants.kTurnI,
-            Constants.kTurnD,
+            Constants.kDriveP,
+            Constants.kDriveI,
+            Constants.kDriveD,
             // The motion profile constraints
-            new TrapezoidProfile.Constraints(Constants.kMaxTurnRateDegPerS, Constants.kMaxTurnAccelerationDegPerSSquared)),
+            new TrapezoidProfile.Constraints(Constants.kMaxDistPerS, Constants.kMaxAccelerationPerS)),
         // This should return the measurement
-        drivetrain::getYaw,
+        drivetrain::getDistanceFeet,
         // This should return the goal (can also be a constant)
-        targetAngle,
+        targetDistance,
         // This uses the output
-        (output, setpoint) -> drivetrain.arcadeDrive(0, output),
+        (output, setpoint) -> drivetrain.arcadeDrive(output, 0),
           // Use the output (and setpoint, if desired) here
          drivetrain);
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.
-    getController().enableContinuousInput(-180, 180);
 
-    getController().setTolerance(Constants.kTurnToleranceDeg, Constants.kTurnRateToleranceDegPerS);
+    getController().setTolerance(Constants.kDistTolerance, Constants.kDistRateTolerancePerS);
   }
 
   // Returns true when the command should end.

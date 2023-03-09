@@ -7,8 +7,7 @@ package frc.robot.commands.VisionCommands;
 import java.util.concurrent.atomic.AtomicReference;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.RobotContainer;
-import frc.robot.commands.ArmCommands.ArmExtensionPID;
+import frc.robot.commands.BangPID.ArmExtendBangBang;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -20,6 +19,6 @@ public class AutoPickup extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
     new RunForTarget(xSteers, 2),
-   new ArmExtensionPID(distFromTarget, RobotContainer.mArm));
+   new ArmExtendBangBang(130));
   }
 }

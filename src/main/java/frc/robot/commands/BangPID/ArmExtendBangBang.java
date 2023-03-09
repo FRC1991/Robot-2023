@@ -2,16 +2,16 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.ArmCommands;
+package frc.robot.commands.BangPID;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
-public class ArmLiftBangBang extends CommandBase {
+public class ArmExtendBangBang extends CommandBase {
   /** Creates a new TurretToSetpoint. */
   double targetPos, speed, initPos, currentPos;
 
-  public ArmLiftBangBang(double encoderValue) {
+  public ArmExtendBangBang(double encoderValue) {
     addRequirements(RobotContainer.mArm);
     targetPos = encoderValue;
   }
@@ -19,18 +19,18 @@ public class ArmLiftBangBang extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    initPos = RobotContainer.mArm.getArmLiftTwoPos();
+    initPos = RobotContainer.mArm.getArmExtendPos();
     currentPos = initPos;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    currentPos = RobotContainer.mArm.getArmLiftTwoPos();
-    if(RobotContainer.mArm.getArmLiftTwoPos() > targetPos){
-      RobotContainer.mTurret.setTurret(-0.4);
-    }else if(RobotContainer.mArm.getArmLiftTwoPos() < targetPos){
-      RobotContainer.mTurret.setTurret(0.4);
+    currentPos = RobotContainer.mArm.getArmExtendPos();
+    if(RobotContainer.mArm.getArmExtendPos() > targetPos){
+      RobotContainer.mArm.setArmExtend(-0.4);
+    }else if(RobotContainer.mArm.getArmExtendPos() < targetPos){
+      RobotContainer.mArm.setArmExtend(0.4);
 
     }
   }
@@ -38,13 +38,13 @@ public class ArmLiftBangBang extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    RobotContainer.mArm.stopArmLift();
+    RobotContainer.mArm.stopArmExtension();
     
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Math.round(targetPos) == Math.round(RobotContainer.mArm.getArmLiftTwoPos());
+    return Math.round(targetPos) == Math.round(RobotContainer.mArm.getArmExtendPos());
   }
 }
