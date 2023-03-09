@@ -4,16 +4,27 @@
 
 package frc.robot.commands.DrivetrainCommands;
 
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
+import frc.robot.RobotContainer;
+import frc.robot.commands.BangPID.PitchClimbPID;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class ChargeStationClimb extends SequentialCommandGroup {
+public class ChargeStationClimb extends ParallelDeadlineGroup {
   /** Creates a new ChargeStationClimb. */
   public ChargeStationClimb() {
-    // Add your commands in the addCommands() call, e.g.
+    // Add the deadline command in the super() call. Add other commands using
+    // addCommands().
+    super(new InstantCommand());
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands();
+    addCommands(new PitchClimbPID(5, RobotContainer.mDrivetrain),
+    new PitchClimbPID(10, RobotContainer.mDrivetrain),
+    new PitchClimbPID(10, RobotContainer.mDrivetrain),
+    new PitchClimbPID(17, RobotContainer.mDrivetrain),
+    new PitchClimbPID(0, RobotContainer.mDrivetrain)
+    );
+  
   }
 }
