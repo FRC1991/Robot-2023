@@ -30,6 +30,7 @@ import frc.robot.commands.AutoCommand.TurnArmScore;
 import frc.robot.commands.ClawCommands.ManualClaw;
 import frc.robot.commands.ClawCommands.ResetClaw;
 import frc.robot.commands.ClawCommands.RotateClawTurret;
+import frc.robot.commands.DrivetrainCommands.ChargeStationClimb;
 import frc.robot.commands.DrivetrainCommands.GameDrive;
 import frc.robot.commands.MiscCommands.BrakeMode;
 import frc.robot.commands.VisionCommands.PipelineSwitch;
@@ -298,6 +299,7 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-cargo");
   .getEntry("Cones And Tag")
   .setBoolean(true))));
   
+  mButtonBind.auxDPadDown.onTrue(new ChargeStationClimb());
 //=========================LED Binds============================
     new InstantCommand(() -> mLED.setToOrange());
   }
