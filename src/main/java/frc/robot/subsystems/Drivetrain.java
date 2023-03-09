@@ -165,7 +165,7 @@ public void GameDrive(double forward, double backward, double curve, boolean fas
 public double distanceFromTagInFeet(){
   AtomicReference <Double> targetY = RobotContainer.yDistanceAim;  
   double tarY = targetY.get();
-  double limelightAngleDeg = 17.0;//For aimming limelight
+  double limelightAngleDeg = 10.5;//For aimming limelight
   double limelightHeightInch = 19.0;//For the aimming limelight
   double targetHeightInch = 23.0;
  
@@ -182,7 +182,7 @@ public double distanceFromTagInFeet(){
 public double distanceFromTapeLowInFeet(){
   AtomicReference <Double> targetY = RobotContainer.yDistanceAim;  
   double tarY = targetY.get();
-  double limelightAngleDeg = 17.0;//For aimming limelight
+  double limelightAngleDeg = 10.5;//For aimming limelight
   double limelightHeightInch = 19.0;//For the aimming limelight
   double targetHeightInch = 22.5;
  
@@ -199,7 +199,7 @@ public double distanceFromTapeLowInFeet(){
 public double distanceFromTapeHighInFeet(){
   AtomicReference <Double> targetY = RobotContainer.yDistanceAim;  
   double tarY = targetY.get();
-  double limelightAngleDeg = 17.0;//For aimming limelight
+  double limelightAngleDeg = 10.5;//For aimming limelight
   double limelightHeightInch = 19.0;//For the aimming limelight
   double targetHeightInch = 42.0;
  
