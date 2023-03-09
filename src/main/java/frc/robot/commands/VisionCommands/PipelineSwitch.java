@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class PipelineSwitch extends CommandBase {
   /** Creates a new PipelineSwitch. */
-  //private boolean trackingConeTape = false;
   private NetworkTable aimmingNT, gamePieceNT;
   public PipelineSwitch() {
     // Use addRequirements() here to declare subsystem dependencies.
