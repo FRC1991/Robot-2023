@@ -29,12 +29,10 @@ import frc.robot.commands.ClawCommands.ManualClaw;
 import frc.robot.commands.ClawCommands.ResetClaw;
 import frc.robot.commands.DrivetrainCommands.GameDrive;
 import frc.robot.commands.MiscCommands.BrakeMode;
-import frc.robot.commands.VisionCommands.AutoPickup;
 import frc.robot.commands.VisionCommands.PipelineSwitch;
 import frc.robot.commands.VisionCommands.RunForTarget;
 import frc.robot.commands.VisionCommands.TurnTillTarget;
 import frc.robot.commands.VisionCommands.TurretAimTarget;
-import frc.robot.commands.VisionCommands.WhichLL;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Drivetrain;
@@ -81,6 +79,7 @@ public class RobotContainer {
   SendableChooser<Command> autoChoose;
   GenericEntry aimLLPipeline, gameLLPipeline;
   int posInField = DriverStation.getLocation();
+  boolean topLL = false;
 //==========================  Subsystems +++++++++++++++++++++++
   public static Drivetrain mDrivetrain = new Drivetrain();
   public static Arm mArm = new Arm();
@@ -270,7 +269,15 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-cargo");
  mButtonBind.auxRightTriggerButton.whileTrue(new ManualClaw(0.5));
   //Turret command
   mButtonBind.auxBackButton.onTrue(new ArmHomePos());
-  mButtonBind.auxBButton.onTrue(new InstantCommand());
+  mButtonBind.auxDPadDown.onTrue( new InstantCommand(()-> topLL = false));
+  mButtonBind.auxBButton.onTrue( new InstantCommand(()->{
+    if(topLL == true)
+    new TurretAimTarget(xDistanceGamePiece);
+  else
+    new TurretAimTarget(xDistanceAim);
+  
+}
+    ));
   //mButtonBind.auxAButton.onTrue(new AutoPickup(aprilTagIDListenerHandle, aprilTagID))
   //Vision Commands
   mButtonBind.auxXButton.toggleOnTrue(new ParallelCommandGroup( new PipelineSwitch(),
