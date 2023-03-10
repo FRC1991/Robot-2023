@@ -18,7 +18,7 @@ public class ArmHomePos extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(new ParallelCommandGroup( new TurretToSetpoint(0),
-    new ArmExtendBangBang(0)),
+    new ArmExtendBangBang(5)),
     new ArmLiftBangBang(0)
     );
   }

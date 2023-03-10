@@ -29,9 +29,9 @@ public class TurretToSetpoint extends CommandBase {
   public void execute() {
     currentPos = RobotContainer.mTurret.getTurretOnePos();
     if(RobotContainer.mTurret.getTurretOnePos() > targetPos){
-      RobotContainer.mTurret.setTurret(-0.4);
+      RobotContainer.mTurret.setTurret(-0.35);
     }else if(RobotContainer.mTurret.getTurretOnePos() < targetPos){
-      RobotContainer.mTurret.setTurret(0.4);
+      RobotContainer.mTurret.setTurret(0.35);
 
     }
   }

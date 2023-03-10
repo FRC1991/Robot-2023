@@ -18,7 +18,7 @@ public class TurnArmScore extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(new TurnAndExtend(),
-    new ArmExtendBangBang(130),
+    new ArmExtendBangBang(115),
     new ResetClaw(),
     new ArmHomePos()
     );

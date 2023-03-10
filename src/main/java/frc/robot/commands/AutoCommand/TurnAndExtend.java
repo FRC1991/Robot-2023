@@ -16,7 +16,7 @@ public class TurnAndExtend extends ParallelCommandGroup {
   public TurnAndExtend() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new TurretToSetpoint(32),
+    addCommands(new TurretToSetpoint(33),
     new ArmLiftBangBang(35));
   }
 }

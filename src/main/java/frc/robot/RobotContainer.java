@@ -262,8 +262,8 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-cargo");
     .getEntry("Cones And Tag")
     .setBoolean(true))));
     
-    mButtonBind.driveXButton.toggleOnTrue(new RunForTarget(xDistanceAim));
-    mButtonBind.driveBButton.toggleOnTrue(new RunForTarget(xDistanceGamePiece));
+    mButtonBind.driveXButton.whileTrue(new RunForTarget(xDistanceAim));
+    mButtonBind.driveBButton.whileTrue(new RunForTarget(xDistanceGamePiece));
 
 
   
@@ -273,7 +273,7 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-cargo");
   mButtonBind.auxLeftBumper.whileTrue(new ManualTurret(-0.3));
   mButtonBind.auxRightBumper.whileTrue(new ManualTurret(0.3));
   // Claw Commands
- mButtonBind.auxAButton.onTrue(new ResetClaw());
+ mButtonBind.auxAButton.whileTrue(new ResetClaw());
  mButtonBind.auxBButton.whileTrue(new ManualClaw(0.5));
   //Turret command
   mButtonBind.auxBackButton.onTrue(new ArmHomePos());
@@ -297,8 +297,8 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-cargo");
   mButtonBind.auxDPadUp.whileTrue(new ManualArmLifter(0.4));
   mButtonBind.auxDPadDown.whileTrue(new ManualArmLifter(-0.4));
 
-  mButtonBind.auxRightStick.whileTrue(new RotateClawTurret(0.3));
-  mButtonBind.auxLeftStick.whileTrue(new RotateClawTurret(-0.3));
+  mButtonBind.auxRightStick.whileTrue(new RotateClawTurret(0.2));
+  mButtonBind.auxLeftStick.whileTrue(new RotateClawTurret(-0.2));
 
 //=========================LED Binds============================
     new InstantCommand(() -> mLED.setToOrange());
