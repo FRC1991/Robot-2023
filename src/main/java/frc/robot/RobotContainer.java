@@ -95,7 +95,6 @@ public class RobotContainer {
 //=============================Commands +++++++++++++++++++++++++++++++++ 
 
 GameDrive standardGameDriveCommand = new GameDrive();
-ManualArmLifter standardArmLiftCommand = new ManualArmLifter();
 
 
   public RobotContainer() {
@@ -249,15 +248,12 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-cargo");
 
 
     mDrivetrain.setDefaultCommand(standardGameDriveCommand);
-    mArm.setDefaultCommand(standardArmLiftCommand);
-    mClaw.setDefaultCommand(new RotateClawTurret());
-    mArm.setDefaultCommand(new ManualArmExtension());
+   
 //==========================Driver binding========================
     
     //Brake mode Command
     mButtonBind.driveStartButton.toggleOnTrue(new BrakeMode());
     //Tracking Command
-    mButtonBind.driveBButton.toggleOnTrue(new RunForTarget(xDistanceGamePiece));
     mButtonBind.driveDPadUp.toggleOnTrue(new ParallelCommandGroup( new PipelineSwitch(),
     new InstantCommand(()-> 
     NetworkTableInstance.getDefault()
@@ -265,9 +261,11 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-cargo");
     .getSubTable("Main")
     .getEntry("Cones And Tag")
     .setBoolean(true))));
+    
     mButtonBind.driveXButton.toggleOnTrue(new RunForTarget(xDistanceAim));
-   // mButtonBind.driveYButton.onTrue(new InstantCommand(()-> System.out.println(mDrivetrain.distanceFromTagInFeet())));
-    //Brake mode
+    mButtonBind.driveBButton.toggleOnTrue(new RunForTarget(xDistanceGamePiece));
+
+
   
     
 //=======================Aux bindings=============================
@@ -279,18 +277,10 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-cargo");
  mButtonBind.auxBButton.whileTrue(new ManualClaw(0.5));
   //Turret command
   mButtonBind.auxBackButton.onTrue(new ArmHomePos());
- // mButtonBind.auxDPadDown.onTrue( new InstantCommand(()-> topLL = false));
-  //mButtonBind.auxBButton.onTrue( new InstantCommand(()->{
-   // if(topLL == true)
-   // new TurretAimTarget(xDistanceGamePiece);
-  //else
-  //  new TurretAimTarget(xDistanceAim);
+
   mButtonBind.auxYButton.onTrue(new TurretAimTarget(xDistanceGamePiece));
   mButtonBind.auxXButton.onTrue(new TurretAimTarget(xDistanceAim));
-//}
-  //  ));
-  //mButtonBind.auxAButton.onTrue(new AutoPickup(aprilTagIDListenerHandle, aprilTagID))
-  //Vision Commands
+
   mButtonBind.auxStartButton.toggleOnTrue(new ParallelCommandGroup( new PipelineSwitch(),
   new InstantCommand(()-> 
   NetworkTableInstance.getDefault()
@@ -299,7 +289,17 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-cargo");
   .getEntry("Cones And Tag")
   .setBoolean(true))));
   
-  mButtonBind.auxDPadDown.onTrue(new ChargeStationClimb());
+  //mButtonBind.auxBackButton.onTrue(new ChargeStationClimb());
+
+  mButtonBind.auxDPadRight.whileTrue(new ManualArmLifter(0.4));
+  mButtonBind.auxDPadLeft.whileTrue(new ManualArmExtension(-0.4));
+
+  mButtonBind.auxDPadUp.whileTrue(new ManualArmLifter(0.4));
+  mButtonBind.auxDPadDown.whileTrue(new ManualArmLifter(-0.4));
+
+  mButtonBind.auxRightStick.whileTrue(new RotateClawTurret(0.3));
+  mButtonBind.auxLeftStick.whileTrue(new RotateClawTurret(-0.3));
+
 //=========================LED Binds============================
     new InstantCommand(() -> mLED.setToOrange());
   }
