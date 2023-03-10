@@ -10,7 +10,7 @@ import frc.robot.RobotContainer;
 public class RotateClawTurret extends CommandBase {
   /** Creates a new RotateClawTurret. */
 
-  
+
   private double speedSet;
   public RotateClawTurret(double speed) {
     addRequirements(RobotContainer.mClaw);
@@ -40,6 +40,6 @@ public class RotateClawTurret extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return false;
   }
 }
