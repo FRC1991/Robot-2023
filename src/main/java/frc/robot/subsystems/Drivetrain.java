@@ -11,7 +11,6 @@ import com.ctre.phoenix.ErrorCode;
 import com.ctre.phoenix.sensors.Pigeon2;
 import com.ctre.phoenix.sensors.Pigeon2.AxisDirection;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.SparkMaxAlternateEncoder;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -149,16 +148,19 @@ public void GameDrive(double forward, double backward, double curve, boolean fas
     rightDriveMotor2.getEncoder().setPosition(0);
     rightDriveMotor3.getEncoder().setPosition(0);
   }
-//Distance in ft ADJUST FOR WHEELS
-  public double getDistanceFeet(){ 
-    double avgDistanceInRotations = (
-      + leftDriveMotor2.getAlternateEncoder(SparkMaxAlternateEncoder.Type.kQuadrature, 8192).getPosition()
-      + -rightDriveMotor2.getAlternateEncoder(SparkMaxAlternateEncoder.Type.kQuadrature, 8192).getPosition())
+//Distance in ft 
+public double getDistanceFeet(){ 
+  double avgDistanceInRotations = (leftDriveMotor1.getEncoder().getPosition()
+    + leftDriveMotor2.getEncoder().getPosition()
+    + leftDriveMotor3.getEncoder().getPosition()
+    + -rightDriveMotor1.getEncoder().getPosition()
+    + -rightDriveMotor2.getEncoder().getPosition()
+    + -rightDriveMotor3.getEncoder().getPosition())
 
-      / 2.0;
+    / 6.0;
 
-    return 2.1 * avgDistanceInRotations;
-  }
+  return 0.183333 * avgDistanceInRotations;
+}
 
 
 //Distance From Target

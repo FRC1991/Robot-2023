@@ -4,30 +4,32 @@
 
 package frc.robot.commands.AutoCommand;
 
+import java.util.concurrent.atomic.AtomicReference;
+
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.RobotContainer;
-import frc.robot.commands.ArmCommands.ArmHomePos;
+import frc.robot.commands.ArmCommands.TurretToSetpoint;
 import frc.robot.commands.BangPID.ArmExtendBangBang;
 import frc.robot.commands.BangPID.ArmLiftBangBang;
-import frc.robot.commands.BangPID.DriveDistancePID;
-import frc.robot.commands.ClawCommands.ClawForCone;
-import frc.robot.commands.VisionCommands.RunForTarget;
+import frc.robot.commands.BangPID.DriveDistanceBang;
+import frc.robot.commands.ClawCommands.ResetClaw;
+import frc.robot.commands.VisionCommands.TurretAimTarget;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class ScoreAndGrabCone extends SequentialCommandGroup {
+public class ScoreAndGrabCargo extends SequentialCommandGroup {
   /** Creates a new ScoreAndGrabCube. */
-  public ScoreAndGrabCone() {
+  public ScoreAndGrabCargo(AtomicReference<Double> cubeOrCone) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new TurnArmScore(),
-     new DriveDistancePID(5, RobotContainer.mDrivetrain));
-     // new ParallelCommandGroup( new RunForTarget(RobotContainer.xDistanceGamePiece , 2),
-     // new ArmLiftBangBang(10)),
-     // new ArmExtendBangBang(130),
-      //new ClawForCone(),
-      //new ArmHomePos());
+    addCommands(new TurnAndExtend(),
+    new ArmExtendBangBang(115),
+    new ResetClaw(),
+    new ParallelCommandGroup( new TurretToSetpoint(0),
+    new ArmLiftBangBang(0),
+    new DriveDistanceBang(4,0.6)),
+    new TurretAimTarget(cubeOrCone)
+    );
   }
 }

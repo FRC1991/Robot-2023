@@ -99,8 +99,8 @@ public static final double kTurnRateToleranceDegPerS = 10;
     public static final double kDriveI = 0;
     public static final double kDriveD = 0;
 
-    public static final double kMaxDistPerS = 10;
-    public static final double kMaxAccelerationPerS = 25;
+    public static final double kMaxDistPerS = 45;
+    public static final double kMaxAccelerationPerS = 90;
 
     public static final double kDistTolerance = 0.183333;
     public static final double kDistRateTolerancePerS = 1;
