@@ -19,13 +19,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.ArmCommands.ArmHomePos;
 import frc.robot.commands.ArmCommands.ManualArmExtension;
 import frc.robot.commands.ArmCommands.ManualArmLifter;
 import frc.robot.commands.ArmCommands.ManualTurret;
-import frc.robot.commands.AutoCommand.ScoreAndGrabCone;
+import frc.robot.commands.AutoCommand.ScoreAndGrabCargo;
 import frc.robot.commands.AutoCommand.TurnArmScore;
 import frc.robot.commands.ClawCommands.ManualClaw;
 import frc.robot.commands.ClawCommands.ResetClaw;
@@ -108,9 +109,9 @@ GameDrive standardGameDriveCommand = new GameDrive();
   //if(posInField == 1){
   autoChoose.setDefaultOption("Score", new TurnArmScore());
  // }else if(posInField == 2){
-  autoChoose.addOption("Score and Grab", new ScoreAndGrabCone());
+  autoChoose.addOption("Score and Grab Cone", new ParallelDeadlineGroup( new ScoreAndGrabCargo(xDistanceAim), new PipelineSwitch()));
  // }else{
-  autoChoose.addOption("Climb", new TurnArmScore());
+  autoChoose.addOption("Score and Grab Cube", new ScoreAndGrabCargo(xDistanceAim));
  // }
   Shuffleboard.getTab("Main").add(autoChoose);
 
