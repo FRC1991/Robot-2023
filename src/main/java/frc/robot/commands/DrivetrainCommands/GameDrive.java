@@ -41,7 +41,7 @@ public class GameDrive extends CommandBase {
     boolean fastTurn = ButtonBind.driverController.rightBumper().getAsBoolean();
     
 
-    RobotContainer.mDrivetrain.GameDrive(forward, backward, -curve, fastTurn);
+    RobotContainer.mDrivetrain.GameDrive(forward * 0.8, backward * 0.8, -curve * 0.8, fastTurn);
 
   }
 

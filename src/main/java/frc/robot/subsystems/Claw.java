@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -24,15 +25,17 @@ public class Claw extends SubsystemBase {
    resetClawEncoder();
    resetClawTurretEncoder();
 
+//Set idle mode
+    clawTurretMotor.setIdleMode(IdleMode.kBrake);
 // Current limiter for neo 550
     clawMotor.setSmartCurrentLimit(20, 40);
 
 //Limiter for claw
-    clawMotor.setSoftLimit(SoftLimitDirection.kForward, 35);//check how many rotations
-   // clawMotor.enableSoftLimit(SoftLimitDirection.kForward, true);
+    clawMotor.setSoftLimit(SoftLimitDirection.kForward, 35);
+   clawMotor.enableSoftLimit(SoftLimitDirection.kForward, true);
 
-    clawMotor.setSoftLimit(SoftLimitDirection.kReverse, 35);//check how many rotations
-   // clawMotor.enableSoftLimit(SoftLimitDirection.kReverse, true);
+    clawMotor.setSoftLimit(SoftLimitDirection.kReverse, -20);
+    clawMotor.enableSoftLimit(SoftLimitDirection.kReverse, true);
 
 //Limiter for claw turret   
     clawTurretMotor.setSoftLimit(SoftLimitDirection.kForward, 18);//check how many rotations
@@ -51,6 +54,7 @@ public class Claw extends SubsystemBase {
 
 //Claw turret Motor values
 public void setClawTurret( double speed){
+  clawTurretMotor.setIdleMode(IdleMode.kCoast);
   clawTurretMotor.set(speed);
 }
 
@@ -81,6 +85,7 @@ public void setClawTurret( double speed){
 
 //Stop claw turret 
   public void stopClawTurret(){
+    clawTurretMotor.setIdleMode(IdleMode.kBrake);
     clawTurretMotor.set(0);
   }
 

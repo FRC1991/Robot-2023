@@ -6,8 +6,6 @@ package frc.robot;
 
 import java.util.EnumSet;
 import java.util.concurrent.atomic.AtomicReference;
-
-
 import edu.wpi.first.networktables.DoubleTopic;
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.networktables.NetworkTable;
@@ -61,7 +59,7 @@ public class RobotContainer {
   public final static AtomicReference<Double> gamePieceSeen = new AtomicReference<Double>(0.0);
   public final static AtomicReference<Double> yDistanceGamePiece = new AtomicReference<Double>(0.0);
   public final static AtomicReference<Double> xDistanceGamePiece = new AtomicReference<Double>(0.0);
-
+  public final static AtomicReference<Double> botPose = new AtomicReference<Double>(0.0);
 
   DoubleTopic tagIDTopic, 
   yDistanceAimTopic, 
@@ -69,15 +67,17 @@ public class RobotContainer {
   retroTapeTopic, 
   gamePieceSeenTopic, 
   yDistanceGamePieceTopic, 
-  xDistanceGamePieceTopic;
-  
+  xDistanceGamePieceTopic,
+  botPoseTopic;
+
   double aprilTagIDListenerHandle, 
   yDistanceAimListenerHandle, 
   xDistanceAimListenerHandle, 
   retroTapeListenerHandle, 
   gamePieceSeenListenerHandle, 
   yDistanceGamePieceListenerHandle,
-  xDistanceGamePieceListenerHandle;
+  xDistanceGamePieceListenerHandle,
+  botPoseListenerHandle;
 
   SendableChooser<Command> autoChoose;
   GenericEntry aimLLPipeline, gameLLPipeline;
@@ -140,18 +140,7 @@ GameDrive standardGameDriveCommand = new GameDrive();
     .setBoolean(range);
     
    }
-  
-   NetworkTableInstance.getDefault()
-   .getTable("Shuffleboard")
-   .getSubTable("Main")
-   .getEntry("Distance from tag")
-   .setNumber(Math.round(mDrivetrain.distanceFromTagInFeet()));
 
-   NetworkTableInstance.getDefault()
-   .getTable("Shuffleboard")
-   .getSubTable("Main")
-   .getEntry("Which alliance this is a test")
-   .setBoolean(Robot.isRedAlliance);
 }
 
 
@@ -171,6 +160,7 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-cargo");
  yDistanceAimTopic = aimmingNT.getDoubleTopic("ty");
  xDistanceAimTopic = aimmingNT.getDoubleTopic("tx");
  retroTapeTopic = aimmingNT.getDoubleTopic("tv");
+ botPoseTopic = aimmingNT.getDoubleTopic("botpose");
 
 //Topics from Game piece NT
   gamePieceSeenTopic = gamePieceNT.getDoubleTopic("tv");
@@ -185,6 +175,14 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-cargo");
   event -> {
       aprilTagID.set(event.valueData.value.getDouble());
   });
+
+  botPoseListenerHandle = ntInst.addListener(
+    botPoseTopic,
+    EnumSet.of(NetworkTableEvent.Kind.kValueAll),
+    event -> {
+      botPose.set(event.valueData.value.getDouble());
+    });
+
 
   yDistanceAimListenerHandle = ntInst.addListener(
     yDistanceAimTopic, 
@@ -253,17 +251,20 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-cargo");
     //Brake mode Command
     mButtonBind.driveStartButton.toggleOnTrue(new BrakeMode());
     //Tracking Command
-    mButtonBind.driveDPadUp.toggleOnTrue(new ParallelCommandGroup( new PipelineSwitch(),
-    new InstantCommand(()-> 
-    NetworkTableInstance.getDefault()
-    .getTable("Shuffleboard")
-    .getSubTable("Main")
-    .getEntry("Cones And Tag")
-    .setBoolean(true))));
-    
-    mButtonBind.driveXButton.whileTrue(new RunForTarget(xDistanceAim));
-    mButtonBind.driveBButton.whileTrue(new RunForTarget(xDistanceGamePiece));
+    mButtonBind.driveDPadUp.toggleOnTrue(new PipelineSwitch());
 
+    mButtonBind.driveXButton.whileTrue(new RunForTarget(xDistanceAim));
+    mButtonBind.driveYButton.whileTrue(new RunForTarget(xDistanceGamePiece));
+
+    mButtonBind.driveDPadDown.toggleOnTrue(new ParallelCommandGroup(
+    new InstantCommand(()-> mDrivetrain.getLeftDrive1().setSmartCurrentLimit(10)),
+    new InstantCommand(()-> mDrivetrain.getLeftDrive2().setSmartCurrentLimit(10)),
+    new InstantCommand(()-> mDrivetrain.getLeftDrive3().setSmartCurrentLimit(10)),
+    new InstantCommand(()-> mDrivetrain.getRightDrive1().setSmartCurrentLimit(10)),
+    new InstantCommand(()-> mDrivetrain.getRightDrive2().setSmartCurrentLimit(10)),
+    new InstantCommand(()-> mDrivetrain.getRightDrive3().setSmartCurrentLimit(10))));
+
+    mButtonBind.driveDPadRight.onTrue(new InstantCommand(()-> System.out.println(botPose.get())));
 
   
     
@@ -272,7 +273,7 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-cargo");
   mButtonBind.auxLeftBumper.whileTrue(new ManualTurret(-0.3));
   mButtonBind.auxRightBumper.whileTrue(new ManualTurret(0.3));
   // Claw Commands
- mButtonBind.auxAButton.whileTrue(new ResetClaw());
+ mButtonBind.auxAButton.onTrue(new ResetClaw());
  mButtonBind.auxBButton.whileTrue(new ManualClaw(0.5));
   //Turret command
   mButtonBind.auxBackButton.onTrue(new ArmHomePos());
@@ -280,24 +281,18 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-cargo");
   mButtonBind.auxYButton.onTrue(new TurretAimTarget(xDistanceGamePiece));
   mButtonBind.auxXButton.onTrue(new TurretAimTarget(xDistanceAim));
 
-  mButtonBind.auxStartButton.toggleOnTrue(new ParallelCommandGroup( new PipelineSwitch(),
-  new InstantCommand(()-> 
-  NetworkTableInstance.getDefault()
-  .getTable("Shuffleboard")
-  .getSubTable("Main")
-  .getEntry("Cones And Tag")
-  .setBoolean(true))));
+  mButtonBind.auxStartButton.toggleOnTrue(new PipelineSwitch());
+
   
-  //mButtonBind.auxBackButton.onTrue(new ChargeStationClimb());
 
-  mButtonBind.auxDPadRight.whileTrue(new ManualArmLifter(0.4));
-  mButtonBind.auxDPadLeft.whileTrue(new ManualArmExtension(-0.4));
+  mButtonBind.auxDPadRight.whileTrue(new ManualArmLifter(0.6));
+  mButtonBind.auxDPadLeft.whileTrue(new ManualArmExtension(-0.6));
 
-  mButtonBind.auxDPadUp.whileTrue(new ManualArmLifter(0.4));
-  mButtonBind.auxDPadDown.whileTrue(new ManualArmLifter(-0.4));
+  mButtonBind.auxDPadUp.whileTrue(new ManualArmLifter(0.6));
+  mButtonBind.auxDPadDown.whileTrue(new ManualArmLifter(-0.6));
 
-  mButtonBind.auxRightStick.whileTrue(new RotateClawTurret(0.2));
-  mButtonBind.auxLeftStick.whileTrue(new RotateClawTurret(-0.2));
+  mButtonBind.auxRightStick.whileTrue(new RotateClawTurret(0.15));
+  mButtonBind.auxLeftStick.whileTrue(new RotateClawTurret(-0.15));
 
 //=========================LED Binds============================
     new InstantCommand(() -> mLED.setToOrange());
