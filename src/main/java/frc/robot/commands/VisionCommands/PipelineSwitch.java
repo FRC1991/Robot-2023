@@ -20,6 +20,11 @@ public class PipelineSwitch extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    NetworkTableInstance.getDefault()
+    .getTable("Shuffleboard")
+    .getSubTable("Main")
+    .getEntry("Pipeline Cones and Tape")
+    .setBoolean(true);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -36,6 +41,11 @@ public class PipelineSwitch extends CommandBase {
   public void end(boolean interrupted) {
     aimmingNT.getEntry("pipeline").setNumber(0);
     gamePieceNT.getEntry("pipeline").setNumber(0);
+    NetworkTableInstance.getDefault()
+    .getTable("Shuffleboard")
+    .getSubTable("Main")
+    .getEntry("Pipeline Cones and Tape")
+    .setBoolean(false);
   }
 
   // Returns true when the command should end.

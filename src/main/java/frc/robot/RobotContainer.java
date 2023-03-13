@@ -274,7 +274,7 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-cargo");
   mButtonBind.auxRightBumper.whileTrue(new ManualTurret(0.3));
   // Claw Commands
  mButtonBind.auxAButton.onTrue(new ResetClaw());
- mButtonBind.auxBButton.whileTrue(new ManualClaw(0.5));
+ mButtonBind.auxBButton.whileTrue(new ManualClaw(0.7));
   //Turret command
   mButtonBind.auxBackButton.onTrue(new ArmHomePos());
 
@@ -288,8 +288,8 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-cargo");
   mButtonBind.auxDPadRight.whileTrue(new ManualArmLifter(0.6));
   mButtonBind.auxDPadLeft.whileTrue(new ManualArmExtension(-0.6));
 
-  mButtonBind.auxDPadUp.whileTrue(new ManualArmLifter(0.6));
-  mButtonBind.auxDPadDown.whileTrue(new ManualArmLifter(-0.6));
+  mButtonBind.auxDPadUp.whileTrue(new ManualArmLifter(0.5));
+  mButtonBind.auxDPadDown.whileTrue(new ManualArmLifter(-0.5));
 
   mButtonBind.auxRightStick.whileTrue(new RotateClawTurret(0.15));
   mButtonBind.auxLeftStick.whileTrue(new RotateClawTurret(-0.15));

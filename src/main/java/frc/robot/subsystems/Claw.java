@@ -28,7 +28,7 @@ public class Claw extends SubsystemBase {
 //Set idle mode
     clawTurretMotor.setIdleMode(IdleMode.kBrake);
 // Current limiter for neo 550
-    clawMotor.setSmartCurrentLimit(20, 40);
+    clawMotor.setSmartCurrentLimit(30, 45);
 
 //Limiter for claw
     clawMotor.setSoftLimit(SoftLimitDirection.kForward, 35);
