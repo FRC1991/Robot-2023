@@ -7,14 +7,15 @@ package frc.robot.commands.ArmCommands;
 import com.revrobotics.CANSparkMax.IdleMode;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.ButtonBind;
 import frc.robot.RobotContainer;
 
 public class ManualArmLifter extends CommandBase {
   /** Creates a new ArmLifter. */
   private double speedSet;
-  public ManualArmLifter(double speed) {
+  public ManualArmLifter(){//double speed) {
     addRequirements(RobotContainer.mArm);
-    speedSet = speed;
+    //speedSet = speed;
   }
 
   // Called when the command is initially scheduled.
@@ -24,7 +25,8 @@ public class ManualArmLifter extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.mArm.setArmLift(speedSet);
+    double speedSet = ButtonBind.auxController.getLeftY();
+    RobotContainer.mArm.setArmLift(speedSet * 0.5);
   }
 
   // Called once the command ends or is interrupted.

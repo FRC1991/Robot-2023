@@ -6,22 +6,20 @@ package frc.robot.commands.VisionCommands;
 
 import java.util.concurrent.atomic.AtomicReference;
 
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.BangPID.ArmExtendBangBang;
-import frc.robot.commands.ClawCommands.ResetClaw;
+import frc.robot.commands.ArmCommands.ArmHomePos;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class AutoPickup extends SequentialCommandGroup {
-  /** Creates a new AutoArmExtension. */
-  public AutoPickup(AtomicReference<Double> areaOfTar, AtomicReference<Double> xSteers) {
+public class CenterAndRunForTarget extends SequentialCommandGroup {
+  /** Creates a new CenterAndRunForTarget. */
+  public CenterAndRunForTarget(AtomicReference<Double> xSteering, AtomicReference<Double> areaOfTarget)  {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-    new CenterAndRunForTarget(xSteers, areaOfTar),
-    new ParallelCommandGroup( new ArmExtendBangBang(50),
-    new ResetClaw()));
+    new ArmHomePos(),
+    new RunForTarget(xSteering, areaOfTarget)
+    );
   }
 }

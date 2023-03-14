@@ -60,35 +60,7 @@ public static final double kTurnRateToleranceDegPerS = 10;
   
   public static final double kChargeToleranceDeg = 2;
   public static final double kChargeRateToleranceDegPerS = 10;
-
-  //PID For Arm Extension
-
-  public static final double kArmExtendP = 1;
-  public static final double kArmExtendI = 0;
-  public static final double kArmExtendD = 0;
-
-  public static final double kMaxArmExtendRatePerS = 5;
-  public static final  double kMaxArmExtendAccelerationPerSSquared = 10;
-
-  public static final double kArmExtendRateTolerancePerS = 0.166667;
-  public static final double kArmExtendTolerance = 2; 
-
   
-
-
-  //PID for arm Lifter
-
-  public static final double kArmLiftP = 1;
-  public static final double kArmLiftI = 0;
-  public static final double kArmLiftD = 0;
-
-  public static final double kMaxArmLiftRatePerS = 5;
-  public static final  double kMaxArmLiftAccelerationPerSSquared = 10;
-
-  public static final double kArmLiftToleranceDeg = 0.0833333;
-  public static final double kArmLiftRateToleranceDegPerS = 2;
-
-
   //Vision constant
 
     public static final double visionConstant = 0.0015;

@@ -16,17 +16,18 @@ public class RunForTarget extends CommandBase {
 
   private double steerScale = Constants.visionConstant;
   private double adjustSteer = 0;
-  private double speedSet, xSteer, stopDist; 
+  private double speedSet, xSteer, stopDist, areaOfTargetSup; 
    private AtomicReference<Double> xSteerSup;
 
 
   
-  public RunForTarget(AtomicReference <Double> xSteering){//, double whenToStop) {
+  public RunForTarget(AtomicReference <Double> xSteering, AtomicReference<Double> areaOfTarget) {
     addRequirements(RobotContainer.mDrivetrain);
     xSteerSup = xSteering;
     xSteer = xSteerSup.get();
     speedSet = 0.65;
-   // whenToStop = stopDist;
+    areaOfTargetSup = areaOfTarget.get();
+    areaOfTargetSup = 0.35;
 
   }
 
@@ -43,8 +44,9 @@ public class RunForTarget extends CommandBase {
   @Override
   public void initialize() {
 
-    //RobotContainer.mButtonBind.singleDriveVibrate();
-    //RobotContainer.mButtonBind.singleAuxVibrate();
+    RobotContainer.mButtonBind.singleDriveVibrate();
+    RobotContainer.mButtonBind.singleAuxVibrate();
+
 
     NetworkTableInstance.getDefault()
         .getTable("Shuffleboard")
@@ -57,9 +59,7 @@ public class RunForTarget extends CommandBase {
   @Override
   public void execute() {
 
-    // if target is off by more than 1 degree, adjust steering, otherwise, do nothing
-    // note that this is a very rough approximation, and may need to be adjusted
-    // multiplying by 0.015 to normalize the degree value to between -1 and 1
+  
     xSteer = xSteerSup.get();
     
     if(xSteer > 0.2){
@@ -71,7 +71,7 @@ public class RunForTarget extends CommandBase {
     }else{
       adjustSteer = 0;
     }
-    RobotContainer.mDrivetrain.arcadeDrive(speedSet, adjustSteer * -1000 * 1.65);
+    RobotContainer.mDrivetrain.arcadeDrive(speedSet, adjustSteer * -1000 * 1.65);//Fix later 
   }
 
   // Called once the command ends or is interrupted.
@@ -87,12 +87,10 @@ public class RunForTarget extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-   // if(RobotContainer.mDrivetrain.distanceFromTagInFeet() <= stopDist){
-   // return true;
-   // }else if(RobotContainer.mDrivetrain.distanceFromCargoInFeet() <= stopDist){
-    //  return true;
-    //}else{
+    if(areaOfTargetSup <= 0.35){
+      return true;
+    }else{
       return false;
     }
   }
-//}
+}

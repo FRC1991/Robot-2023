@@ -16,7 +16,6 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -30,9 +29,10 @@ import frc.robot.commands.ClawCommands.ManualClaw;
 import frc.robot.commands.ClawCommands.ResetClaw;
 import frc.robot.commands.ClawCommands.RotateClawTurret;
 import frc.robot.commands.DrivetrainCommands.GameDrive;
+import frc.robot.commands.DrivetrainCommands.SlowDown;
 import frc.robot.commands.MiscCommands.BrakeMode;
+import frc.robot.commands.VisionCommands.CenterAndRunForTarget;
 import frc.robot.commands.VisionCommands.PipelineSwitch;
-import frc.robot.commands.VisionCommands.RunForTarget;
 import frc.robot.commands.VisionCommands.TurretAimTarget;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Claw;
@@ -59,7 +59,9 @@ public class RobotContainer {
   public final static AtomicReference<Double> gamePieceSeen = new AtomicReference<Double>(0.0);
   public final static AtomicReference<Double> yDistanceGamePiece = new AtomicReference<Double>(0.0);
   public final static AtomicReference<Double> xDistanceGamePiece = new AtomicReference<Double>(0.0);
-  public final static AtomicReference<Double> botPose = new AtomicReference<Double>(0.0);
+  public final static AtomicReference<Double> cargoArea = new AtomicReference<Double>(0.0);
+  public final static AtomicReference<Double> tagArea = new AtomicReference<Double>(0.0);
+
 
   DoubleTopic tagIDTopic, 
   yDistanceAimTopic, 
@@ -68,7 +70,8 @@ public class RobotContainer {
   gamePieceSeenTopic, 
   yDistanceGamePieceTopic, 
   xDistanceGamePieceTopic,
-  botPoseTopic;
+  cargoAreaTopic,
+  tagAreaTopic;
 
   double aprilTagIDListenerHandle, 
   yDistanceAimListenerHandle, 
@@ -77,7 +80,8 @@ public class RobotContainer {
   gamePieceSeenListenerHandle, 
   yDistanceGamePieceListenerHandle,
   xDistanceGamePieceListenerHandle,
-  botPoseListenerHandle;
+  cargoAreaListenerHandle,
+  tagAreaListenerHandle;
 
   SendableChooser<Command> autoChoose;
   GenericEntry aimLLPipeline, gameLLPipeline;
@@ -115,33 +119,9 @@ GameDrive standardGameDriveCommand = new GameDrive();
  // }
   Shuffleboard.getTab("Main").add(autoChoose);
 
-  //Vision Pipline Selector
+  }
 
 
-  //Drivetrain data
-  if(mDrivetrain.getPitch() > 2 || mDrivetrain.getPitch() < -2){
-      
-    boolean range = false;
-
-    NetworkTableInstance.getDefault()
-    .getTable("Shuffleboard")
-    .getSubTable("Main")
-    .getEntry("Is charging station in range?")
-    .setBoolean(range);    
-    
-  }else{
-  
-    boolean range = true;
-  
-    NetworkTableInstance.getDefault()
-    .getTable("Shuffleboard")
-    .getSubTable("Main")
-    .getEntry("Is charging station in range?")
-    .setBoolean(range);
-    
-   }
-
-}
 
 
  
@@ -160,13 +140,13 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-cargo");
  yDistanceAimTopic = aimmingNT.getDoubleTopic("ty");
  xDistanceAimTopic = aimmingNT.getDoubleTopic("tx");
  retroTapeTopic = aimmingNT.getDoubleTopic("tv");
- botPoseTopic = aimmingNT.getDoubleTopic("botpose");
+  tagAreaTopic = aimmingNT.getDoubleTopic("ta");
 
 //Topics from Game piece NT
   gamePieceSeenTopic = gamePieceNT.getDoubleTopic("tv");
   yDistanceGamePieceTopic = gamePieceNT.getDoubleTopic("ty");
   xDistanceGamePieceTopic = gamePieceNT.getDoubleTopic("tx");
-
+  cargoAreaTopic = gamePieceNT.getDoubleTopic("ta");
 
  //Listeners for Aimming NT
  aprilTagIDListenerHandle = ntInst.addListener(
@@ -176,11 +156,11 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-cargo");
       aprilTagID.set(event.valueData.value.getDouble());
   });
 
-  botPoseListenerHandle = ntInst.addListener(
-    botPoseTopic,
+  tagAreaListenerHandle = ntInst.addListener(
+    tagAreaTopic,
     EnumSet.of(NetworkTableEvent.Kind.kValueAll),
     event -> {
-      botPose.set(event.valueData.value.getDouble());
+      tagArea.set(event.valueData.value.getDouble());
     });
 
 
@@ -212,6 +192,14 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-cargo");
     event -> {
       gamePieceSeen.set(event.valueData.value.getDouble());
     });
+
+  cargoAreaListenerHandle = ntInst.addListener(
+    cargoAreaTopic,
+     EnumSet.of(NetworkTableEvent.Kind.kValueAll),
+     event -> {
+      cargoArea.set(event.valueData.value.getDouble());
+    });
+  
 
   yDistanceGamePieceListenerHandle = ntInst.addListener(
     yDistanceGamePieceTopic,
@@ -245,7 +233,7 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-cargo");
 
 
     mDrivetrain.setDefaultCommand(standardGameDriveCommand);
-   
+    mArm.setDefaultCommand(new ManualArmLifter());
 //==========================Driver binding========================
     
     //Brake mode Command
@@ -253,18 +241,12 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-cargo");
     //Tracking Command
     mButtonBind.driveDPadUp.toggleOnTrue(new PipelineSwitch());
 
-    mButtonBind.driveXButton.whileTrue(new RunForTarget(xDistanceAim));
-    mButtonBind.driveYButton.whileTrue(new RunForTarget(xDistanceGamePiece));
+    mButtonBind.driveXButton.whileTrue(new CenterAndRunForTarget(xDistanceAim, cargoArea));
+    mButtonBind.driveYButton.whileTrue(new CenterAndRunForTarget(xDistanceGamePiece, cargoArea));
 
-    mButtonBind.driveDPadDown.toggleOnTrue(new ParallelCommandGroup(
-    new InstantCommand(()-> mDrivetrain.getLeftDrive1().setSmartCurrentLimit(10)),
-    new InstantCommand(()-> mDrivetrain.getLeftDrive2().setSmartCurrentLimit(10)),
-    new InstantCommand(()-> mDrivetrain.getLeftDrive3().setSmartCurrentLimit(10)),
-    new InstantCommand(()-> mDrivetrain.getRightDrive1().setSmartCurrentLimit(10)),
-    new InstantCommand(()-> mDrivetrain.getRightDrive2().setSmartCurrentLimit(10)),
-    new InstantCommand(()-> mDrivetrain.getRightDrive3().setSmartCurrentLimit(10))));
+    mButtonBind.driveDPadDown.toggleOnTrue(new SlowDown());
 
-    mButtonBind.driveDPadRight.onTrue(new InstantCommand(()-> System.out.println(botPose.get())));
+    mButtonBind.driveDPadRight.onTrue(new InstantCommand(()-> System.out.println(cargoArea.get())));
 
   
     
@@ -285,11 +267,11 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-cargo");
 
   
 
-  mButtonBind.auxDPadRight.whileTrue(new ManualArmLifter(0.6));
+  mButtonBind.auxDPadRight.whileTrue(new ManualArmExtension(0.6));
   mButtonBind.auxDPadLeft.whileTrue(new ManualArmExtension(-0.6));
 
-  mButtonBind.auxDPadUp.whileTrue(new ManualArmLifter(0.5));
-  mButtonBind.auxDPadDown.whileTrue(new ManualArmLifter(-0.5));
+  //mButtonBind.auxDPadUp.whileTrue(new ManualArmLifter(0.5));
+  //mButtonBind.auxDPadDown.whileTrue(new ManualArmLifter(-0.5));
 
   mButtonBind.auxRightStick.whileTrue(new RotateClawTurret(0.15));
   mButtonBind.auxLeftStick.whileTrue(new RotateClawTurret(-0.15));
