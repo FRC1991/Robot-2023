@@ -12,6 +12,21 @@ This is a summary of the our robot's software and hardware. Feel free to find us
 
 ### Info for judges
    
+-Automated functions(all of these can be done in teleop with the press of a button)
+   -We use two Limelights one to track apriltags and retroreflective tape the other limelights tracks cubes and cones. The drivers can switch what we are tracking on the fly.
+   -Auto tracking.
+   -Running to target. 
+   -Auto pickup of cubes or cones.
+   -Auto drop off for cubes or cone.
+   -Auto Climb.
+-Features for drivers
+   -Communation to driver using controller vibration
+-Mechanical Features
+   -Can reach top, middle or bottom.
+   -Can Pick up from the ground
+   -
+   
+   
 
 ### Electronics
 
