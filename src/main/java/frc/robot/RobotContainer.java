@@ -6,6 +6,9 @@ package frc.robot;
 
 import java.util.EnumSet;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.concurrent.atomic.AtomicReferenceArray;
+
+import edu.wpi.first.networktables.DoubleArrayTopic;
 import edu.wpi.first.networktables.DoubleTopic;
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.networktables.NetworkTable;
@@ -24,13 +27,13 @@ import frc.robot.commands.ArmCommands.ManualArmExtension;
 import frc.robot.commands.ArmCommands.ManualArmLifter;
 import frc.robot.commands.ArmCommands.ManualTurret;
 import frc.robot.commands.AutoCommand.ScoreAndGrabCargo;
-import frc.robot.commands.AutoCommand.TurnArmScore;
 import frc.robot.commands.ClawCommands.ManualClaw;
 import frc.robot.commands.ClawCommands.ResetClaw;
 import frc.robot.commands.ClawCommands.RotateClawTurret;
 import frc.robot.commands.DrivetrainCommands.GameDrive;
 import frc.robot.commands.DrivetrainCommands.SlowDown;
 import frc.robot.commands.MiscCommands.BrakeMode;
+import frc.robot.commands.VisionCommands.AutoPickup;
 import frc.robot.commands.VisionCommands.CenterAndRunForTarget;
 import frc.robot.commands.VisionCommands.PipelineSwitch;
 import frc.robot.commands.VisionCommands.TurretAimTarget;
@@ -61,6 +64,7 @@ public class RobotContainer {
   public final static AtomicReference<Double> xDistanceGamePiece = new AtomicReference<Double>(0.0);
   public final static AtomicReference<Double> cargoArea = new AtomicReference<Double>(0.0);
   public final static AtomicReference<Double> tagArea = new AtomicReference<Double>(0.0);
+  public final static AtomicReferenceArray<Double> botPose = new AtomicReferenceArray<Double>(6);
 
 
   DoubleTopic tagIDTopic, 
@@ -73,6 +77,8 @@ public class RobotContainer {
   cargoAreaTopic,
   tagAreaTopic;
 
+  DoubleArrayTopic botPoseTopic;
+
   double aprilTagIDListenerHandle, 
   yDistanceAimListenerHandle, 
   xDistanceAimListenerHandle, 
@@ -82,6 +88,8 @@ public class RobotContainer {
   xDistanceGamePieceListenerHandle,
   cargoAreaListenerHandle,
   tagAreaListenerHandle;
+
+  double[] botPoseListenerHandle;
 
   SendableChooser<Command> autoChoose;
   GenericEntry aimLLPipeline, gameLLPipeline;
@@ -111,7 +119,7 @@ GameDrive standardGameDriveCommand = new GameDrive();
 //Auto Chooser
   autoChoose = new SendableChooser<Command>();
   //if(posInField == 1){
-  autoChoose.setDefaultOption("Score", new TurnArmScore());
+  //autoChoose.setDefaultOption("Score", new TurnArmScore());
  // }else if(posInField == 2){
   autoChoose.addOption("Score and Grab Cone", new ParallelDeadlineGroup( new ScoreAndGrabCargo(xDistanceAim), new PipelineSwitch()));
  // }else{
@@ -140,7 +148,8 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-cargo");
  yDistanceAimTopic = aimmingNT.getDoubleTopic("ty");
  xDistanceAimTopic = aimmingNT.getDoubleTopic("tx");
  retroTapeTopic = aimmingNT.getDoubleTopic("tv");
-  tagAreaTopic = aimmingNT.getDoubleTopic("ta");
+ tagAreaTopic = aimmingNT.getDoubleTopic("ta");
+ botPoseTopic = aimmingNT.getDoubleArrayTopic("camerapose_robotspace");
 
 //Topics from Game piece NT
   gamePieceSeenTopic = gamePieceNT.getDoubleTopic("tv");
@@ -163,6 +172,12 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-cargo");
       tagArea.set(event.valueData.value.getDouble());
     });
 
+ // botPoseListenerHandle = ntInst.addListener(
+ //   botPoseTopic,
+ //   EnumSet.of(NetworkTableEvent.Kind.kValueAll),
+ //   event -> {
+ //   botPose.set(event.valueData.value.getDoubleArray());
+//    });
 
   yDistanceAimListenerHandle = ntInst.addListener(
     yDistanceAimTopic, 
@@ -265,6 +280,7 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-cargo");
 
   mButtonBind.auxStartButton.toggleOnTrue(new PipelineSwitch());
 
+  mButtonBind.auxDPadUp.onTrue(new AutoPickup(cargoArea, xDistanceGamePiece));
   
 
   mButtonBind.auxDPadRight.whileTrue(new ManualArmExtension(0.6));
