@@ -26,7 +26,7 @@ import frc.robot.commands.ArmCommands.ArmHomePos;
 import frc.robot.commands.ArmCommands.ManualArmExtension;
 import frc.robot.commands.ArmCommands.ManualArmLifter;
 import frc.robot.commands.ArmCommands.ManualTurret;
-import frc.robot.commands.AutoCommand.ScoreAndGrabCargo;
+import frc.robot.commands.AutoCommand.CornerAuto;
 import frc.robot.commands.ClawCommands.ManualClaw;
 import frc.robot.commands.ClawCommands.ResetClaw;
 import frc.robot.commands.ClawCommands.RotateClawTurret;
@@ -37,10 +37,10 @@ import frc.robot.commands.VisionCommands.AutoPickup;
 import frc.robot.commands.VisionCommands.CenterAndRunForTarget;
 import frc.robot.commands.VisionCommands.PipelineSwitch;
 import frc.robot.commands.VisionCommands.TurretAimTarget;
-import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.ArmExtension;
+import frc.robot.subsystems.ArmLift;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.LED;
 import frc.robot.subsystems.Turret;
 
 /**
@@ -97,11 +97,11 @@ public class RobotContainer {
   boolean topLL = false;
 //==========================  Subsystems +++++++++++++++++++++++
   public static Drivetrain mDrivetrain = new Drivetrain();
-  public static Arm mArm = new Arm();
+  public static ArmExtension mArmExtension = new ArmExtension();
+  public static ArmLift mArmLift = new ArmLift();
   public static Claw mClaw = new Claw();
   public static Turret mTurret = new Turret();
   public static ButtonBind mButtonBind = new ButtonBind();
-  public static LED mLED = new LED();
 
 //=============================Commands +++++++++++++++++++++++++++++++++ 
 
@@ -121,9 +121,9 @@ GameDrive standardGameDriveCommand = new GameDrive();
   //if(posInField == 1){
   //autoChoose.setDefaultOption("Score", new TurnArmScore());
  // }else if(posInField == 2){
-  autoChoose.addOption("Score and Grab Cone", new ParallelDeadlineGroup( new ScoreAndGrabCargo(xDistanceAim), new PipelineSwitch()));
+  autoChoose.addOption("Score and Grab Cone", new ParallelDeadlineGroup( new CornerAuto(xDistanceAim), new PipelineSwitch()));
  // }else{
-  autoChoose.addOption("Score and Grab Cube", new ScoreAndGrabCargo(xDistanceAim));
+  autoChoose.addOption("Score and Grab Cube", new CornerAuto(xDistanceAim));
  // }
   Shuffleboard.getTab("Main").add(autoChoose);
 
@@ -248,7 +248,8 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-cargo");
 
 
     mDrivetrain.setDefaultCommand(standardGameDriveCommand);
-    mArm.setDefaultCommand(new ManualArmLifter());
+    mArmLift.setDefaultCommand(new ManualArmLifter());
+    mArmExtension.setDefaultCommand(new ManualArmExtension());
 //==========================Driver binding========================
     
     //Brake mode Command
@@ -267,8 +268,8 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-cargo");
     
 //=======================Aux bindings=============================
   // Manual Movement
-  mButtonBind.auxLeftBumper.whileTrue(new ManualTurret(-0.3));
-  mButtonBind.auxRightBumper.whileTrue(new ManualTurret(0.3));
+  mButtonBind.auxLeftBumper.whileTrue(new ManualTurret(-0.4));
+  mButtonBind.auxRightBumper.whileTrue(new ManualTurret(0.4));
   // Claw Commands
  mButtonBind.auxAButton.onTrue(new ResetClaw());
  mButtonBind.auxBButton.whileTrue(new ManualClaw(0.7));
@@ -282,18 +283,10 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-cargo");
 
   mButtonBind.auxDPadUp.onTrue(new AutoPickup(cargoArea, xDistanceGamePiece));
   
-
-  mButtonBind.auxDPadRight.whileTrue(new ManualArmExtension(0.6));
-  mButtonBind.auxDPadLeft.whileTrue(new ManualArmExtension(-0.6));
-
-  //mButtonBind.auxDPadUp.whileTrue(new ManualArmLifter(0.5));
-  //mButtonBind.auxDPadDown.whileTrue(new ManualArmLifter(-0.5));
-
   mButtonBind.auxRightStick.whileTrue(new RotateClawTurret(0.15));
   mButtonBind.auxLeftStick.whileTrue(new RotateClawTurret(-0.15));
 
 //=========================LED Binds============================
-    new InstantCommand(() -> mLED.setToOrange());
   }
 
   /**

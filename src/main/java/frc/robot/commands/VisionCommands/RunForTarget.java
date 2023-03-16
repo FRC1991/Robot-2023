@@ -17,7 +17,7 @@ public class RunForTarget extends CommandBase {
   private double steerScale = Constants.visionConstant;
   private double adjustSteer = 0;
   private double speedSet, xSteer, stopDist, areaOfTargetSup; 
-   private AtomicReference<Double> xSteerSup;
+   private AtomicReference<Double> xSteerSup, targetAreaSup;
 
 
   
@@ -26,8 +26,8 @@ public class RunForTarget extends CommandBase {
     xSteerSup = xSteering;
     xSteer = xSteerSup.get();
     speedSet = 0.65;
-    areaOfTargetSup = areaOfTarget.get();
-    areaOfTargetSup = 0.35;
+    targetAreaSup = areaOfTarget;
+    areaOfTargetSup = targetAreaSup.get();
 
   }
 
@@ -59,7 +59,7 @@ public class RunForTarget extends CommandBase {
   @Override
   public void execute() {
 
-  
+    areaOfTargetSup = targetAreaSup.get();
     xSteer = xSteerSup.get();
     
     if(xSteer > 0.2){
@@ -87,7 +87,7 @@ public class RunForTarget extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(areaOfTargetSup <= 0.35){
+    if(areaOfTargetSup >= 0.35){
       return true;
     }else{
       return false;

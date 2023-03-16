@@ -8,13 +8,14 @@ import com.revrobotics.CANSparkMax.IdleMode;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.ButtonBind;
+import frc.robot.Constants;
 import frc.robot.RobotContainer;
 
 public class ManualArmLifter extends CommandBase {
   /** Creates a new ArmLifter. */
   private double speedSet;
   public ManualArmLifter(){//double speed) {
-    addRequirements(RobotContainer.mArm);
+    addRequirements(RobotContainer.mArmLift);
     //speedSet = speed;
   }
 
@@ -25,16 +26,18 @@ public class ManualArmLifter extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double speedSet = ButtonBind.auxController.getLeftY();
-    RobotContainer.mArm.setArmLift(speedSet * 0.5);
+    if(ButtonBind.auxController.getLeftY() > Constants.globalDeadband || ButtonBind.auxController.getLeftY() < Constants.globalDeadband){
+     speedSet = ButtonBind.auxController.getLeftY();
+    }
+    RobotContainer.mArmLift.setArmLift(speedSet * 0.4);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    RobotContainer.mArm.setArmLift(0);
-    RobotContainer.mArm.getArmLifterOne().setIdleMode(IdleMode.kBrake);
-    RobotContainer.mArm.getArmLifterTwo().setIdleMode(IdleMode.kBrake);
+    RobotContainer.mArmLift.setArmLift(0);
+    RobotContainer.mArmLift.getArmLifterOne().setIdleMode(IdleMode.kBrake);
+    RobotContainer.mArmLift.getArmLifterTwo().setIdleMode(IdleMode.kBrake);
 
   }
 

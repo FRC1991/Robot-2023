@@ -5,14 +5,15 @@
 package frc.robot.commands.ArmCommands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.ButtonBind;
+import frc.robot.Constants;
 import frc.robot.RobotContainer;
 
 public class ManualArmExtension extends CommandBase {
   /** Creates a new ManualArmExtension. */
 private double speedSet;
-  public ManualArmExtension(double speed) {
-    addRequirements(RobotContainer.mArm); 
-    speedSet = speed;
+  public ManualArmExtension() {
+    addRequirements(RobotContainer.mArmExtension); 
   }
 
   // Called when the command is initially scheduled.
@@ -22,13 +23,16 @@ private double speedSet;
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.mArm.setArmExtend(speedSet);
+    if(ButtonBind.auxController.getLeftX() > Constants.globalDeadband || ButtonBind.auxController.getLeftX() < Constants.globalDeadband){
+      speedSet = ButtonBind.auxController.getLeftX();
+    }
+    RobotContainer.mArmExtension.setArmExtend(speedSet * 0.6);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    RobotContainer.mArm.stopArmExtension();
+    RobotContainer.mArmExtension.stopArmExtension();
 
   }
 

@@ -19,11 +19,11 @@ public class PerfectClimb extends CommandBase {
   private NetworkTable aimmingNT;
 
   
-  public PerfectClimb(AtomicReference<Double> areaOfTag, double targetPitchSup) {
+  public PerfectClimb(AtomicReference<Double> areaOfTag) {
     addRequirements(RobotContainer.mDrivetrain);
     areaOfTagSup = areaOfTag;
     areaOfTagSuplier = areaOfTagSup.get();
-    aimmingNT = NetworkTableInstance.getDefault().getTable("limelight-aimming");
+    aimmingNT = NetworkTableInstance.getDefault().getTable("limelight-cargo");
 
 
   }
@@ -32,31 +32,46 @@ public class PerfectClimb extends CommandBase {
   @Override
   public void initialize() {
     aimmingNT.getEntry("pipeline").setNumber(3);
+    NetworkTableInstance.getDefault()
+    .getTable("Shuffleboard")
+    .getSubTable("Main")
+    .getEntry("Climb Active")
+    .setBoolean(true);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     areaOfTagSuplier = areaOfTagSup.get();
-    if(areaOfTagSuplier < 0.4){
+    if(areaOfTagSuplier < 0.3){
+    RobotContainer.mDrivetrain.arcadeDrive(0.35, 0);
+    }else if(areaOfTagSuplier < 0.4){
     RobotContainer.mDrivetrain.arcadeDrive(0.3, 0);
-    }else if(areaOfTagSuplier < 0.3){
-      RobotContainer.mDrivetrain.arcadeDrive(0.2, 0);
-    }
+    }else if(areaOfTagSuplier < 0.5){
+    RobotContainer.mDrivetrain.arcadeDrive(0.25, 0);
+    }else if(areaOfTagSuplier < 0.6){
+    RobotContainer.mDrivetrain.arcadeDrive(0.20, 0);
+    }else if(areaOfTagSuplier < 0.7){
+   RobotContainer.mDrivetrain.arcadeDrive(0.15, 0);
+    }   
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     aimmingNT.getEntry("pipeline").setNumber(0);
-
+    NetworkTableInstance.getDefault()
+    .getTable("Shuffleboard")
+    .getSubTable("Main")
+    .getEntry("Climb Active")
+    .setBoolean(false);
     RobotContainer.mDrivetrain.arcadeDrive(0, 0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(areaOfTagSuplier == 0.35){
+    if(areaOfTagSuplier >= 1){
     return true;
     }else{
       return false;

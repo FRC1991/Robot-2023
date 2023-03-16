@@ -12,25 +12,25 @@ public class ArmLiftBangBang extends CommandBase {
   double targetPos, speed, initPos, currentPos;
 
   public ArmLiftBangBang(double encoderValue) {
-    addRequirements(RobotContainer.mArm);
+    addRequirements(RobotContainer.mArmLift);
     targetPos = encoderValue;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    initPos = RobotContainer.mArm.getArmLiftTwoPos();
+    initPos = RobotContainer.mArmLift.getArmLiftTwoPos();
     currentPos = initPos;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    currentPos = RobotContainer.mArm.getArmLiftTwoPos();
-    if(RobotContainer.mArm.getArmLiftTwoPos() > targetPos){
-      RobotContainer.mArm.setArmLift(-0.4);
-    }else if(RobotContainer.mArm.getArmLiftTwoPos() < targetPos){
-      RobotContainer.mArm.setArmLift(0.4);
+    currentPos = RobotContainer.mArmLift.getArmLiftTwoPos();
+    if(RobotContainer.mArmLift.getArmLiftTwoPos() > targetPos){
+      RobotContainer.mArmLift.setArmLift(-0.5);
+    }else if(RobotContainer.mArmLift.getArmLiftTwoPos() < targetPos){
+      RobotContainer.mArmLift.setArmLift(0.5);
 
     }
   }
@@ -38,13 +38,13 @@ public class ArmLiftBangBang extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    RobotContainer.mArm.stopArmLift();
+    RobotContainer.mArmLift.stopArmLift();
     
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Math.round(targetPos) == Math.round(RobotContainer.mArm.getArmLiftTwoPos());
+    return Math.round(targetPos) == Math.round(RobotContainer.mArmLift.getArmLiftTwoPos());
   }
 }

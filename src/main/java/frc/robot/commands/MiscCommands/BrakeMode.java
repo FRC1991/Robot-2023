@@ -15,7 +15,8 @@ public class BrakeMode extends CommandBase {
   public BrakeMode() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.mDrivetrain);
-    addRequirements(RobotContainer.mArm);
+    addRequirements(RobotContainer.mArmExtension);
+    addRequirements(RobotContainer.mArmLift);
     addRequirements(RobotContainer.mClaw);
     addRequirements(RobotContainer.mTurret);
 
@@ -34,8 +35,8 @@ public class BrakeMode extends CommandBase {
 
     RobotContainer.mTurret.setTurret(0);
 
-    RobotContainer.mArm.setArmExtend(0);
-    RobotContainer.mArm.setArmLift(0);
+    RobotContainer.mArmExtension.setArmExtend(0);
+    RobotContainer.mArmLift.setArmLift(0);
 
     RobotContainer.mClaw.setClaw(0);
     RobotContainer.mClaw.setClawTurret(0);
@@ -48,11 +49,8 @@ public class BrakeMode extends CommandBase {
     RobotContainer.mDrivetrain.getRightDrive3().setIdleMode(IdleMode.kBrake);
     
 
-    RobotContainer.mArm.getArmExtender().setIdleMode(IdleMode.kBrake);
     
 
-    RobotContainer.mClaw.getClawMotor().setIdleMode(IdleMode.kBrake);
-    RobotContainer.mClaw.getClawTurretMotor().setIdleMode(IdleMode.kBrake);
 
 
     Timer.delay(0.3);
@@ -69,11 +67,7 @@ public class BrakeMode extends CommandBase {
     RobotContainer.mDrivetrain.getRightDrive3().setIdleMode(IdleMode.kCoast);
   
 
-    RobotContainer.mArm.getArmExtender().setIdleMode(IdleMode.kCoast);
     
-
-    RobotContainer.mClaw.getClawMotor().setIdleMode(IdleMode.kCoast);
-    RobotContainer.mClaw.getClawTurretMotor().setIdleMode(IdleMode.kCoast);
 
 
   }
