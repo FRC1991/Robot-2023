@@ -14,7 +14,7 @@ import frc.robot.RobotContainer;
 public class PerfectClimb extends CommandBase {
   /** Creates a new PerfectClimb. */
 
-  private double areaOfTagSuplier;
+  private double areaOfTagSuplier, pitchSuplier, pitchVal;
   private AtomicReference<Double> areaOfTagSup;
   private NetworkTable aimmingNT;
 
@@ -24,7 +24,7 @@ public class PerfectClimb extends CommandBase {
     areaOfTagSup = areaOfTag;
     areaOfTagSuplier = areaOfTagSup.get();
     aimmingNT = NetworkTableInstance.getDefault().getTable("limelight-cargo");
-
+    pitchSuplier = RobotContainer.mDrivetrain.getPitch();
 
   }
 
@@ -43,17 +43,10 @@ public class PerfectClimb extends CommandBase {
   @Override
   public void execute() {
     areaOfTagSuplier = areaOfTagSup.get();
-    if(areaOfTagSuplier < 0.3){
-    RobotContainer.mDrivetrain.arcadeDrive(0.35, 0);
-    }else if(areaOfTagSuplier < 0.4){
-    RobotContainer.mDrivetrain.arcadeDrive(0.3, 0);
-    }else if(areaOfTagSuplier < 0.5){
-    RobotContainer.mDrivetrain.arcadeDrive(0.25, 0);
-    }else if(areaOfTagSuplier < 0.6){
-    RobotContainer.mDrivetrain.arcadeDrive(0.20, 0);
-    }else if(areaOfTagSuplier < 0.7){
-   RobotContainer.mDrivetrain.arcadeDrive(0.15, 0);
-    }   
+    pitchVal = pitchSuplier; 
+    System.out.println(pitchVal + " " + areaOfTagSuplier);
+   RobotContainer.mDrivetrain.arcadeDrive(0.7, 0);
+    
   }
 
   // Called once the command ends or is interrupted.
@@ -71,7 +64,7 @@ public class PerfectClimb extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(areaOfTagSuplier >= 1){
+    if(areaOfTagSuplier >= 0.75 && Math.round(pitchVal) == 0){
     return true;
     }else{
       return false;
