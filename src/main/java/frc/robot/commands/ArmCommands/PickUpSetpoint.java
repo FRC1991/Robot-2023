@@ -5,20 +5,15 @@
 package frc.robot.commands.ArmCommands;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import frc.robot.commands.BangPID.ArmExtendBangBang;
-import frc.robot.commands.BangPID.ArmLiftBangBang;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class ArmHomePos extends ParallelCommandGroup {
-  /** Creates a new ArmHomePos. */
-  public ArmHomePos() {
+public class PickUpSetpoint extends ParallelCommandGroup {
+  /** Creates a new PickUpSetpoint. */
+  public PickUpSetpoint() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new TurretToSetpoint(0),
-    new ArmExtendBangBang(0),
-    new ArmLiftBangBang(0)
-    );
+    addCommands();
   }
 }

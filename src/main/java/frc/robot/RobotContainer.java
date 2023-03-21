@@ -7,7 +7,9 @@ package frc.robot;
 import java.util.EnumSet;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.atomic.AtomicReferenceArray;
+import java.util.function.DoubleSupplier;
 
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.networktables.DoubleArrayTopic;
 import edu.wpi.first.networktables.DoubleTopic;
 import edu.wpi.first.networktables.GenericEntry;
@@ -19,19 +21,15 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.ArmCommands.ArmHomePos;
 import frc.robot.commands.ArmCommands.ManualArmExtension;
 import frc.robot.commands.ArmCommands.ManualArmLifter;
 import frc.robot.commands.ArmCommands.ManualTurret;
-import frc.robot.commands.AutoCommand.CornerAuto;
 import frc.robot.commands.ClawCommands.ManualClaw;
 import frc.robot.commands.ClawCommands.ResetClaw;
-import frc.robot.commands.ClawCommands.RotateClawTurret;
 import frc.robot.commands.DrivetrainCommands.GameDrive;
-import frc.robot.commands.DrivetrainCommands.SlowDown;
 import frc.robot.commands.MiscCommands.BrakeMode;
 import frc.robot.commands.VisionCommands.AutoPickup;
 import frc.robot.commands.VisionCommands.CenterAndRunForTarget;
@@ -64,7 +62,7 @@ public class RobotContainer {
   public final static AtomicReference<Double> xDistanceGamePiece = new AtomicReference<Double>(0.0);
   public final static AtomicReference<Double> cargoArea = new AtomicReference<Double>(0.0);
   public final static AtomicReference<Double> tagArea = new AtomicReference<Double>(0.0);
-  public final static AtomicReferenceArray<Double> botPose = new AtomicReferenceArray<Double>(6);
+  public final static AtomicReferenceArray<Pose3d> botPose = new AtomicReferenceArray<Pose3d>(Pose3d());
 
 
   DoubleTopic tagIDTopic, 
@@ -94,8 +92,8 @@ public class RobotContainer {
   SendableChooser<Command> autoChoose;
   GenericEntry aimLLPipeline, gameLLPipeline;
   int posInField = DriverStation.getLocation();
-  boolean topLL = false;
-//==========================  Subsystems +++++++++++++++++++++++
+  DoubleSupplier maxSpeedSup;
+  //==========================  Subsystems +++++++++++++++++++++++
   public static Drivetrain mDrivetrain = new Drivetrain();
   public static ArmExtension mArmExtension = new ArmExtension();
   public static ArmLift mArmLift = new ArmLift();
@@ -105,7 +103,7 @@ public class RobotContainer {
 
 //=============================Commands +++++++++++++++++++++++++++++++++ 
 
-GameDrive standardGameDriveCommand = new GameDrive();
+GameDrive standardGameDriveCommand = new GameDrive(maxSpeedSup);
 
 
   public RobotContainer() {
@@ -121,9 +119,9 @@ GameDrive standardGameDriveCommand = new GameDrive();
   //if(posInField == 1){
   //autoChoose.setDefaultOption("Score", new TurnArmScore());
  // }else if(posInField == 2){
-  autoChoose.addOption("Score and Grab Cone", new ParallelDeadlineGroup( new CornerAuto(xDistanceAim), new PipelineSwitch()));
+ // autoChoose.addOption("Score and Grab Cone", new ParallelDeadlineGroup( new CornerAuto(xDistanceAim), new PipelineSwitch()));
  // }else{
-  autoChoose.addOption("Score and Grab Cube", new CornerAuto(xDistanceAim));
+  //autoChoose.addOption("Score and Grab Cube", new CornerAuto(xDistanceAim));
  // }
   Shuffleboard.getTab("Main").add(autoChoose);
 
@@ -260,7 +258,6 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-cargo");
     mButtonBind.driveXButton.whileTrue(new CenterAndRunForTarget(xDistanceAim, cargoArea));
     mButtonBind.driveYButton.whileTrue(new CenterAndRunForTarget(xDistanceGamePiece, cargoArea));
 
-    mButtonBind.driveDPadDown.toggleOnTrue(new SlowDown());
 
     mButtonBind.driveDPadRight.onTrue(new InstantCommand(()-> System.out.println(cargoArea.get())));
 
@@ -283,8 +280,7 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-cargo");
 
   mButtonBind.auxDPadUp.onTrue(new AutoPickup(cargoArea, xDistanceGamePiece));
   
-  mButtonBind.auxRightStick.whileTrue(new RotateClawTurret(0.15));
-  mButtonBind.auxLeftStick.whileTrue(new RotateClawTurret(-0.15));
+  
 
 //=========================LED Binds============================
   }

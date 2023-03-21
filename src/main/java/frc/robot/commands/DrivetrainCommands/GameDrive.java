@@ -6,15 +6,19 @@
 
 package frc.robot.commands.DrivetrainCommands;
 
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.ButtonBind;
 import frc.robot.RobotContainer;
 
 public class GameDrive extends CommandBase {
 
+  DoubleSupplier maxSpeed;
   
-  public GameDrive(){  
+  public GameDrive(DoubleSupplier maxSpeedSet){  
   addRequirements(RobotContainer.mDrivetrain);
+  maxSpeed = maxSpeedSet;
 }
 
 
@@ -22,12 +26,12 @@ public class GameDrive extends CommandBase {
   @Override
   public void initialize(){
      // set motor profile to avoid tipping
-  RobotContainer.mDrivetrain.getRightDrive1().setOpenLoopRampRate(0.5);
-  RobotContainer.mDrivetrain.getRightDrive2().setOpenLoopRampRate(0.5);
-  RobotContainer.mDrivetrain.getRightDrive3().setOpenLoopRampRate(0.5);
-  RobotContainer.mDrivetrain.getLeftDrive1().setOpenLoopRampRate(0.5);
-  RobotContainer.mDrivetrain.getLeftDrive2().setOpenLoopRampRate(0.5);
-  RobotContainer.mDrivetrain.getLeftDrive3().setOpenLoopRampRate(0.5);
+  RobotContainer.mDrivetrain.getRightDrive1().setOpenLoopRampRate(1);
+  RobotContainer.mDrivetrain.getRightDrive2().setOpenLoopRampRate(1);
+  RobotContainer.mDrivetrain.getRightDrive3().setOpenLoopRampRate(1);
+  RobotContainer.mDrivetrain.getLeftDrive1().setOpenLoopRampRate(1);
+  RobotContainer.mDrivetrain.getLeftDrive2().setOpenLoopRampRate(1);
+  RobotContainer.mDrivetrain.getLeftDrive3().setOpenLoopRampRate(1);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -41,7 +45,7 @@ public class GameDrive extends CommandBase {
     boolean fastTurn = ButtonBind.driverController.rightBumper().getAsBoolean();
     
 
-    RobotContainer.mDrivetrain.GameDrive(forward * 0.8, backward * 0.8, -curve * 0.8, fastTurn);
+    RobotContainer.mDrivetrain.GameDrive(forward * maxSpeed.getAsDouble(), backward * maxSpeed.getAsDouble(), -curve * maxSpeed.getAsDouble(), fastTurn);
 
   }
 

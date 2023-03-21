@@ -11,27 +11,25 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 
-public class RunForTarget extends CommandBase {
+public class RunFromTarget extends CommandBase {
   /** Creates a new RunForTag. */
 
   private double steerScale = Constants.visionConstant;
   private double adjustSteer = 0;
-  private double speedSet, xSteer, stopDist, areaOfTargetSup; 
-   private AtomicReference<Double> xSteerSup, targetAreaSup;
+  private double speedSet, xSteer, stopDist; 
+   private AtomicReference<Double> xSteerSup;
 
 
   
-  public RunForTarget(AtomicReference <Double> xSteering, AtomicReference<Double> areaOfTarget) {
+  public RunFromTarget(AtomicReference <Double> xSteering) {
     addRequirements(RobotContainer.mDrivetrain);
     xSteerSup = xSteering;
     xSteer = xSteerSup.get();
     speedSet = 0.65;
-    targetAreaSup = areaOfTarget;
-    areaOfTargetSup = targetAreaSup.get();
 
   }
 
-  public RunForTarget(double speed, AtomicReference <Double> xSteering, double whenToStop) {
+  public RunFromTarget(double speed, AtomicReference <Double> xSteering, double whenToStop) {
 
     addRequirements(RobotContainer.mDrivetrain);
     speedSet = speed;
@@ -59,7 +57,6 @@ public class RunForTarget extends CommandBase {
   @Override
   public void execute() {
 
-    areaOfTargetSup = targetAreaSup.get();
     xSteer = xSteerSup.get();
     
     if(xSteer > 0.2){
@@ -71,7 +68,7 @@ public class RunForTarget extends CommandBase {
     }else{
       adjustSteer = 0;
     }
-    RobotContainer.mDrivetrain.arcadeDrive(speedSet, adjustSteer * -1000 * 1.65);//Fix later 
+    RobotContainer.mDrivetrain.arcadeDrive(-speedSet,- adjustSteer * -1000 * 1.65);//Fix later 
   }
 
   // Called once the command ends or is interrupted.
@@ -87,10 +84,9 @@ public class RunForTarget extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(areaOfTargetSup >= 1.35){
-      return true;
-    }else{
+   
       return false;
     }
   }
-}
+
+

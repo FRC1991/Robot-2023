@@ -26,7 +26,7 @@ private double speedSet;
     if(ButtonBind.auxController.getLeftX() > Constants.globalDeadband || ButtonBind.auxController.getLeftX() < Constants.globalDeadband){
       speedSet = ButtonBind.auxController.getLeftX();
     }
-    RobotContainer.mArmExtension.setArmExtend(speedSet * 0.6);
+    RobotContainer.mArmExtension.setArmExtend(speedSet * 0.4);
   }
 
   // Called once the command ends or is interrupted.

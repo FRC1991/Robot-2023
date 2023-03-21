@@ -4,7 +4,6 @@
 
 package frc.robot.commands.ArmCommands;
 
-import com.revrobotics.CANSparkMax.IdleMode;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.ButtonBind;
@@ -35,17 +34,13 @@ public class ManualArmLifter extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    RobotContainer.mArmLift.setArmLift(0);
-    RobotContainer.mArmLift.getArmLifterOne().setIdleMode(IdleMode.kBrake);
-    RobotContainer.mArmLift.getArmLifterTwo().setIdleMode(IdleMode.kBrake);
-
+    RobotContainer.mArmLift.stopArmLift();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-   
-      return false;
+    return false;
     }
   } 
  
