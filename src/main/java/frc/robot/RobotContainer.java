@@ -6,10 +6,9 @@ package frc.robot;
 
 import java.util.EnumSet;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.concurrent.atomic.AtomicReferenceArray;
-import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.networktables.DoubleArrayTopic;
 import edu.wpi.first.networktables.DoubleTopic;
 import edu.wpi.first.networktables.GenericEntry;
@@ -62,7 +61,7 @@ public class RobotContainer {
   public final static AtomicReference<Double> xDistanceGamePiece = new AtomicReference<Double>(0.0);
   public final static AtomicReference<Double> cargoArea = new AtomicReference<Double>(0.0);
   public final static AtomicReference<Double> tagArea = new AtomicReference<Double>(0.0);
-  public final static AtomicReferenceArray<Pose3d> botPose = new AtomicReferenceArray<Pose3d>(Pose3d());
+  public final static AtomicReference<Pose3d> botPose = new AtomicReference<Pose3d>(new Pose3d());
 
 
   DoubleTopic tagIDTopic, 
@@ -87,12 +86,12 @@ public class RobotContainer {
   cargoAreaListenerHandle,
   tagAreaListenerHandle;
 
-  double[] botPoseListenerHandle;
+  int botPoseListenerHandle;
 
   SendableChooser<Command> autoChoose;
   GenericEntry aimLLPipeline, gameLLPipeline;
   int posInField = DriverStation.getLocation();
-  DoubleSupplier maxSpeedSup;
+  double maxSpeedSup = 0.8;
   //==========================  Subsystems +++++++++++++++++++++++
   public static Drivetrain mDrivetrain = new Drivetrain();
   public static ArmExtension mArmExtension = new ArmExtension();
@@ -103,7 +102,7 @@ public class RobotContainer {
 
 //=============================Commands +++++++++++++++++++++++++++++++++ 
 
-GameDrive standardGameDriveCommand = new GameDrive(maxSpeedSup);
+GameDrive standardGameDriveCommand = new GameDrive(()-> maxSpeedSup);
 
 
   public RobotContainer() {
@@ -147,7 +146,7 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-cargo");
  xDistanceAimTopic = aimmingNT.getDoubleTopic("tx");
  retroTapeTopic = aimmingNT.getDoubleTopic("tv");
  tagAreaTopic = aimmingNT.getDoubleTopic("ta");
- botPoseTopic = aimmingNT.getDoubleArrayTopic("camerapose_robotspace");
+ botPoseTopic = aimmingNT.getDoubleArrayTopic("botpose");
 
 //Topics from Game piece NT
   gamePieceSeenTopic = gamePieceNT.getDoubleTopic("tv");
@@ -170,12 +169,14 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-cargo");
       tagArea.set(event.valueData.value.getDouble());
     });
 
- // botPoseListenerHandle = ntInst.addListener(
- //   botPoseTopic,
- //   EnumSet.of(NetworkTableEvent.Kind.kValueAll),
- //   event -> {
- //   botPose.set(event.valueData.value.getDoubleArray());
-//    });
+  botPoseListenerHandle = ntInst.addListener(
+    botPoseTopic,
+    EnumSet.of(NetworkTableEvent.Kind.kValueAll),
+    event -> {
+    double[] coordsArray = event.valueData.value.getDoubleArray();
+    botPose.set(new Pose3d(coordsArray[0], coordsArray[1], coordsArray[2],
+      new Rotation3d(coordsArray[3], coordsArray[4], coordsArray[5])));
+    });
 
   yDistanceAimListenerHandle = ntInst.addListener(
     yDistanceAimTopic, 

@@ -30,7 +30,7 @@ public class CornerAuto extends SequentialCommandGroup {
     new ResetClaw(),
     new ParallelCommandGroup(new ArmExtendBangBang(0),
     new TurretToSetpoint(0),
-    new ParallelCommandGroup( new DriveDistance(-0.7, 6),
+    new ParallelCommandGroup( new DriveDistance(0.7, 6),
     new PickUpSetpoint()),
     new RunForTarget(cubeOrCone, cubeOrCone)));
   }
