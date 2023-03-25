@@ -41,6 +41,6 @@ public class CenterArm extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return RobotContainer.mButtonBind.turretBeam.getAsBoolean() == true;
+    return Math.round(RobotContainer.mTurret.getTurretOnePos()) == 0;
   }
 }
