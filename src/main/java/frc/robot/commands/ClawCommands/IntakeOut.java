@@ -4,47 +4,46 @@
 
 package frc.robot.commands.ClawCommands;
 
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
-public class ManualClaw extends CommandBase {
-  /** Creates a new ManualClaw. */
-
-  private double speedSet;
-             
-  public ManualClaw(double speed) {
+public class IntakeOut extends CommandBase {
+  /** Creates a new IntakeOut. */
+  public IntakeOut() {
     addRequirements(RobotContainer.mClaw);
-    speedSet = speed;
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    NetworkTableInstance.getDefault()
+    .getTable("Shuffleboard")
+    .getSubTable("Main")
+    .getEntry("Intake out?")
+    .setBoolean(true);
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
-
-      RobotContainer.mClaw.setClaw(speedSet);
-    
-
+    RobotContainer.mClaw.setClaw(0.5);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    RobotContainer.mClaw.setClaw(0);
-
+    NetworkTableInstance.getDefault()
+    .getTable("Shuffleboard")
+    .getSubTable("Main")
+    .getEntry("Intake out?")
+    .setBoolean(false);
+    RobotContainer.mClaw.stopClaw();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-   // if(RobotContainer.mButtonBind.clawLimit.getAsBoolean() == false){
-  //    return true;
-   // }else{
     return false;
-  //}
-}
+  }
 }

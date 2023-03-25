@@ -26,8 +26,7 @@ import frc.robot.commands.ArmCommands.ArmHomePos;
 import frc.robot.commands.ArmCommands.ManualArmExtension;
 import frc.robot.commands.ArmCommands.ManualArmLifter;
 import frc.robot.commands.ArmCommands.ManualTurret;
-import frc.robot.commands.ClawCommands.ManualClaw;
-import frc.robot.commands.ClawCommands.ResetClaw;
+import frc.robot.commands.ClawCommands.BackPreassure;
 import frc.robot.commands.DrivetrainCommands.GameDrive;
 import frc.robot.commands.MiscCommands.BrakeMode;
 import frc.robot.commands.VisionCommands.AutoPickup;
@@ -249,6 +248,7 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-cargo");
     mDrivetrain.setDefaultCommand(standardGameDriveCommand);
     mArmLift.setDefaultCommand(new ManualArmLifter());
     mArmExtension.setDefaultCommand(new ManualArmExtension());
+    mClaw.setDefaultCommand(new BackPreassure());
 //==========================Driver binding========================
     
     //Brake mode Command
@@ -269,8 +269,8 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-cargo");
   mButtonBind.auxLeftBumper.whileTrue(new ManualTurret(-0.4));
   mButtonBind.auxRightBumper.whileTrue(new ManualTurret(0.4));
   // Claw Commands
- mButtonBind.auxAButton.onTrue(new ResetClaw());
- mButtonBind.auxBButton.whileTrue(new ManualClaw(0.7));
+ //mButtonBind.auxAButton.onTrue(new ResetClaw());
+ //mButtonBind.auxBButton.whileTrue(new ManualClaw(0.7));
   //Turret command
   mButtonBind.auxBackButton.onTrue(new ArmHomePos());
 

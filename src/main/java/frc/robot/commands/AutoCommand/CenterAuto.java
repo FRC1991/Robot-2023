@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.BangPID.ArmExtendBangBang;
 import frc.robot.commands.BangPID.ArmLiftBangBang;
 import frc.robot.commands.BangPID.DriveDistance;
-import frc.robot.commands.ClawCommands.ResetClaw;
+import frc.robot.commands.ClawCommands.IntakeOut;
 import frc.robot.commands.DrivetrainCommands.PerfectClimb;
 import frc.robot.commands.MiscCommands.BrakeMode;
 
@@ -26,7 +26,7 @@ public class CenterAuto extends SequentialCommandGroup {
     addCommands(new ParallelCommandGroup(
       new ArmLiftBangBang(44)),
       new ArmExtendBangBang(100),
-      new ResetClaw(),
+      new IntakeOut().withTimeout(1),
       new DriveDistance(-0.7, 16),
       new PerfectClimb(climbSup),
       new BrakeMode());

@@ -31,8 +31,7 @@ public final class Constants {
   public static final int armLiftMotor2 = 12;
 
   //Claw Motors
-  public static final int clawTurretMotor = 13;
-  public static final int clawMotor = 14;
+  public static final int clawMotor = 13;
   //Gyro
   public static final int pigeonIMU = 0;
   //Global Deadband and Motor Multiplier

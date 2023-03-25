@@ -4,46 +4,47 @@
 
 package frc.robot.commands.ClawCommands;
 
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
-public class ClawClosing extends CommandBase {
-  /** Creates a new ClawCone. */
-
-  private double closingDistance;
-
-  public ClawClosing(double clawClose) {
-    // Use addRequirements() here to declare subsystem dependencies.
+public class IntakeIn extends CommandBase {
+  /** Creates a new IntakeIn. */
+  public IntakeIn() {
     addRequirements(RobotContainer.mClaw);
-    closingDistance = clawClose;
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() { 
-}
+  public void initialize() {
+    NetworkTableInstance.getDefault()
+    .getTable("Shuffleboard")
+    .getSubTable("Main")
+    .getEntry("Intake in?")
+    .setBoolean(true);
+  }
+
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.mClaw.setClaw(0.8);
-    RobotContainer.mClaw.getClawPos();
+    RobotContainer.mClaw.setClaw(-0.5);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    NetworkTableInstance.getDefault()
+    .getTable("Shuffleboard")
+    .getSubTable("Main")
+    .getEntry("Intake in?")
+    .setBoolean(false);
     RobotContainer.mClaw.stopClaw();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    
-     if((Math.abs(RobotContainer.mClaw.getClawPos()) >= closingDistance) == true){
-      return true;
-     }else{
-      return false;
-     }
+    return false;
   }
 }
