@@ -15,12 +15,19 @@ This is a summary of the our robot's software and hardware. Feel free to find us
  #### ***Automated functions(all of these can be done in teleop with the press of a button)***
    
    -We use two Limelights one to track apriltags and retroreflective tape the other limelights tracks cubes and cones. The drivers can switch what we are tracking on the fly.
+
    -Auto tracking.
+
    -Running to target. 
-   -Auto Defense 
+
+   -Auto Defense.
+
    -Auto pickup of cubes or cones.
+
    -Auto drop off for cubes or cone.
+
    -Auto Climb(using apriltags).
+
    -Field localization.
 #### ***Features for drivers***
    
@@ -28,6 +35,7 @@ This is a summary of the our robot's software and hardware. Feel free to find us
 #### ***Mechanical features***
    
    -Can reach top, middle or bottom.
+   
    -Can Pick up from the ground or Human player station
    
    
@@ -53,12 +61,18 @@ For the build starting from the drivetrain. We used two neo evo slims gearboxes 
 These are quick profiles on our mentors and team leaders.
 
  #### ***Mentors***
-- Jay Kean
-    - Fun Fact: 
-    - Hobbies: 
+- Mr. Kean
+    
 - Eileen Kean
-    - Fun Fact: Former team captain.
-    - Hobbies: Legos, Watching baseball
+    
+- Mr. Ganoe
+
+- Mr. Guilliete
+
+- Mr. Surace
+
+- Ms. Hockenhull
+
 
  #### ***Student Leaders***
  - Build Captain: Pacey Mahar
