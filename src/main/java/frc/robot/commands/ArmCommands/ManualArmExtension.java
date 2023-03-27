@@ -23,10 +23,12 @@ private double speedSet;
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(ButtonBind.auxController.getLeftX() > Constants.globalDeadband || ButtonBind.auxController.getLeftX() < Constants.globalDeadband){
+    if(ButtonBind.auxController.getLeftX() < Constants.globalDeadband){
+      speedSet = 0;
+    } else{
       speedSet = ButtonBind.auxController.getLeftX();
     }
-    RobotContainer.mArmExtension.setArmExtend(speedSet * 0.4);
+    RobotContainer.mArmExtension.setArmExtend(speedSet * 0.6);
   }
 
   // Called once the command ends or is interrupted.

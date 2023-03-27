@@ -26,7 +26,6 @@ import frc.robot.commands.ArmCommands.ArmHomePos;
 import frc.robot.commands.ArmCommands.ManualArmExtension;
 import frc.robot.commands.ArmCommands.ManualArmLifter;
 import frc.robot.commands.ArmCommands.ManualTurret;
-import frc.robot.commands.ClawCommands.BackPreassure;
 import frc.robot.commands.DrivetrainCommands.GameDrive;
 import frc.robot.commands.MiscCommands.BrakeMode;
 import frc.robot.commands.VisionCommands.AutoPickup;
@@ -248,7 +247,7 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-cargo");
     mDrivetrain.setDefaultCommand(standardGameDriveCommand);
     mArmLift.setDefaultCommand(new ManualArmLifter());
     mArmExtension.setDefaultCommand(new ManualArmExtension());
-    mClaw.setDefaultCommand(new BackPreassure());
+    //mClaw.setDefaultCommand(new BackPreassure());
 //==========================Driver binding========================
     
     //Brake mode Command
@@ -260,7 +259,7 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-cargo");
     mButtonBind.driveYButton.whileTrue(new CenterAndRunForTarget(xDistanceGamePiece, cargoArea));
 
 
-    mButtonBind.driveDPadRight.onTrue(new InstantCommand(()-> System.out.println(cargoArea.get())));
+    mButtonBind.driveDPadRight.onTrue(new InstantCommand(()-> System.out.println(botPose.get())));
 
   
     

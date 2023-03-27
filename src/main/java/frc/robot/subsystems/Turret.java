@@ -49,12 +49,12 @@ public class Turret extends SubsystemBase {
   public void setTurret(double speed){
     turretMotor1.setIdleMode(IdleMode.kCoast);
     turretMotor2.setIdleMode(IdleMode.kCoast);
-    if(speed > 0){
-    turretMotor1.set(speed);
+    if(speed < 0){
+    turretMotor1.set(speed * 0.5);
     turretMotor2.set(0);
-    }else if(speed < 0){
+    }else if(speed > 0){
     turretMotor1.set(0);
-    turretMotor2.set(speed);
+    turretMotor2.set(speed * 0.5);
     }
   
   } 
