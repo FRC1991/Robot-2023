@@ -26,8 +26,8 @@ public class PipelineSwitch extends CommandBase {
     NetworkTableInstance.getDefault()
     .getTable("Shuffleboard")
     .getSubTable("Main")
-    .getEntry("Pipeline Cones and Tape")
-    .setBoolean(true);
+    .getEntry("Pipeline Default?")
+    .setBoolean(false);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -47,8 +47,8 @@ public class PipelineSwitch extends CommandBase {
     NetworkTableInstance.getDefault()
     .getTable("Shuffleboard")
     .getSubTable("Main")
-    .getEntry("Pipeline Cones and Tape")
-    .setBoolean(false);
+    .getEntry("Pipeline Default?")
+    .setBoolean(true);
   }
 
   // Returns true when the command should end.

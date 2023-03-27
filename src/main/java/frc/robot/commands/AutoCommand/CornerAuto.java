@@ -8,7 +8,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.ArmCommands.PickUpSetpoint;
+import frc.robot.commands.ArmCommands.PickUpPos;
 import frc.robot.commands.ArmCommands.TurretToSetpoint;
 import frc.robot.commands.BangPID.ArmExtendBangBang;
 import frc.robot.commands.BangPID.ArmLiftBangBang;
@@ -31,7 +31,7 @@ public class CornerAuto extends SequentialCommandGroup {
     new ParallelCommandGroup(new ArmExtendBangBang(0),
     new TurretToSetpoint(0),
     new ParallelCommandGroup( new DriveDistance(0.7, 6),
-    new PickUpSetpoint()),
+    new PickUpPos()),
     new RunForTarget(cubeOrCone, cubeOrCone)));
   }
 }
