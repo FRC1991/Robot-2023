@@ -28,7 +28,7 @@ public class AutoHumanStationPickup extends SequentialCommandGroup {
       new RunForTarget(RobotContainer.xDistanceAim, RobotContainer.tagArea).withTimeout(3),
       new ArmLiftBangBang(44),
       new ArmExtendBangBang(50),
-      new TurretAimTarget(RobotContainer.xDistanceGamePiece),
+      //new TurretAimTarget(RobotContainer.xDistanceGamePiece),
       new IntakeIn().withTimeout(5),
       new DriveDistance(-0.5, 2),
       new ArmHomePos()
