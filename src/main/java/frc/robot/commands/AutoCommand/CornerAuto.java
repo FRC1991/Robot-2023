@@ -14,7 +14,6 @@ import frc.robot.commands.BangPID.ArmExtendBangBang;
 import frc.robot.commands.BangPID.ArmLiftBangBang;
 import frc.robot.commands.BangPID.DriveDistance;
 import frc.robot.commands.ClawCommands.IntakeOut;
-import frc.robot.commands.VisionCommands.RunForTarget;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -29,9 +28,9 @@ public class CornerAuto extends SequentialCommandGroup {
     new ArmExtendBangBang(100),
     new IntakeOut().withTimeout(1),
     new ParallelCommandGroup(new ArmExtendBangBang(0),
-    new TurretToSetpoint(0),
+    new TurretToSetpoint(0)),
     new ParallelCommandGroup( new DriveDistance(0.7, 6),
-    new PickUpPos()),
-    new RunForTarget(cubeOrCone, cubeOrCone)));
+    new PickUpPos()));
+   // new RunForTarget(cubeOrCone, cubeOrCone)));
   }
 }

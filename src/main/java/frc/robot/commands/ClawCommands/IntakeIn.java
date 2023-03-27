@@ -45,6 +45,10 @@ public class IntakeIn extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return RobotContainer.mButtonBind.intakeStop.getAsBoolean() == true;
+    if(RobotContainer.mButtonBind.intakeStop.getAsBoolean() == true){
+    return true;
+    }else{
+      return false;
+    }
   }
 }
