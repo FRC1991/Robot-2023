@@ -11,9 +11,12 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class PipelineSwitch extends CommandBase {
   /** Creates a new PipelineSwitch. */
   private NetworkTable aimmingNT, gamePieceNT;
-  public PipelineSwitch() {
+  private double cargoPiplineNum, aimPipelineNum;
+  public PipelineSwitch(double cargoPipeline, double aimPipeline) {
     // Use addRequirements() here to declare subsystem dependencies.
     aimmingNT = NetworkTableInstance.getDefault().getTable("limelight-aimming");
+    cargoPiplineNum = cargoPipeline;
+    aimPipelineNum = aimPipeline;
     gamePieceNT = NetworkTableInstance.getDefault().getTable("limelight-cargo");
   }
 
@@ -30,8 +33,8 @@ public class PipelineSwitch extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-      aimmingNT.getEntry("pipeline").setNumber(1);
-      gamePieceNT.getEntry("pipeline").setNumber(1);
+      aimmingNT.getEntry("pipeline").setNumber(cargoPiplineNum);
+      gamePieceNT.getEntry("pipeline").setNumber(aimPipelineNum);
 
     
   }

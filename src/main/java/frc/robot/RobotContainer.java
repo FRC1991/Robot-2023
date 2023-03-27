@@ -31,7 +31,7 @@ import frc.robot.commands.ClawCommands.BackPreassure;
 import frc.robot.commands.DrivetrainCommands.GameDrive;
 import frc.robot.commands.DrivetrainCommands.PerfectClimb;
 import frc.robot.commands.MiscCommands.BrakeMode;
-import frc.robot.commands.VisionCommands.AutoPickup;
+import frc.robot.commands.VisionCommands.AutoHumanStationPickup;
 import frc.robot.commands.VisionCommands.CenterAndRunForTarget;
 import frc.robot.commands.VisionCommands.PipelineSwitch;
 import frc.robot.commands.VisionCommands.TurretAimTarget;
@@ -256,7 +256,7 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-cargo");
     //Brake mode Command
     mButtonBind.driveStartButton.toggleOnTrue(new BrakeMode());
     //Tracking Command
-    mButtonBind.driveDPadUp.toggleOnTrue(new PipelineSwitch());
+    mButtonBind.driveDPadUp.toggleOnTrue(new PipelineSwitch(1,1));
 
     mButtonBind.driveXButton.whileTrue(new CenterAndRunForTarget(xDistanceAim, cargoArea));
     mButtonBind.driveYButton.whileTrue(new CenterAndRunForTarget(xDistanceGamePiece, cargoArea));
@@ -265,6 +265,8 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-cargo");
       new PerfectClimb(tagArea),
       new BrakeMode().withTimeout(5)
       ));
+
+    mButtonBind.driveDPadDown.onTrue(new AutoHumanStationPickup());
 
     mButtonBind.driveDPadRight.onTrue(new InstantCommand(()-> System.out.println(botPose.get())));
 
@@ -283,9 +285,8 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-cargo");
   mButtonBind.auxYButton.onTrue(new TurretAimTarget(xDistanceGamePiece));
   mButtonBind.auxXButton.onTrue(new TurretAimTarget(xDistanceAim));
 
-  mButtonBind.auxStartButton.toggleOnTrue(new PipelineSwitch());
+  mButtonBind.auxStartButton.toggleOnTrue(new PipelineSwitch(1,1));
 
-  mButtonBind.auxDPadUp.onTrue(new AutoPickup(cargoArea, xDistanceGamePiece));
   
   
 
