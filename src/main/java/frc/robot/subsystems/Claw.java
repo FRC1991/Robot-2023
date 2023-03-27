@@ -23,9 +23,9 @@ public class Claw extends SubsystemBase {
    resetClawEncoder();
 
 //Set idle mode
-    clawMotor.setIdleMode(IdleMode.kCoast);
+    clawMotor.setIdleMode(IdleMode.kBrake);
 // Current limiter 
-    clawMotor.setSmartCurrentLimit(30, 45, 2000);
+    //clawMotor.setSmartCurrentLimit(30, 45, 2000);
 
   }
   
