@@ -20,13 +20,16 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.ArmCommands.ArmHomePos;
 import frc.robot.commands.ArmCommands.ManualArmExtension;
 import frc.robot.commands.ArmCommands.ManualArmLifter;
 import frc.robot.commands.ArmCommands.ManualTurret;
+import frc.robot.commands.ClawCommands.BackPreassure;
 import frc.robot.commands.DrivetrainCommands.GameDrive;
+import frc.robot.commands.DrivetrainCommands.PerfectClimb;
 import frc.robot.commands.MiscCommands.BrakeMode;
 import frc.robot.commands.VisionCommands.AutoPickup;
 import frc.robot.commands.VisionCommands.CenterAndRunForTarget;
@@ -247,7 +250,7 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-cargo");
     mDrivetrain.setDefaultCommand(standardGameDriveCommand);
     mArmLift.setDefaultCommand(new ManualArmLifter());
     mArmExtension.setDefaultCommand(new ManualArmExtension());
-    //mClaw.setDefaultCommand(new BackPreassure());
+    mClaw.setDefaultCommand(new BackPreassure());
 //==========================Driver binding========================
     
     //Brake mode Command
@@ -258,6 +261,10 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-cargo");
     mButtonBind.driveXButton.whileTrue(new CenterAndRunForTarget(xDistanceAim, cargoArea));
     mButtonBind.driveYButton.whileTrue(new CenterAndRunForTarget(xDistanceGamePiece, cargoArea));
 
+    mButtonBind.driveDPadUp.onTrue(new SequentialCommandGroup(
+      new PerfectClimb(tagArea),
+      new BrakeMode().withTimeout(5)
+      ));
 
     mButtonBind.driveDPadRight.onTrue(new InstantCommand(()-> System.out.println(botPose.get())));
 

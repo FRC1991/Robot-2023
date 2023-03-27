@@ -49,7 +49,7 @@ public class RunFromTarget extends CommandBase {
     NetworkTableInstance.getDefault()
         .getTable("Shuffleboard")
         .getSubTable("Main")
-        .getEntry("Is Chasing Target")
+        .getEntry("Is Running From Target")
         .setBoolean(true);
   }
 
@@ -77,8 +77,10 @@ public class RunFromTarget extends CommandBase {
     NetworkTableInstance.getDefault()
         .getTable("Shuffleboard")
         .getSubTable("Main")
-        .getEntry("Is Chasing Target")
+        .getEntry("Is Running From Target")
         .setBoolean(false);
+
+    
   }
 
   // Returns true when the command should end.

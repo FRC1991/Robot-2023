@@ -45,8 +45,11 @@ public class PerfectClimb extends CommandBase {
     areaOfTagSuplier = areaOfTagSup.get();
     pitchVal = pitchSuplier; 
     System.out.println(pitchVal + " " + areaOfTagSuplier);
+    if(areaOfTagSuplier >= 0.65){
    RobotContainer.mDrivetrain.arcadeDrive(0.7, 0);
-    
+    }else if(areaOfTagSuplier <= 0.85){
+    RobotContainer.mDrivetrain.arcadeDrive(-0.7, 0);
+    }
   }
 
   // Called once the command ends or is interrupted.
