@@ -5,9 +5,9 @@
 package frc.robot.commands.ArmCommands;
 
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.ButtonBind;
-import frc.robot.Constants;
 import frc.robot.RobotContainer;
 
 public class ManualArmLifter extends CommandBase {
@@ -25,12 +25,11 @@ public class ManualArmLifter extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(ButtonBind.auxController.getRightY() < Constants.globalDeadband){
-      speedSet = 0;
-    } else{
-      speedSet = ButtonBind.auxController.getRightY();
-    }
-    RobotContainer.mArmLift.setArmLift(speedSet * 0.4);
+    
+      speedSet = ButtonBind.auxController.getLeftY();
+    
+
+    RobotContainer.mArmLift.setArmLift(MathUtil.applyDeadband(speedSet, 0.3) * 0.4);
   }
 
   // Called once the command ends or is interrupted.

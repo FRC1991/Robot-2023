@@ -14,6 +14,10 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
@@ -43,6 +47,8 @@ private boolean rightDriveInverted = true;
 
   DifferentialDrive differentialDrive;
 
+  DifferentialDriveOdometry differentialDriveOdometry;
+  Rotation2d rotation2d;
   /** Creates a new Drivetrain. */
   public Drivetrain() {
 //gyro config
@@ -68,6 +74,11 @@ private boolean rightDriveInverted = true;
 
 //deadband
     differentialDrive.setDeadband(Constants.globalDeadband);
+
+//Trajectory stuff
+    rotation2d = new Rotation2d(getYaw());
+
+    differentialDriveOdometry = new DifferentialDriveOdometry(rotation2d, getLeftDistanceFeet(), getRightDistanceFeet());
   }
   
 
@@ -161,6 +172,28 @@ public double getDistanceFeet(){
 
   return 0.183333 * avgDistanceInRotations;
 }
+
+public double getLeftDistanceFeet(){ 
+  double avgDistanceInRotations = (leftDriveMotor1.getEncoder().getPosition()
+    + leftDriveMotor2.getEncoder().getPosition()
+    + leftDriveMotor3.getEncoder().getPosition())
+
+    / 3.0;
+
+  return 0.183333 * avgDistanceInRotations;
+}
+
+public double getRightDistanceFeet(){ 
+  double avgDistanceInRotations = (
+     -rightDriveMotor1.getEncoder().getPosition()
+    + -rightDriveMotor2.getEncoder().getPosition()
+    + -rightDriveMotor3.getEncoder().getPosition())
+
+    / 3.0;
+
+  return 0.183333 * avgDistanceInRotations;
+}
+
 
 
 //Distance From Target
@@ -274,5 +307,34 @@ public ErrorCode resetGyro(){
   return pigeon.setYaw(0);
 }
 
+//Trajectory following
+
+public Pose2d getPose2d(){
+  return differentialDriveOdometry.getPoseMeters();
+}
+
+public DifferentialDriveWheelSpeeds getWheelSpeeds() {
+  return new DifferentialDriveWheelSpeeds(getLeftDrive1Pos(), getRightDrive1Pos());
+}
+
+public void resetOdometry(Pose2d pose) {
+  resetEncoders();
+  differentialDriveOdometry.resetPosition(
+      rotation2d, getLeftDistanceFeet(), getRightDistanceFeet(), pose);
+}
+
+public void tankDriveVolts(double leftVolts, double rightVolts) {
+  leftDriveMotors.setVoltage(leftVolts);
+  rightDriveMotors.setVoltage(rightVolts);
+  differentialDrive.feed();
+}
+
+@Override
+public void periodic() {
+
+differentialDriveOdometry.update(rotation2d, getLeftDistanceFeet(), getRightDistanceFeet());
+
+
+}
 
 }

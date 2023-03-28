@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -48,18 +49,23 @@ public static final  double kMaxTurnAccelerationDegPerSSquared = 90;
 public static final double kTurnToleranceDeg = 2;
 public static final double kTurnRateToleranceDegPerS = 10; 
 
-  //PID ChargeStation Constants
-    
-  public static final double kChargeP = 1;
-  public static final double kChargeI = 0;
-  public static final double kChargeD = 0;
+  //Trajectory following Constants
   
-  public static final double kMaxChargeRateDegPerS = 40;
-  public static final  double kMaxChargeAccelerationDegPerSSquared = 85;
-  
-  public static final double kChargeToleranceDeg = 2;
-  public static final double kChargeRateToleranceDegPerS = 10;
-  
+public static final double ksVolt = 0.30037;
+public static final double kvVolt = 12.498;
+public static final double kaVolt = 4.2915;
+public static final double kpVolt = 0.94873;
+public static final double trackWitdh = 2.1;
+
+public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(trackWitdh);
+
+public static final double kMaxSpeed = 0.6;
+public static final double kMaxAcceleration= 2;
+
+public static final double kRamseteB = 6.5;
+public static final double kRamseteZeta = 2.2;
+
+
   //Vision constant
 
     public static final double visionConstant = 0.0015;

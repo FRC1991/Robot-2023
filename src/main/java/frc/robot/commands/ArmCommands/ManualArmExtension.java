@@ -4,9 +4,9 @@
 
 package frc.robot.commands.ArmCommands;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.ButtonBind;
-import frc.robot.Constants;
 import frc.robot.RobotContainer;
 
 public class ManualArmExtension extends CommandBase {
@@ -23,12 +23,10 @@ private double speedSet;
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(ButtonBind.auxController.getLeftX() < Constants.globalDeadband){
-      speedSet = 0;
-    } else{
-      speedSet = ButtonBind.auxController.getLeftX();
-    }
-    RobotContainer.mArmExtension.setArmExtend(speedSet * 0.6);
+   
+      speedSet = ButtonBind.auxController.getRightX();
+    
+    RobotContainer.mArmExtension.setArmExtend(MathUtil.applyDeadband(speedSet, 0.3) * 0.6);
   }
 
   // Called once the command ends or is interrupted.
