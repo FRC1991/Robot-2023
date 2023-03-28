@@ -26,7 +26,7 @@ private double speedSet;
    
       speedSet = ButtonBind.auxController.getRightX();
     
-    RobotContainer.mArmExtension.setArmExtend(MathUtil.applyDeadband(speedSet, 0.3) * 0.6);
+    RobotContainer.mArmExtension.setArmExtend(MathUtil.applyDeadband(speedSet * 0.6, 0.2));
   }
 
   // Called once the command ends or is interrupted.

@@ -29,7 +29,7 @@ public class ManualArmLifter extends CommandBase {
       speedSet = ButtonBind.auxController.getLeftY();
     
 
-    RobotContainer.mArmLift.setArmLift(MathUtil.applyDeadband(speedSet, 0.3) * 0.4);
+    RobotContainer.mArmLift.setArmLift(MathUtil.applyDeadband(speedSet * 0.6, 0.2));
   }
 
   // Called once the command ends or is interrupted.
