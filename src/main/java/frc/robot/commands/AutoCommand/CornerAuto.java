@@ -32,7 +32,7 @@ public class CornerAuto extends SequentialCommandGroup {
     new PickUpPos(),
     new DriveDistance(0.8, 15),
     new IntakeIn().withTimeout(1.3),
-    new ParallelCommandGroup(new ArmLiftBangBang(35),
+    new ParallelCommandGroup(new ArmLiftBangBang(23),
     new TurretToSetpoint(36),
     new ArmExtendBangBang(0),
     new DriveDistance(-0.75, 15.6)),

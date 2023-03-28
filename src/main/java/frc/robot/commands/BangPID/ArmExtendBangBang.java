@@ -28,9 +28,9 @@ public class ArmExtendBangBang extends CommandBase {
   public void execute() {
     currentPos = RobotContainer.mArmExtension.getArmExtendPos();
     if(RobotContainer.mArmExtension.getArmExtendPos() > targetPos){
-      RobotContainer.mArmExtension.setArmExtend(-0.5);
+      RobotContainer.mArmExtension.setArmExtend(-0.7);
     }else if(RobotContainer.mArmExtension.getArmExtendPos() < targetPos){
-      RobotContainer.mArmExtension.setArmExtend(0.5);
+      RobotContainer.mArmExtension.setArmExtend(0.7);
 
     }
   }
