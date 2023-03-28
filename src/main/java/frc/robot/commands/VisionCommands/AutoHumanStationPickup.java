@@ -10,6 +10,7 @@ import frc.robot.commands.ArmCommands.ArmHomePos;
 import frc.robot.commands.BangPID.ArmExtendBangBang;
 import frc.robot.commands.BangPID.ArmLiftBangBang;
 import frc.robot.commands.BangPID.DriveDistance;
+import frc.robot.commands.BangPID.TurnDegreesBang;
 import frc.robot.commands.ClawCommands.IntakeIn;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -23,7 +24,7 @@ public class AutoHumanStationPickup extends SequentialCommandGroup {
     addCommands(
       new ArmHomePos(),
       new PipelineSwitch(2,2),
-      new TurnTillTarget(0.5),
+      new TurnTillTarget(0.8),
       new RunForTarget(RobotContainer.xDistanceAim, RobotContainer.tagArea).withTimeout(3),
       new RunForTarget(RobotContainer.xDistanceAim, RobotContainer.tagArea).withTimeout(3),
       new ArmLiftBangBang(44),
@@ -31,6 +32,7 @@ public class AutoHumanStationPickup extends SequentialCommandGroup {
       //new TurretAimTarget(RobotContainer.xDistanceGamePiece),
       new IntakeIn().withTimeout(5),
       new DriveDistance(-0.5, 2),
+      new TurnDegreesBang(0.8, 180),
       new ArmHomePos()
     );
   }

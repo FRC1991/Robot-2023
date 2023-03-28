@@ -19,7 +19,7 @@ public class PickUpPos extends SequentialCommandGroup {
     addCommands(
       new TurretToSetpoint(0),
       new ArmLiftBangBang(10),
-      new ArmExtendBangBang(60),
+      new ArmExtendBangBang(80),
       new ArmLiftBangBang(0)
     );
   }

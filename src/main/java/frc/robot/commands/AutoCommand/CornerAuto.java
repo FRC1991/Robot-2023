@@ -8,11 +8,13 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.commands.ArmCommands.ArmHomePos;
 import frc.robot.commands.ArmCommands.PickUpPos;
 import frc.robot.commands.ArmCommands.TurretToSetpoint;
 import frc.robot.commands.BangPID.ArmExtendBangBang;
 import frc.robot.commands.BangPID.ArmLiftBangBang;
 import frc.robot.commands.BangPID.DriveDistance;
+import frc.robot.commands.ClawCommands.IntakeIn;
 import frc.robot.commands.ClawCommands.IntakeOut;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -23,14 +25,21 @@ public class CornerAuto extends SequentialCommandGroup {
   public CornerAuto(AtomicReference<Double> cubeOrCone, AtomicReference<Double> tarArea) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new ParallelCommandGroup(new TurretToSetpoint(34),
+    addCommands(new ParallelCommandGroup(
+    new TurretToSetpoint(32),
     new ArmLiftBangBang(44)),
-    new ArmExtendBangBang(100),
-    new IntakeOut().withTimeout(1),
-    new ParallelCommandGroup(new ArmExtendBangBang(0),
-    new TurretToSetpoint(0)),
-    new ParallelCommandGroup( new DriveDistance(0.7, 6),
-    new PickUpPos()));
+    new IntakeOut().withTimeout(0.5),
+    new PickUpPos(),
+    new DriveDistance(0.8, 15),
+    new IntakeIn().withTimeout(1.3),
+    new ParallelCommandGroup(new ArmLiftBangBang(35),
+    new TurretToSetpoint(36),
+    new ArmExtendBangBang(0),
+    new DriveDistance(-0.75, 15.6)),
+    new IntakeOut().withTimeout(0.6),
+    new ParallelCommandGroup(
+    new ArmHomePos(),
+    new DriveDistance(0.8, 5)));
    // new RunForTarget(cubeOrCone, cubeOrCone)));
   }
 }

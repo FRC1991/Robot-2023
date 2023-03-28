@@ -28,7 +28,7 @@ public class IntakeIn extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.mClaw.setClaw(-0.5);
+    RobotContainer.mClaw.setClaw(0.5);
   }
 
   // Called once the command ends or is interrupted.
