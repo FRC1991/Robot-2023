@@ -17,8 +17,9 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class ButtonBind {
 //Controllers
     public final static CommandXboxController driverController = new CommandXboxController(0);
-    public final static CommandXboxController auxController = new CommandXboxController(1);
-    public final static CommandGenericHID buttonBox = new CommandGenericHID(3);
+    public final static CommandXboxController auxController = new CommandXboxController(10);
+    public final static CommandGenericHID buttonBox = new CommandGenericHID(1);
+    public final static CommandGenericHID buttonBoxTwo = new CommandGenericHID(2);
 //Controllers just for rumble
     private final static XboxController driveRumble = new XboxController(0);
     private final static XboxController auxRumble = new XboxController(1);
@@ -241,6 +242,21 @@ public class ButtonBind {
   public final double buttonBoxX = buttonBox.getRawAxis(0);
   public final double buttonBoxY = buttonBox.getRawAxis(1);
 
+
+//Button Box 2 bindings
+
+public final Trigger buttonTwoOne =  buttonBox.button(0);
+  public final Trigger buttonTwoTwo =  buttonBox.button(1);
+  public final Trigger buttonTwoThree =  buttonBox.button(2);
+  public final Trigger buttonTwoFour =  buttonBox.button(3);
+  public final Trigger buttonTwoFive =  buttonBox.button(4);
+  public final Trigger buttonTwoSix =  buttonBox.button(5);
+  public final Trigger buttonTwoSeven =  buttonBox.button(7);
+  public final Trigger buttonTwoEight =  buttonBox.button(7);
+
+  public final double buttonBoxTwoX = buttonBox.getRawAxis(0);
+  public final double buttonBoxTwoY = buttonBox.getRawAxis(1);
+  
 
 //Limit switches
     public final DigitalInput intakeDIO = new DigitalInput(1);
