@@ -8,14 +8,14 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.ArmCommands.ArmHomePos;
-import frc.robot.commands.ArmCommands.PickUpPos;
 import frc.robot.commands.ArmCommands.TurretToSetpoint;
 import frc.robot.commands.BangPID.ArmExtendBangBang;
 import frc.robot.commands.BangPID.ArmLiftBangBang;
 import frc.robot.commands.BangPID.DriveDistance;
 import frc.robot.commands.ClawCommands.IntakeIn;
 import frc.robot.commands.ClawCommands.IntakeOut;
+import frc.robot.commands.Setpoints.ArmHomePos;
+import frc.robot.commands.Setpoints.PickUpPos;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:

@@ -32,6 +32,8 @@ This is a summary of the our robot's software and hardware. Feel free to find us
 #### ***Features for drivers***
    
    -Communation to driver using controller vibration
+
+   -Setpoints for all needed arm positions.
 #### ***Mechanical features***
    
    -Can reach top, middle or bottom.

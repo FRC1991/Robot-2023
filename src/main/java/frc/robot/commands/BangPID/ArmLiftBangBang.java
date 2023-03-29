@@ -28,9 +28,9 @@ public class ArmLiftBangBang extends CommandBase {
   public void execute() {
     currentPos = RobotContainer.mArmLift.getArmLiftTwoPos();
     if(RobotContainer.mArmLift.getArmLiftTwoPos() > targetPos){
-      RobotContainer.mArmLift.setArmLift(-0.7);
+      RobotContainer.mArmLift.setArmLift(-0.6);
     }else if(RobotContainer.mArmLift.getArmLiftTwoPos() < targetPos){
-      RobotContainer.mArmLift.setArmLift(0.7);
+      RobotContainer.mArmLift.setArmLift(0.6);
 
     }
   }

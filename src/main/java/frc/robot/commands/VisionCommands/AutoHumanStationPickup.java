@@ -6,12 +6,12 @@ package frc.robot.commands.VisionCommands;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.RobotContainer;
-import frc.robot.commands.ArmCommands.ArmHomePos;
 import frc.robot.commands.BangPID.ArmExtendBangBang;
 import frc.robot.commands.BangPID.ArmLiftBangBang;
 import frc.robot.commands.BangPID.DriveDistance;
 import frc.robot.commands.BangPID.TurnDegreesBang;
 import frc.robot.commands.ClawCommands.IntakeIn;
+import frc.robot.commands.Setpoints.ArmHomePos;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:

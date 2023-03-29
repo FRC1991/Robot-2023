@@ -23,14 +23,16 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.commands.ArmCommands.ArmHomePos;
 import frc.robot.commands.ArmCommands.ManualArmExtension;
 import frc.robot.commands.ArmCommands.ManualArmLifter;
 import frc.robot.commands.ArmCommands.ManualTurret;
+import frc.robot.commands.AutoCommand.CenterAuto;
+import frc.robot.commands.AutoCommand.CornerAuto;
 import frc.robot.commands.ClawCommands.BackPreassure;
 import frc.robot.commands.DrivetrainCommands.GameDrive;
 import frc.robot.commands.DrivetrainCommands.PerfectClimb;
 import frc.robot.commands.MiscCommands.BrakeMode;
+import frc.robot.commands.Setpoints.ArmHomePos;
 import frc.robot.commands.VisionCommands.AutoHumanStationPickup;
 import frc.robot.commands.VisionCommands.CenterAndRunForTarget;
 import frc.robot.commands.VisionCommands.PipelineSwitch;
@@ -117,11 +119,11 @@ GameDrive standardGameDriveCommand = new GameDrive(()-> maxSpeedSup);
 //Auto Chooser
   autoChoose = new SendableChooser<Command>();
   //if(posInField == 1){
-  //autoChoose.setDefaultOption("Score", new TurnArmScore());
+  autoChoose.setDefaultOption("Score", new CenterAuto(tagArea));
  // }else if(posInField == 2){
- // autoChoose.addOption("Score and Grab Cone", new ParallelDeadlineGroup( new CornerAuto(xDistanceAim), new PipelineSwitch()));
+ // autoChoose.addOption("Trajectory follow", new TracjectoryFollowing());
  // }else{
-  //autoChoose.addOption("Score and Grab Cube", new CornerAuto(xDistanceAim));
+  autoChoose.addOption("Corner Auto", new CornerAuto(xDistanceGamePiece, cargoArea));
  // }
   Shuffleboard.getTab("Main").add(autoChoose);
 
@@ -290,7 +292,22 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-cargo");
   
   
 
-//=========================LED Binds============================
+//=========================Random Binds============================
+
+mButtonBind.intakeStop.onTrue(new InstantCommand(()->
+NetworkTableInstance.getDefault()
+        .getTable("Shuffleboard")
+        .getSubTable("Main")
+        .getEntry("Is Cargo in?")
+        .setBoolean(true)
+));
+mButtonBind.intakeStop.onFalse(new InstantCommand(()->
+NetworkTableInstance.getDefault()
+        .getTable("Shuffleboard")
+        .getSubTable("Main")
+        .getEntry("Is Cargo in?")
+        .setBoolean(false)
+));
   }
 
   /**

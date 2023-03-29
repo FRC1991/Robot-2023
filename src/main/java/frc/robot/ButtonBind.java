@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
+import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -17,6 +18,7 @@ public class ButtonBind {
 //Controllers
     public final static CommandXboxController driverController = new CommandXboxController(0);
     public final static CommandXboxController auxController = new CommandXboxController(1);
+    public final static CommandGenericHID buttonBox = new CommandGenericHID(3);
 //Controllers just for rumble
     private final static XboxController driveRumble = new XboxController(0);
     private final static XboxController auxRumble = new XboxController(1);
@@ -224,6 +226,20 @@ public class ButtonBind {
        public Trigger getAuxDPadLeft(){
         return auxDPadLeft;
        }
+
+//Button Box Bindings
+
+  public final Trigger buttonOne =  buttonBox.button(0);
+  public final Trigger buttonTwo =  buttonBox.button(1);
+  public final Trigger buttonThree =  buttonBox.button(2);
+  public final Trigger buttonFour =  buttonBox.button(3);
+  public final Trigger buttonFive =  buttonBox.button(4);
+  public final Trigger buttonSix =  buttonBox.button(5);
+  public final Trigger buttonSeven =  buttonBox.button(7);
+  public final Trigger buttonEight =  buttonBox.button(7);
+
+  public final double buttonBoxX = buttonBox.getRawAxis(0);
+  public final double buttonBoxY = buttonBox.getRawAxis(1);
 
 
 //Limit switches
