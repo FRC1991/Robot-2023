@@ -28,6 +28,8 @@ import frc.robot.commands.ArmCommands.ManualArmLifter;
 import frc.robot.commands.ArmCommands.ManualTurret;
 import frc.robot.commands.AutoCommand.CenterAuto;
 import frc.robot.commands.AutoCommand.CornerAuto;
+import frc.robot.commands.AutoCommand.JustScore;
+import frc.robot.commands.AutoCommand.ScoreAndDrive;
 import frc.robot.commands.ClawCommands.BackPreassure;
 import frc.robot.commands.ClawCommands.IntakeIn;
 import frc.robot.commands.ClawCommands.IntakeOut;
@@ -123,9 +125,10 @@ GameDrive standardGameDriveCommand = new GameDrive(()-> maxSpeedSup);
 //Auto Chooser
   autoChoose = new SendableChooser<Command>();
   //if(posInField == 1){
-  autoChoose.setDefaultOption("Score", new CenterAuto(tagArea));
+  autoChoose.setDefaultOption("Center Auto", new CenterAuto(tagArea));
  // }else if(posInField == 2){
- // autoChoose.addOption("Trajectory follow", new TracjectoryFollowing());
+  autoChoose.addOption("Just Score", new JustScore());
+  autoChoose.addOption("Score And Drive", new ScoreAndDrive());
  // }else{
   autoChoose.addOption("Corner Auto", new CornerAuto(xDistanceGamePiece, cargoArea));
  // }
