@@ -29,10 +29,13 @@ import frc.robot.commands.ArmCommands.ManualTurret;
 import frc.robot.commands.AutoCommand.CenterAuto;
 import frc.robot.commands.AutoCommand.CornerAuto;
 import frc.robot.commands.ClawCommands.BackPreassure;
+import frc.robot.commands.ClawCommands.IntakeIn;
+import frc.robot.commands.ClawCommands.IntakeOut;
 import frc.robot.commands.DrivetrainCommands.GameDrive;
 import frc.robot.commands.DrivetrainCommands.PerfectClimb;
 import frc.robot.commands.MiscCommands.BrakeMode;
 import frc.robot.commands.Setpoints.ArmHomePos;
+import frc.robot.commands.Setpoints.PickUpPos;
 import frc.robot.commands.VisionCommands.AutoHumanStationPickup;
 import frc.robot.commands.VisionCommands.CenterAndRunForTarget;
 import frc.robot.commands.VisionCommands.PipelineSwitch;
@@ -256,7 +259,7 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-cargo");
 //==========================Driver binding========================
     
     //Brake mode Command
-    mButtonBind.driveStartButton.toggleOnTrue(new BrakeMode());
+    mButtonBind.driveStartButton.toggleOnTrue(new BrakeMode().withTimeout(5));
     //Tracking Command
     mButtonBind.driveDPadUp.toggleOnTrue(new PipelineSwitch(1,1));
 
@@ -270,7 +273,7 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-cargo");
 
     mButtonBind.driveDPadDown.onTrue(new AutoHumanStationPickup());
 
-    mButtonBind.driveDPadRight.onTrue(new InstantCommand(()-> System.out.println(botPose.get())));
+    //mButtonBind.driveDPadRight.onTrue(new InstantCommand(()-> System.out.println(botPose.get())));
 
   
     
@@ -279,15 +282,15 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-cargo");
   mButtonBind.auxLeftBumper.whileTrue(new ManualTurret(-0.4));
   mButtonBind.auxRightBumper.whileTrue(new ManualTurret(0.4));
   // Claw Commands
- //mButtonBind.auxAButton.onTrue(new ResetClaw());
- //mButtonBind.auxBButton.whileTrue(new ManualClaw(0.7));
+ mButtonBind.auxAButton.onTrue(new IntakeIn());
+ mButtonBind.auxBButton.whileTrue(new IntakeOut());
   //Turret command
   mButtonBind.auxBackButton.onTrue(new ArmHomePos());
 
   mButtonBind.auxYButton.onTrue(new TurretAimTarget(xDistanceGamePiece));
   mButtonBind.auxXButton.onTrue(new TurretAimTarget(xDistanceAim));
 
-  mButtonBind.auxStartButton.toggleOnTrue(new PipelineSwitch(1,1));
+  mButtonBind.auxStartButton.onTrue(new PickUpPos());
 
   
   

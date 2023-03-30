@@ -4,31 +4,27 @@
 
 package frc.robot.commands.AutoCommand;
 
-import java.util.concurrent.atomic.AtomicReference;
-
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.BangPID.ArmExtendBangBang;
+import frc.robot.commands.ArmCommands.TurretToSetpoint;
 import frc.robot.commands.BangPID.ArmLiftBangBang;
-import frc.robot.commands.BangPID.DriveDistance;
 import frc.robot.commands.ClawCommands.IntakeOut;
-import frc.robot.commands.DrivetrainCommands.PerfectClimb;
-import frc.robot.commands.MiscCommands.BrakeMode;
+import frc.robot.commands.Setpoints.PickUpPos;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class CenterAuto extends SequentialCommandGroup {
-  /** Creates a new CenterAuto. */
-  public CenterAuto(AtomicReference<Double>climbSup) {
+public class JustScore extends SequentialCommandGroup {
+  /** Creates a new JustScore. */
+  public JustScore() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new ParallelCommandGroup(
-      new ArmLiftBangBang(44),
-      new ArmExtendBangBang(100)),
-      new IntakeOut().withTimeout(0.6),
-      new DriveDistance(-0.7, 16),
-      new PerfectClimb(climbSup),
-      new BrakeMode().withTimeout(6));
+    addCommands(
+      new ParallelCommandGroup(
+    new TurretToSetpoint(32),
+    new ArmLiftBangBang(44)),
+    new IntakeOut().withTimeout(0.5),
+    new PickUpPos()
+    );
   }
 }
