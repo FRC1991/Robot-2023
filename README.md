@@ -1,6 +1,6 @@
 # FRC Team 1991 The Dragons Robot for 2023: Tippy(Prone to tip)
 --------------------------------------------------------------
-This is a summary of the our robot's software and hardware. Feel free to find us and ask for more information!!! Also go find out even more about us on our new [website](https://team1991.vercel.app/). 
+This is a summary of the our robot's software and hardware. Feel free to find us and ask for more information!!! Also go find out even more about us on our new [website](https://team1991.vercel.app/). We also want to give a special thanks to everyone who helped us this season mentors, parents, sponsors and the students!!!
 
 ## I want to learn about...
 
