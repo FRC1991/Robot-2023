@@ -35,6 +35,7 @@ import frc.robot.commands.DrivetrainCommands.GameDrive;
 import frc.robot.commands.DrivetrainCommands.PerfectClimb;
 import frc.robot.commands.MiscCommands.BrakeMode;
 import frc.robot.commands.Setpoints.ArmHomePos;
+import frc.robot.commands.Setpoints.DrivingBack;
 import frc.robot.commands.Setpoints.PickUpPos;
 import frc.robot.commands.VisionCommands.AutoHumanStationPickup;
 import frc.robot.commands.VisionCommands.CenterAndRunForTarget;
@@ -259,23 +260,39 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-cargo");
 //==========================Driver binding========================
     
     //Brake mode Command
-    mButtonBind.driveStartButton.toggleOnTrue(new BrakeMode().withTimeout(5));
+    mButtonBind.driveStartButton.toggleOnTrue(new BrakeMode());
     //Tracking Command
     mButtonBind.driveDPadUp.toggleOnTrue(new PipelineSwitch(1,1));
 
     mButtonBind.driveXButton.whileTrue(new CenterAndRunForTarget(xDistanceAim, cargoArea));
     mButtonBind.driveYButton.whileTrue(new CenterAndRunForTarget(xDistanceGamePiece, cargoArea));
 
-    mButtonBind.driveDPadUp.onTrue(new SequentialCommandGroup(
+    mButtonBind.driveDPadDown.onTrue(new SequentialCommandGroup(
+      new ArmHomePos(),
       new PerfectClimb(tagArea),
       new BrakeMode().withTimeout(5)
       ));
 
     mButtonBind.driveDPadDown.onTrue(new AutoHumanStationPickup());
 
-    //mButtonBind.driveDPadRight.onTrue(new InstantCommand(()-> System.out.println(botPose.get())));
+    mButtonBind.driveDPadLeft.toggleOnFalse(
+    new SequentialCommandGroup(
+    new ArmHomePos(),
+    new InstantCommand(()-> NetworkTableInstance.getDefault()
+    .getTable("Shuffleboard")
+    .getSubTable("Main")
+    .getEntry("Is in Defense Mode")
+    .setBoolean(false))));
 
-  
+    mButtonBind.driveDPadLeft.toggleOnTrue(
+    new SequentialCommandGroup(
+    new ArmHomePos(),
+    new PipelineSwitch(2, 2),
+    new InstantCommand(()-> NetworkTableInstance.getDefault()
+    .getTable("Shuffleboard")
+    .getSubTable("Main")
+    .getEntry("Is in Defense Mode")
+    .setBoolean(true))));
     
 //=======================Aux bindings=============================
   // Manual Movement
@@ -292,19 +309,21 @@ NetworkTable gamePieceNT = ntInst.getTable("limelight-cargo");
 
   mButtonBind.auxStartButton.onTrue(new PickUpPos());
 
+  mButtonBind.auxDPadDown.toggleOnTrue(new PipelineSwitch(1,1));
   
+  mButtonBind.auxDPadUp.onTrue(new DrivingBack());
   
 
 //=========================Random Binds============================
 
-mButtonBind.intakeStop.onTrue(new InstantCommand(()->
+mButtonBind.intakeStop.toggleOnTrue(new InstantCommand(()->
 NetworkTableInstance.getDefault()
         .getTable("Shuffleboard")
         .getSubTable("Main")
         .getEntry("Is Cargo in?")
         .setBoolean(true)
 ));
-mButtonBind.intakeStop.onFalse(new InstantCommand(()->
+mButtonBind.intakeStop.toggleOnFalse(new InstantCommand(()->
 NetworkTableInstance.getDefault()
         .getTable("Shuffleboard")
         .getSubTable("Main")
