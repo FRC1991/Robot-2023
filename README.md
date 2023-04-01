@@ -63,17 +63,23 @@ For the build starting from the drivetrain. We used two neo evo slims gearboxes 
 These are quick profiles on our mentors and team leaders.
 
  #### ***Mentors***
-- Mr. Kean
-    
-- Eileen Kean
-    
+- Mr. Kean 
+   - Fun fact: Once ate a 2 lb lobster with one hand because the other one was broken. 
+
 - Mr. Ganoe
+   - Fun Fact: Served in the Navy on submarines for 5  1/2 years. 
 
-- Mr. Guilliete
+- Mrs. Hockenhull
+   - Fun Fact: is from Indiana
 
-- Mr. Surace
+- Mr. Surace: 
+   - Fun Fact: born and raised in Brooklyn
 
-- Ms. Hockenhull
+- Mrs. Eileen
+   - Fun Fact: Was a captain of the team in 2017
+
+- Mr. Guillette
+   - Fun Fact: longest serving mentor on the team
 
 
  #### ***Student Leaders***
